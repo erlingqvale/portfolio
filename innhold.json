@@ -1,0 +1,71 @@
+{
+  "navn": "Erling Qvale",
+  "tittel": "[Din tittel, f.eks. Produktleder / Rådgiver]",
+  "ingress": "[2–3 setninger om hvem du er, hva du jobber med og hva du er god på. Dette er det første besøkende leser.]",
+  "kontakt": {
+    "epost": "erling.qvale@tribia.com",
+    "linkedin": "https://www.linkedin.com/in/[ditt-brukernavn]",
+    "github": "https://github.com/[ditt-brukernavn]",
+    "sted": "[By], Norge"
+  },
+  "ferdigheter": [
+    "[Ferdighet 1]",
+    "[Ferdighet 2]",
+    "[Ferdighet 3]",
+    "[Ferdighet 4]",
+    "[Ferdighet 5]"
+  ],
+  "prosjekter": [
+    {
+      "tittel": "[Prosjektnavn 1]",
+      "aar": "2026",
+      "rolle": "[Din rolle]",
+      "beskrivelse": "[Hva var problemet, hva gjorde du, og hva ble resultatet? 2–4 setninger.]",
+      "resultat": "[Ett målbart resultat, f.eks. «Reduserte saksbehandlingstid med 40 %»]",
+      "stikkord": ["[Verktøy]", "[Metode]"],
+      "lenke": "",
+      "bilde": ""
+    },
+    {
+      "tittel": "[Prosjektnavn 2]",
+      "aar": "2025",
+      "rolle": "[Din rolle]",
+      "beskrivelse": "[Kort beskrivelse av prosjektet.]",
+      "resultat": "[Resultat]",
+      "stikkord": ["[Stikkord]"],
+      "lenke": "",
+      "bilde": ""
+    },
+    {
+      "tittel": "[Prosjektnavn 3]",
+      "aar": "2024",
+      "rolle": "[Din rolle]",
+      "beskrivelse": "[Kort beskrivelse av prosjektet.]",
+      "resultat": "[Resultat]",
+      "stikkord": ["[Stikkord]"],
+      "lenke": "",
+      "bilde": ""
+    }
+  ],
+  "erfaring": [
+    {
+      "periode": "[20XX] – nå",
+      "stilling": "[Stilling]",
+      "arbeidsgiver": "Tribia",
+      "beskrivelse": "[Kort om ansvarsområder.]"
+    },
+    {
+      "periode": "[20XX] – [20XX]",
+      "stilling": "[Stilling]",
+      "arbeidsgiver": "[Arbeidsgiver]",
+      "beskrivelse": "[Kort om ansvarsområder.]"
+    }
+  ],
+  "utdanning": [
+    {
+      "periode": "[20XX] – [20XX]",
+      "grad": "[Grad / fag]",
+      "sted": "[Lærested]"
+    }
+  ]
+}

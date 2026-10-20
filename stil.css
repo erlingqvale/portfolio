@@ -1,0 +1,88 @@
+:root {
+  --bg: #fbfbfa;
+  --flate: #ffffff;
+  --tekst: #1c2430;
+  --dempet: #5b6573;
+  --linje: #e4e6ea;
+  --aksent: #2a5bd7;
+  --aksent-bg: #eef2fb;
+  --maks: 1040px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #12151a;
+    --flate: #1a1e25;
+    --tekst: #e8eaee;
+    --dempet: #9aa3b0;
+    --linje: #2a2f38;
+    --aksent: #7da2ff;
+    --aksent-bg: #1f2a44;
+  }
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--tekst);
+  font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--aksent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.bredde { max-width: var(--maks); margin: 0 auto; padding: 0 20px; }
+
+.topp { padding: 96px 0 64px; border-bottom: 1px solid var(--linje); }
+.overtittel {
+  text-transform: uppercase; letter-spacing: .12em; font-size: 13px;
+  color: var(--aksent); font-weight: 600; margin: 0 0 12px;
+}
+h1 { font-size: clamp(40px, 7vw, 68px); line-height: 1.05; letter-spacing: -.03em; margin: 0; }
+.tittel { font-size: 22px; color: var(--dempet); margin: 10px 0 24px; }
+.ingress { font-size: 20px; max-width: 680px; margin: 0 0 28px; }
+.kontakt { font-size: 15px; color: var(--dempet); }
+
+section { padding: 64px 0 0; }
+h2 {
+  font-size: 14px; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--dempet); margin: 0 0 24px;
+}
+
+.rutenett { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.kort {
+  background: var(--flate); border: 1px solid var(--linje); border-radius: 14px;
+  padding: 24px; display: flex; flex-direction: column;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.kort:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgb(0 0 0 / .07); }
+.kort img { width: calc(100% + 48px); margin: -24px -24px 18px; border-radius: 14px 14px 0 0; aspect-ratio: 16/9; object-fit: cover; }
+.kort h3 { font-size: 21px; margin: 4px 0 8px; letter-spacing: -.01em; }
+.kort p { margin: 0 0 12px; font-size: 16px; }
+.meta { font-size: 13px; color: var(--dempet); }
+.resultat { color: var(--aksent); font-weight: 600; }
+.mer { margin-top: auto; padding-top: 8px; font-weight: 600; font-size: 15px; }
+
+.stikkord { list-style: none; padding: 0; margin: 0 0 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+.stikkord li {
+  background: var(--aksent-bg); color: var(--aksent);
+  font-size: 13px; padding: 3px 10px; border-radius: 999px;
+}
+.stikkord.stor li { font-size: 15px; padding: 6px 14px; }
+
+.tidslinje { list-style: none; padding: 0; margin: 0; }
+.tidslinje li {
+  display: grid; grid-template-columns: 160px 1fr; gap: 16px;
+  padding: 16px 0; border-top: 1px solid var(--linje);
+}
+.tidslinje p { margin: 4px 0 0; color: var(--dempet); font-size: 16px; }
+.periode { color: var(--dempet); font-size: 15px; }
+
+footer { padding: 64px 20px 48px; color: var(--dempet); font-size: 15px; }
+
+@media (max-width: 600px) {
+  .topp { padding: 56px 0 40px; }
+  .rutenett { grid-template-columns: 1fr; }
+  .tidslinje li { grid-template-columns: 1fr; gap: 2px; }
+}
