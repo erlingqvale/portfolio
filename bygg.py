@@ -78,18 +78,6 @@ def prosjektkort(p):
       </a>"""
 
 
-def tidslinje(rader, tittel_felt, under_felt):
-    return "".join(
-        f"""
-      <li>
-        <span class="periode">{e(r["periode"])}</span>
-        <div><strong>{e(r[tittel_felt])}</strong> — {e(r[under_felt])}
-        {f'<p>{e(r["beskrivelse"])}</p>' if r.get("beskrivelse") else ""}</div>
-      </li>"""
-        for r in rader
-    )
-
-
 def lag_forside(d):
     kropp = f"""<header class="topp">
   <div class="bredde">
@@ -109,14 +97,6 @@ def lag_forside(d):
   <section id="ferdigheter">
     <h2>Skills &amp; tools</h2>
     {stikkord(d["ferdigheter"], "stikkord stor")}
-  </section>
-  <section id="erfaring">
-    <h2>Experience</h2>
-    <ul class="tidslinje">{tidslinje(d["erfaring"], "stilling", "arbeidsgiver")}</ul>
-  </section>
-  <section id="utdanning">
-    <h2>Education</h2>
-    <ul class="tidslinje">{tidslinje(d["utdanning"], "grad", "sted")}</ul>
   </section>
 </main>
 {bunntekst(d)}"""
@@ -180,14 +160,6 @@ def lag_pdf_html(d):
       </div>"""
         for p in d["prosjekter"]
     )
-    erfaring = "".join(
-        f'<li><span>{e(r["periode"])}</span>{e(r["stilling"])}, {e(r["arbeidsgiver"])}</li>'
-        for r in d["erfaring"]
-    )
-    utdanning = "".join(
-        f'<li><span>{e(r["periode"])}</span>{e(r["grad"])}, {e(r["sted"])}</li>'
-        for r in d["utdanning"]
-    )
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <style>
@@ -204,10 +176,7 @@ def lag_pdf_html(d):
   .ph {{ display: flex; justify-content: space-between; gap: 8pt; }}
   .ph span {{ color: #5b6573; font-size: 8.5pt; white-space: nowrap; }}
   .p p {{ margin: 1pt 0 0; }}
-  .kol {{ display: grid; grid-template-columns: 1fr 1fr; gap: 0 18pt; }}
   ul {{ list-style: none; padding: 0; margin: 0; }}
-  .liste li {{ margin-bottom: 3pt; }}
-  .liste span {{ display: inline-block; width: 78pt; color: #5b6573; font-size: 8.5pt; }}
   .ferd {{ display: flex; flex-wrap: wrap; gap: 4pt; }}
   .ferd li {{ background: #eef2fb; color: #1e3f99; padding: 1.5pt 6pt; border-radius: 8pt; font-size: 8.5pt; }}
 </style></head>
@@ -218,11 +187,7 @@ def lag_pdf_html(d):
   <p class="ingress">{e(d["ingress"])}</p>
   <hr>
   <h2>Projects</h2>{prosjekter}
-  <div class="kol">
-    <div><h2>Experience</h2><ul class="liste">{erfaring}</ul>
-      <h2>Education</h2><ul class="liste">{utdanning}</ul></div>
-    <div><h2>Skills &amp; tools</h2><ul class="ferd">{"".join(f"<li>{e(f)}</li>" for f in d["ferdigheter"])}</ul></div>
-  </div>
+  <h2>Skills &amp; tools</h2><ul class="ferd">{"".join(f"<li>{e(f)}</li>" for f in d["ferdigheter"])}</ul>
 </body></html>
 """
 

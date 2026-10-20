@@ -71,13 +71,6 @@ h2 {
 }
 .stikkord.stor li { font-size: 15px; padding: 6px 14px; }
 
-.tidslinje { list-style: none; padding: 0; margin: 0; }
-.tidslinje li {
-  display: grid; grid-template-columns: 160px 1fr; gap: 16px;
-  padding: 16px 0; border-top: 1px solid var(--linje);
-}
-.tidslinje p { margin: 4px 0 0; color: var(--dempet); font-size: 16px; }
-.periode { color: var(--dempet); font-size: 15px; }
 
 a.kort { color: inherit; text-decoration: none; }
 a.kort:hover h3 { color: var(--aksent); }
@@ -111,5 +104,4 @@ footer { padding: 64px 20px 48px; color: var(--dempet); font-size: 15px; }
 @media (max-width: 600px) {
   .topp { padding: 56px 0 40px; }
   .rutenett { grid-template-columns: 1fr; }
-  .tidslinje li { grid-template-columns: 1fr; gap: 2px; }
 }
