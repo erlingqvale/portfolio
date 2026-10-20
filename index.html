@@ -99,15 +99,20 @@
 <script>
 const lenker = document.querySelectorAll('.toppmeny a[href^="#"]');
 const seksjoner = [...lenker].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const menyboks = document.querySelector('.toppmeny .bredde');
+let forrige = null;
 function oppdater() {
   const linje = window.innerHeight * 0.3;
   let aktiv = seksjoner[0];
   for (const s of seksjoner) if (s.getBoundingClientRect().top <= linje) aktiv = s;
   if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) aktiv = seksjoner[seksjoner.length - 1];
+  if (aktiv === forrige) return;
+  forrige = aktiv;
   lenker.forEach(a => {
     const på = a.getAttribute('href') === '#' + aktiv.id;
     a.classList.toggle('aktiv', på);
-    if (på) a.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    // Flytt bare menyen sidelengs (på smale skjermer) – aldri selve siden.
+    if (på) menyboks.scrollTo({ left: a.offsetLeft - menyboks.clientWidth / 2 + a.offsetWidth / 2, behavior: 'smooth' });
   });
 }
 addEventListener('scroll', oppdater, { passive: true });

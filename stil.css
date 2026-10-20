@@ -42,7 +42,7 @@ a:hover { text-decoration: underline; }
   background: var(--bg); border-bottom: 1px solid var(--linje);
 }
 .toppmeny .bredde {
-  display: flex; gap: 24px; height: var(--meny); align-items: center;
+  position: relative; display: flex; gap: 24px; height: var(--meny); align-items: center;
   overflow-x: auto; scrollbar-width: none; white-space: nowrap;
 }
 .toppmeny a { color: var(--dempet); font-size: 15px; }
