@@ -41,13 +41,51 @@ a:hover { text-decoration: underline; }
   position: sticky; top: 0; z-index: 10;
   background: var(--bg); border-bottom: 1px solid var(--linje);
 }
-.toppmeny .bredde {
-  position: relative; display: flex; gap: 24px; height: var(--meny); align-items: center;
-  overflow-x: auto; scrollbar-width: none; white-space: nowrap;
-}
-.toppmeny a { color: var(--dempet); font-size: 15px; }
-.toppmeny a:first-child { color: var(--tekst); font-weight: 700; margin-right: auto; }
+.toppmeny .bredde { display: flex; align-items: center; height: var(--meny); }
+.toppmeny a { color: var(--dempet); font-size: 15px; white-space: nowrap; }
+.toppmeny .navn { color: var(--tekst); font-weight: 700; margin-right: auto; }
 .toppmeny a.aktiv { color: var(--aksent); font-weight: 600; }
+.menyliste { display: flex; gap: 24px; }
+
+/* Hamburgerknapp – tre streker som blir til en X */
+.menyknapp {
+  display: none; position: relative; width: 44px; height: 44px; margin-right: -10px;
+  border: 0; background: none; cursor: pointer; color: var(--tekst);
+}
+.menyknapp span {
+  position: absolute; left: 11px; width: 22px; height: 2px; border-radius: 2px;
+  background: currentColor; transition: transform .25s ease, opacity .2s ease;
+}
+.menyknapp span:nth-child(1) { top: 15px; }
+.menyknapp span:nth-child(2) { top: 21px; }
+.menyknapp span:nth-child(3) { top: 27px; }
+.apen .menyknapp span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.apen .menyknapp span:nth-child(2) { opacity: 0; }
+.apen .menyknapp span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+@media (max-width: 760px) {
+  .menyknapp { display: block; }
+  .menyliste {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; gap: 0; padding: 8px 0 16px;
+    background: var(--bg); border-bottom: 1px solid var(--linje);
+    max-height: calc(100vh - var(--meny)); overflow-y: auto;
+  }
+  .apen .menyliste { display: flex; }
+  .menyliste a { font-size: 18px; padding: 12px 20px; }
+}
+
+/* «In short»-boks øverst i hvert prosjekt */
+.oppsummering {
+  background: var(--aksent-bg); border-left: 4px solid var(--aksent);
+  border-radius: 0 12px 12px 0; padding: 18px 24px; margin: 8px 0 24px; max-width: 720px;
+}
+.oppsummering p {
+  margin: 0 0 8px; font-size: 13px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .12em; color: var(--aksent);
+}
+.oppsummering ul { margin: 0; padding-left: 20px; }
+.oppsummering li { margin-bottom: 4px; }
 
 .topp { padding: 80px 0 64px; border-bottom: 1px solid var(--linje); }
 .overtittel {
@@ -90,5 +128,4 @@ h4 { font-size: 18px; margin: 0 0 6px; }
   .topp { padding: 48px 0 40px; }
   section { padding: 56px 0; }
   h2 { font-size: 32px; }
-  .toppmeny a:first-child { margin-right: 0; }
 }

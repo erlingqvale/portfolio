@@ -83,11 +83,17 @@ def prosjektseksjon(p):
         if p.get("prosess") else ""
     )
     lenke = f'<p><a class="mer" href="{e(p["lenke"])}">View project →</a></p>' if p.get("lenke") else ""
+    oppsummering = (
+        '<aside class="oppsummering"><p>In short</p><ul>'
+        + "".join(f"<li>{e(x)}</li>" for x in p["oppsummering"])
+        + "</ul></aside>"
+        if p.get("oppsummering") else ""
+    )
     return f"""
   <section class="prosjekt" id="{e(p["slug"])}">
     <p class="meta">{meta(p)}</p>
     <h2>{e(p["tittel"])}</h2>
-    <p class="ingress">{e(p.get("kort", ""))}</p>
+    {oppsummering}
     {stikkord(p.get("stikkord", []))}
     {bilde}
     <h3>The challenge</h3>
@@ -101,7 +107,6 @@ def prosjektseksjon(p):
 SCROLLSPY = """<script>
 const lenker = document.querySelectorAll('.toppmeny a[href^="#"]');
 const seksjoner = [...lenker].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-const menyboks = document.querySelector('.toppmeny .bredde');
 let forrige = null;
 function oppdater() {
   const linje = window.innerHeight * 0.3;
@@ -110,17 +115,24 @@ function oppdater() {
   if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) aktiv = seksjoner[seksjoner.length - 1];
   if (aktiv === forrige) return;
   forrige = aktiv;
-  lenker.forEach(a => {
-    const på = a.getAttribute('href') === '#' + aktiv.id;
-    a.classList.toggle('aktiv', på);
-    // Flytt bare menyen sidelengs (på smale skjermer) – aldri selve siden.
-    if (på) menyboks.scrollTo({ left: a.offsetLeft - menyboks.clientWidth / 2 + a.offsetWidth / 2, behavior: 'smooth' });
-  });
+  lenker.forEach(a => a.classList.toggle('aktiv', a.getAttribute('href') === '#' + aktiv.id));
 }
 addEventListener('scroll', oppdater, { passive: true });
 addEventListener('resize', oppdater);
 addEventListener('load', oppdater);
 oppdater();
+
+// Hamburgermeny på mobil
+const meny = document.querySelector('.toppmeny');
+const knapp = document.querySelector('.menyknapp');
+function settMeny(åpen) {
+  meny.classList.toggle('apen', åpen);
+  knapp.setAttribute('aria-expanded', åpen);
+  knapp.setAttribute('aria-label', åpen ? 'Close menu' : 'Menu');
+}
+knapp.addEventListener('click', () => settMeny(!meny.classList.contains('apen')));
+lenker.forEach(a => a.addEventListener('click', () => settMeny(false)));
+addEventListener('keydown', e => { if (e.key === 'Escape') settMeny(false); });
 </script>"""
 
 
@@ -128,7 +140,11 @@ def lag_forside(d):
     meny = "".join(f'<a href="#{e(p["slug"])}">{e(p["tittel"])}</a>' for p in d["prosjekter"])
     kropp = f"""<nav class="toppmeny">
   <div class="bredde">
-    <a href="#top">{e(d["navn"])}</a>{meny}<a href="#contact">Contact</a>
+    <a class="navn" href="#top">{e(d["navn"])}</a>
+    <button class="menyknapp" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menyliste">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="menyliste" id="menyliste">{meny}<a href="#contact">Contact</a></div>
   </div>
 </nav>
 <header class="topp" id="top">

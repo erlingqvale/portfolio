@@ -29,6 +29,12 @@
       "aar": "",
       "rolle": "UX design, team project",
       "kort": "A desktop interface that lets students interact with co-created data visualizations, using real emission data to enhance the credibility and context of a true use case.",
+      "oppsummering": [
+        "A desktop interface that makes real emission data understandable for students",
+        "Three views: Compare, Explore and Verify",
+        "Built on six interviews, an expert focus group and a co-creation workshop with eight students",
+        "Two prototype iterations, each followed by usability testing"
+      ],
       "utfordring": "Design a desktop interface that visualizes complex data for students. Imagine an interface transforming complex data into captivating stories that practically anyone can understand. This is the vision of FUSE – an innovative data visualization interface developed for and by students. Through an iterative design process, FUSE has developed into a prototype that uses authentic data and real text examples, to replace placeholders and imprecise visualizations that lead to confusion.",
       "losning": [
         {
@@ -81,6 +87,12 @@
       "aar": "",
       "rolle": "Team of four",
       "kort": "An augmented reality application that lets users immerse themselves as a wizard, using full-body movement as input instead of the limited interactions common in AR mobile games.",
+      "oppsummering": [
+        "An AR app in Unity where full-body movement is the input",
+        "The user becomes a wizard, casting magic with hand movements",
+        "A team of four with no prior Unity experience",
+        "Four approaches to hand tracking explored – position recognition proved most reliable"
+      ],
       "utfordring": "Develop a prototype in Unity focusing on Augmented Reality and Body Interaction. None of the four of us had prior experience with Unity, and the task was very open-ended – so everyone created a storyboard, and we voted on the proposal we liked best.",
       "losning": [
         {
@@ -124,6 +136,12 @@
       "aar": "",
       "rolle": "UX design, in collaboration with Wolftech",
       "kort": "Three designs that make journalists' research process more efficient and interactive in Wolftech's news production platform.",
+      "oppsummering": [
+        "Making journalists' research faster in Wolftech's news production platform",
+        "Run as a Google Design Sprint together with Wolftech employees",
+        "Three concepts: Dashboard, Discover and Keyword search",
+        "Five expert interviews, two prototypes and usability tests over Zoom"
+      ],
       "utfordring": "How can we improve an existing solution in an established news production platform? Wolftech described Feeds as a tool in its early stage that had not been given much attention yet. Our challenge was to look at how journalists do research, and how Feeds can make the research process easier and more efficient.",
       "losning": [
         {
@@ -175,6 +193,12 @@
       "aar": "",
       "rolle": "UX design, in collaboration with TV 2",
       "kort": "An exploration mode for TV 2 Play, tailored to young adults with children – designed so that exciting content finds the user, not the other way around.",
+      "oppsummering": [
+        "An exploration mode for TV 2 Play, aimed at young adults with children",
+        "Lets relevant content find the user – less scrolling, fewer cancellations",
+        "A visual identity inspired by the universe",
+        "Interviews, think-aloud sessions and two rounds of usability testing"
+      ],
       "utfordring": "Design a user interface in collaboration with TV 2 for their streaming service TV 2 Play, tailored to young adults with children. The challenge in streaming services is finding the balance between too much and too little content on the home page – showing users that there is plenty of exciting content for them, without overwhelming them.",
       "losning": [
         {
@@ -222,6 +246,12 @@
       "aar": "",
       "rolle": "Individual project, exchange at Bath Spa University",
       "kort": "A 3D model and short movie of Bath City FC's football stadium, made in Autodesk Maya with no prior 3D experience.",
+      "oppsummering": [
+        "A 3D model and short film of Bath City FC's stadium",
+        "Made in Autodesk Maya with no prior 3D experience",
+        "Based on online research and my own photos from the stadium",
+        "Exchange project at Bath Spa University"
+      ],
       "utfordring": "Create a piece of environment modelling that responded to my experience of Bath with the 3D software Autodesk Maya, and make a short movie. I chose Twerton Park, the football stadium of Bath City FC, because I spent a lot of my time in England travelling around to watch football matches.",
       "losning": [],
       "prosess": [
@@ -247,6 +277,12 @@
       "aar": "",
       "rolle": "Individual project, exchange at Bath Spa University",
       "kort": "A landscape of my own choice and a short film of a car driving through it, made in Cinema 4D and Adobe After Effects.",
+      "oppsummering": [
+        "A landscape and short film of a car driving through it",
+        "Modelled in Cinema 4D and edited in Adobe After Effects",
+        "Car, road, bridge and landscape – plus a boat, a house and flowers",
+        "Exchange project at Bath Spa University"
+      ],
       "utfordring": "Create a landscape of our own choice and make a short film with a car driving through the landscape. We used Cinema 4D during the last three weeks of the course, after being introduced to Adobe Animate and Adobe After Effects.",
       "losning": [],
       "prosess": [
