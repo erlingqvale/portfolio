@@ -1,12 +1,13 @@
 {
   "navn": "Erling Qvale",
   "tittel": "UX Designer",
-  "ingress": "I'm a UX designer who enjoys making the complex understandable. Through projects with partners such as TV 2 and Wolftech, I've worked across the whole design process – from interviews and workshops to prototypes and usability testing.",
+  "ingress": "UX designer at Tribia, working on Interaxo, with a master's degree in Media and Interaction Design from the University of Bergen. I enjoy making the complex understandable – working across the whole design process, from interviews and workshops to prototypes and usability testing.",
   "kontakt": {
     "epost": "",
+    "telefon": "",
     "linkedin": "https://www.linkedin.com/in/erling-qvale-18190717b/",
     "github": "https://github.com/erlingqvale",
-    "sted": ""
+    "sted": "Oslo, Norway"
   },
   "ferdigheter": [
     "User interviews",
@@ -220,7 +221,7 @@
       "slug": "twerton-park",
       "tittel": "Twerton Park",
       "aar": "",
-      "rolle": "Individual project",
+      "rolle": "Individual project, exchange at Bath Spa University",
       "kort": "A 3D model and short movie of Bath City FC's football stadium, made in Autodesk Maya with no prior 3D experience.",
       "utfordring": "Create a piece of environment modelling that responded to my experience of Bath with the 3D software Autodesk Maya, and make a short movie. I chose Twerton Park, the football stadium of Bath City FC, because I spent a lot of my time in England travelling around to watch football matches.",
       "losning": [],
@@ -245,7 +246,7 @@
       "slug": "car-ride",
       "tittel": "Car Ride",
       "aar": "",
-      "rolle": "Individual project",
+      "rolle": "Individual project, exchange at Bath Spa University",
       "kort": "A landscape of my own choice and a short film of a car driving through it, made in Cinema 4D and Adobe After Effects.",
       "utfordring": "Create a landscape of our own choice and make a short film with a car driving through the landscape. We used Cinema 4D during the last three weeks of the course, after being introduced to Adobe Animate and Adobe After Effects.",
       "losning": [],

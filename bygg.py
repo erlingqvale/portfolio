@@ -32,6 +32,9 @@ def lenker(k):
     deler = []
     if k.get("epost"):
         deler.append(f'<a href="mailto:{e(k["epost"])}">{e(k["epost"])}</a>')
+    if k.get("telefon"):
+        tlf = k["telefon"].replace(" ", "")
+        deler.append(f'<a href="tel:{e(tlf)}">{e(k["telefon"])}</a>')
     if k.get("linkedin"):
         deler.append(f'<a href="{e(k["linkedin"])}">LinkedIn</a>')
     if k.get("github"):
@@ -150,7 +153,7 @@ def lag_pdf_html(d):
     """Kortversjon: én A4-side med det viktigste."""
     k = d["kontakt"]
     kontaktlinje = " · ".join(
-        x for x in [k.get("epost"), k.get("sted"), k.get("linkedin"), k.get("github")] if x
+        x for x in [k.get("epost"), k.get("telefon"), k.get("sted"), k.get("linkedin"), k.get("github")] if x
     )
     prosjekter = "".join(
         f"""
