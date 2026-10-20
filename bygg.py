@@ -45,7 +45,7 @@ def stikkord(liste, klasse="stikkord"):
 
 def side(tittel, beskrivelse, kropp, css="stil.css"):
     return f"""<!doctype html>
-<html lang="no">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@ def prosjektkort(p):
         <h3>{e(p["tittel"])}</h3>
         <p>{e(p.get("kort", ""))}</p>
         {stikkord(p.get("stikkord", []))}
-        <span class="mer">Les casen →</span>
+        <span class="mer">Read the case →</span>
       </a>"""
 
 
@@ -93,7 +93,7 @@ def tidslinje(rader, tittel_felt, under_felt):
 def lag_forside(d):
     kropp = f"""<header class="topp">
   <div class="bredde">
-    <p class="overtittel">Portefølje</p>
+    <p class="overtittel">Portfolio</p>
     <h1>{e(d["navn"])}</h1>
     <p class="tittel">{e(d["tittel"])}</p>
     <p class="ingress">{e(d["ingress"])}</p>
@@ -102,25 +102,25 @@ def lag_forside(d):
 </header>
 <main class="bredde">
   <section id="prosjekter">
-    <h2>Prosjekter</h2>
+    <h2>Projects</h2>
     <div class="rutenett">{"".join(prosjektkort(p) for p in d["prosjekter"])}
     </div>
   </section>
   <section id="ferdigheter">
-    <h2>Ferdigheter og verktøy</h2>
+    <h2>Skills &amp; tools</h2>
     {stikkord(d["ferdigheter"], "stikkord stor")}
   </section>
   <section id="erfaring">
-    <h2>Erfaring</h2>
+    <h2>Experience</h2>
     <ul class="tidslinje">{tidslinje(d["erfaring"], "stilling", "arbeidsgiver")}</ul>
   </section>
   <section id="utdanning">
-    <h2>Utdanning</h2>
+    <h2>Education</h2>
     <ul class="tidslinje">{tidslinje(d["utdanning"], "grad", "sted")}</ul>
   </section>
 </main>
 {bunntekst(d)}"""
-    return side(f'{d["navn"]} – Portefølje', d["ingress"], kropp)
+    return side(f'{d["navn"]} – Portfolio', d["ingress"], kropp)
 
 
 def blokker(rader, klasse):
@@ -133,16 +133,16 @@ def blokker(rader, klasse):
 def lag_prosjektside(d, p, forrige, neste):
     bilde = f'<img class="hovedbilde" src="../{e(p["bilde"])}" alt="">' if p.get("bilde") else ""
     losning = (
-        f'<section><h2>Løsningen</h2><div class="rutenett">{blokker(p["losning"], "kort")}</div></section>'
+        f'<section><h2>The solution</h2><div class="rutenett">{blokker(p["losning"], "kort")}</div></section>'
         if p.get("losning") else ""
     )
     prosess = (
-        f'<section><h2>Prosessen</h2><ol class="prosess">'
+        f'<section><h2>The process</h2><ol class="prosess">'
         + "".join(f'<li><h3>{e(s["tittel"])}</h3><p>{e(s["tekst"])}</p></li>' for s in p["prosess"])
         + "</ol></section>"
         if p.get("prosess") else ""
     )
-    lenke = f'<p><a class="mer" href="{e(p["lenke"])}">Se prosjektet →</a></p>' if p.get("lenke") else ""
+    lenke = f'<p><a class="mer" href="{e(p["lenke"])}">View project →</a></p>' if p.get("lenke") else ""
     kropp = f"""<header class="topp smal">
   <div class="bredde">
     <p class="overtittel"><a href="../index.html">← {e(d["navn"])}</a></p>
@@ -154,7 +154,7 @@ def lag_prosjektside(d, p, forrige, neste):
 </header>
 <main class="bredde">
   {bilde}
-  <section><h2>Utfordringen</h2><p class="tekst">{e(p.get("utfordring", ""))}</p>{lenke}</section>
+  <section><h2>The challenge</h2><p class="tekst">{e(p.get("utfordring", ""))}</p>{lenke}</section>
   {losning}
   {prosess}
   <nav class="bla">
@@ -189,7 +189,7 @@ def lag_pdf_html(d):
         for r in d["utdanning"]
     )
     return f"""<!doctype html>
-<html lang="no"><head><meta charset="utf-8">
+<html lang="en"><head><meta charset="utf-8">
 <style>
   @page {{ size: A4; margin: 16mm 16mm 14mm; }}
   * {{ box-sizing: border-box; }}
@@ -217,11 +217,11 @@ def lag_pdf_html(d):
   <div class="kontakt">{e(kontaktlinje)}</div>
   <p class="ingress">{e(d["ingress"])}</p>
   <hr>
-  <h2>Prosjekter</h2>{prosjekter}
+  <h2>Projects</h2>{prosjekter}
   <div class="kol">
-    <div><h2>Erfaring</h2><ul class="liste">{erfaring}</ul>
-      <h2>Utdanning</h2><ul class="liste">{utdanning}</ul></div>
-    <div><h2>Ferdigheter og verktøy</h2><ul class="ferd">{"".join(f"<li>{e(f)}</li>" for f in d["ferdigheter"])}</ul></div>
+    <div><h2>Experience</h2><ul class="liste">{erfaring}</ul>
+      <h2>Education</h2><ul class="liste">{utdanning}</ul></div>
+    <div><h2>Skills &amp; tools</h2><ul class="ferd">{"".join(f"<li>{e(f)}</li>" for f in d["ferdigheter"])}</ul></div>
   </div>
 </body></html>
 """
