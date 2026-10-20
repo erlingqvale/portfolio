@@ -2,7 +2,7 @@
 """Bygger nettsiden og portefolje-kort.pdf fra innhold.json.
 
 Bruk:  python3 bygg.py
-Lager index.html, én side per prosjekt i prosjekter/, og PDF-en
+Lager index.html (one-pager med alle prosjekter) og PDF-en
 (via Google Chrome i headless-modus).
 """
 import json
@@ -46,7 +46,7 @@ def stikkord(liste, klasse="stikkord"):
     return f'<ul class="{klasse}">{"".join(f"<li>{e(s)}</li>" for s in liste)}</ul>'
 
 
-def side(tittel, beskrivelse, kropp, css="stil.css"):
+def side(tittel, beskrivelse, kropp):
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -54,7 +54,7 @@ def side(tittel, beskrivelse, kropp, css="stil.css"):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(tittel)}</title>
 <meta name="description" content="{e(beskrivelse)}">
-<link rel="stylesheet" href="{css}">
+<link rel="stylesheet" href="stil.css">
 </head>
 <body>
 {kropp}
@@ -63,90 +63,88 @@ def side(tittel, beskrivelse, kropp, css="stil.css"):
 """
 
 
-def bunntekst(d):
-    k = d["kontakt"]
-    return f'<footer class="bredde"><p>{" · ".join(lenker(k))}</p></footer>'
+def blokker(rader, klasse):
+    return "".join(
+        f'<div class="{klasse}"><h4>{e(r["tittel"])}</h4><p>{e(r["tekst"])}</p></div>'
+        for r in rader
+    )
 
 
-def prosjektkort(p):
-    bilde = f'<img src="{e(p["bilde"])}" alt="" loading="lazy">' if p.get("bilde") else ""
+def prosjektseksjon(p):
+    bilde = f'<img class="hovedbilde" src="{e(p["bilde"])}" alt="" loading="lazy">' if p.get("bilde") else ""
+    losning = (
+        f'<h3>The solution</h3><div class="rutenett">{blokker(p["losning"], "kort")}</div>'
+        if p.get("losning") else ""
+    )
+    prosess = (
+        '<h3>The process</h3><ol class="prosess">'
+        + "".join(f'<li><h4>{e(s["tittel"])}</h4><p>{e(s["tekst"])}</p></li>' for s in p["prosess"])
+        + "</ol>"
+        if p.get("prosess") else ""
+    )
+    lenke = f'<p><a class="mer" href="{e(p["lenke"])}">View project →</a></p>' if p.get("lenke") else ""
     return f"""
-      <a class="kort" href="prosjekter/{e(p["slug"])}.html">
-        {bilde}
-        <div class="meta">{meta(p)}</div>
-        <h3>{e(p["tittel"])}</h3>
-        <p>{e(p.get("kort", ""))}</p>
-        {stikkord(p.get("stikkord", []))}
-        <span class="mer">Read the case →</span>
-      </a>"""
+  <section class="prosjekt" id="{e(p["slug"])}">
+    <p class="meta">{meta(p)}</p>
+    <h2>{e(p["tittel"])}</h2>
+    <p class="ingress">{e(p.get("kort", ""))}</p>
+    {stikkord(p.get("stikkord", []))}
+    {bilde}
+    <h3>The challenge</h3>
+    <p class="tekst">{e(p.get("utfordring", ""))}</p>{lenke}
+    {losning}
+    {prosess}
+  </section>"""
+
+
+# Markerer prosjektet som vises i navigasjonen mens man scroller.
+SCROLLSPY = """<script>
+const lenker = document.querySelectorAll('.toppmeny a[href^="#"]');
+const seksjoner = [...lenker].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+function oppdater() {
+  const linje = window.innerHeight * 0.3;
+  let aktiv = seksjoner[0];
+  for (const s of seksjoner) if (s.getBoundingClientRect().top <= linje) aktiv = s;
+  if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) aktiv = seksjoner[seksjoner.length - 1];
+  lenker.forEach(a => {
+    const på = a.getAttribute('href') === '#' + aktiv.id;
+    a.classList.toggle('aktiv', på);
+    if (på) a.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  });
+}
+addEventListener('scroll', oppdater, { passive: true });
+addEventListener('resize', oppdater);
+addEventListener('load', oppdater);
+oppdater();
+</script>"""
 
 
 def lag_forside(d):
-    kropp = f"""<header class="topp">
+    meny = "".join(f'<a href="#{e(p["slug"])}">{e(p["tittel"])}</a>' for p in d["prosjekter"])
+    kropp = f"""<nav class="toppmeny">
+  <div class="bredde">
+    <a href="#top">{e(d["navn"])}</a>{meny}<a href="#contact">Contact</a>
+  </div>
+</nav>
+<header class="topp" id="top">
   <div class="bredde">
     <p class="overtittel">Portfolio</p>
     <h1>{e(d["navn"])}</h1>
     <p class="tittel">{e(d["tittel"])}</p>
     <p class="ingress">{e(d["ingress"])}</p>
-    <nav class="kontakt">{" · ".join(lenker(d["kontakt"]))}</nav>
+    <p class="kontakt">{" · ".join(lenker(d["kontakt"]))}</p>
   </div>
 </header>
-<main class="bredde">
-  <section id="prosjekter">
-    <h2>Projects</h2>
-    <div class="rutenett">{"".join(prosjektkort(p) for p in d["prosjekter"])}
-    </div>
-  </section>
-  <section id="ferdigheter">
-    <h2>Skills &amp; tools</h2>
+<main class="bredde">{"".join(prosjektseksjon(p) for p in d["prosjekter"])}
+  <section id="contact">
+    <h2>Contact</h2>
+    <p class="kontakt">{" · ".join(lenker(d["kontakt"]))}</p>
+    <h3>Skills &amp; tools</h3>
     {stikkord(d["ferdigheter"], "stikkord stor")}
   </section>
 </main>
-{bunntekst(d)}"""
+{SCROLLSPY}"""
     return side(f'{d["navn"]} – Portfolio', d["ingress"], kropp)
-
-
-def blokker(rader, klasse):
-    return "".join(
-        f'<div class="{klasse}"><h3>{e(r["tittel"])}</h3><p>{e(r["tekst"])}</p></div>'
-        for r in rader
-    )
-
-
-def lag_prosjektside(d, p, forrige, neste):
-    bilde = f'<img class="hovedbilde" src="../{e(p["bilde"])}" alt="">' if p.get("bilde") else ""
-    losning = (
-        f'<section><h2>The solution</h2><div class="rutenett">{blokker(p["losning"], "kort")}</div></section>'
-        if p.get("losning") else ""
-    )
-    prosess = (
-        f'<section><h2>The process</h2><ol class="prosess">'
-        + "".join(f'<li><h3>{e(s["tittel"])}</h3><p>{e(s["tekst"])}</p></li>' for s in p["prosess"])
-        + "</ol></section>"
-        if p.get("prosess") else ""
-    )
-    lenke = f'<p><a class="mer" href="{e(p["lenke"])}">View project →</a></p>' if p.get("lenke") else ""
-    kropp = f"""<header class="topp smal">
-  <div class="bredde">
-    <p class="overtittel"><a href="../index.html">← {e(d["navn"])}</a></p>
-    <h1>{e(p["tittel"])}</h1>
-    <p class="tittel">{meta(p)}</p>
-    <p class="ingress">{e(p.get("kort", ""))}</p>
-    {stikkord(p.get("stikkord", []))}
-  </div>
-</header>
-<main class="bredde">
-  {bilde}
-  <section><h2>The challenge</h2><p class="tekst">{e(p.get("utfordring", ""))}</p>{lenke}</section>
-  {losning}
-  {prosess}
-  <nav class="bla">
-    <a href="{e(forrige["slug"])}.html">← {e(forrige["tittel"])}</a>
-    <a href="{e(neste["slug"])}.html">{e(neste["tittel"])} →</a>
-  </nav>
-</main>
-{bunntekst(d)}"""
-    return side(f'{p["tittel"]} – {d["navn"]}', p.get("kort", ""), kropp, "../stil.css")
 
 
 def lag_pdf_html(d):
@@ -206,16 +204,6 @@ def main():
     d = les_innhold()
     (ROT / "index.html").write_text(lag_forside(d), encoding="utf-8")
     print("✓ index.html")
-
-    mappe = ROT / "prosjekter"
-    mappe.mkdir(exist_ok=True)
-    for gammel in mappe.glob("*.html"):
-        gammel.unlink()
-    ps = d["prosjekter"]
-    for i, p in enumerate(ps):
-        html = lag_prosjektside(d, p, ps[i - 1], ps[(i + 1) % len(ps)])
-        (mappe / f'{p["slug"]}.html').write_text(html, encoding="utf-8")
-    print(f"✓ prosjekter/ ({len(ps)} sider)")
 
     chrome = finn_chrome()
     if not chrome:

@@ -1,3 +1,4 @@
+/* Midlertidig, enkel stil – designet er ikke bestemt ennå. */
 :root {
   --bg: #fbfbfa;
   --flate: #ffffff;
@@ -7,6 +8,7 @@
   --aksent: #2a5bd7;
   --aksent-bg: #eef2fb;
   --maks: 1040px;
+  --meny: 56px;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -21,7 +23,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--meny); }
 body {
   margin: 0;
   background: var(--bg);
@@ -34,74 +36,59 @@ a:hover { text-decoration: underline; }
 
 .bredde { max-width: var(--maks); margin: 0 auto; padding: 0 20px; }
 
-.topp { padding: 96px 0 64px; border-bottom: 1px solid var(--linje); }
+/* Navigasjon som alltid ligger øverst */
+.toppmeny {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--bg); border-bottom: 1px solid var(--linje);
+}
+.toppmeny .bredde {
+  display: flex; gap: 24px; height: var(--meny); align-items: center;
+  overflow-x: auto; scrollbar-width: none; white-space: nowrap;
+}
+.toppmeny a { color: var(--dempet); font-size: 15px; }
+.toppmeny a:first-child { color: var(--tekst); font-weight: 700; margin-right: auto; }
+.toppmeny a.aktiv { color: var(--aksent); font-weight: 600; }
+
+.topp { padding: 80px 0 64px; border-bottom: 1px solid var(--linje); }
 .overtittel {
   text-transform: uppercase; letter-spacing: .12em; font-size: 13px;
   color: var(--aksent); font-weight: 600; margin: 0 0 12px;
 }
 h1 { font-size: clamp(40px, 7vw, 68px); line-height: 1.05; letter-spacing: -.03em; margin: 0; }
 .tittel { font-size: 22px; color: var(--dempet); margin: 10px 0 24px; }
-.ingress { font-size: 20px; max-width: 680px; margin: 0 0 28px; }
+.ingress { font-size: 20px; max-width: 680px; margin: 0 0 20px; }
 .kontakt { font-size: 15px; color: var(--dempet); }
 
-section { padding: 64px 0 0; }
-h2 {
+section { padding: 80px 0; border-bottom: 1px solid var(--linje); }
+section:last-child { border-bottom: 0; }
+h2 { font-size: 40px; line-height: 1.1; letter-spacing: -.02em; margin: 0 0 16px; }
+h3 {
   font-size: 14px; text-transform: uppercase; letter-spacing: .12em;
-  color: var(--dempet); margin: 0 0 24px;
+  color: var(--dempet); margin: 48px 0 16px;
 }
+h4 { font-size: 18px; margin: 0 0 6px; }
+.meta { font-size: 14px; color: var(--dempet); margin: 0 0 8px; }
+.tekst { max-width: 720px; margin: 0; }
+.hovedbilde { width: 100%; border-radius: 12px; margin-top: 32px; }
 
-.rutenett { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-.kort {
-  background: var(--flate); border: 1px solid var(--linje); border-radius: 14px;
-  padding: 24px; display: flex; flex-direction: column;
-  transition: transform .15s ease, box-shadow .15s ease;
-}
-.kort:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgb(0 0 0 / .07); }
-.kort img { width: calc(100% + 48px); margin: -24px -24px 18px; border-radius: 14px 14px 0 0; aspect-ratio: 16/9; object-fit: cover; }
-.kort h3 { font-size: 21px; margin: 4px 0 8px; letter-spacing: -.01em; }
-.kort p { margin: 0 0 12px; font-size: 16px; }
-.meta { font-size: 13px; color: var(--dempet); }
-.resultat { color: var(--aksent); font-weight: 600; }
-.mer { margin-top: auto; padding-top: 8px; font-weight: 600; font-size: 15px; }
+.rutenett { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.kort { background: var(--flate); border: 1px solid var(--linje); border-radius: 12px; padding: 20px; }
+.kort p { margin: 0; font-size: 16px; }
 
-.stikkord { list-style: none; padding: 0; margin: 0 0 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+.stikkord { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .stikkord li {
   background: var(--aksent-bg); color: var(--aksent);
   font-size: 13px; padding: 3px 10px; border-radius: 999px;
 }
 .stikkord.stor li { font-size: 15px; padding: 6px 14px; }
 
-
-a.kort { color: inherit; text-decoration: none; }
-a.kort:hover h3 { color: var(--aksent); }
-
-/* Prosjektsider */
-.topp.smal { padding: 56px 0 48px; }
-.topp .overtittel a { color: inherit; }
-.hovedbilde { width: 100%; border-radius: 14px; margin-top: 48px; border: 1px solid var(--linje); }
-.tekst { font-size: 19px; max-width: 720px; margin: 0; }
-.prosess { list-style: none; counter-reset: steg; padding: 0; margin: 0; max-width: 760px; }
-.prosess li {
-  counter-increment: steg; position: relative;
-  padding: 0 0 28px 56px; border-left: 2px solid var(--linje); margin-left: 17px;
-}
-.prosess li:last-child { border-left-color: transparent; }
-.prosess li::before {
-  content: counter(steg); position: absolute; left: -18px; top: -4px;
-  width: 34px; height: 34px; border-radius: 50%;
-  background: var(--aksent); color: var(--bg);
-  display: grid; place-items: center; font-weight: 700; font-size: 15px;
-}
-.prosess h3 { margin: 0 0 4px; font-size: 19px; margin-left: -20px; }
-.prosess p { margin: 0 0 0 -20px; color: var(--dempet); }
-.bla {
-  display: flex; justify-content: space-between; gap: 16px;
-  margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--linje); font-weight: 600;
-}
-
-footer { padding: 64px 20px 48px; color: var(--dempet); font-size: 15px; }
+.prosess { padding-left: 20px; margin: 0; max-width: 720px; }
+.prosess li { margin-bottom: 20px; }
+.prosess p { margin: 0; color: var(--dempet); }
 
 @media (max-width: 600px) {
-  .topp { padding: 56px 0 40px; }
-  .rutenett { grid-template-columns: 1fr; }
+  .topp { padding: 48px 0 40px; }
+  section { padding: 56px 0; }
+  h2 { font-size: 32px; }
+  .toppmeny a:first-child { margin-right: 0; }
 }
