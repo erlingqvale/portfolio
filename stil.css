@@ -1,4 +1,7 @@
-/* Midlertidig, enkel stil – designet er ikke bestemt ennå. */
+/* Midlertidig, enkel stil – designet er ikke bestemt ennå.
+   Mobile first: grunnstilen er for mobil, og to bruddpunkter bygger på:
+     768px  – nettbrett (iPad stående)
+     1024px – desktop (iPad liggende, laptop, PC) */
 :root {
   --bg: #fbfbfa;
   --flate: #ffffff;
@@ -9,6 +12,7 @@
   --aksent-bg: #eef2fb;
   --maks: 1040px;
   --meny: 56px;
+  --gutter: 20px;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -22,19 +26,21 @@
   }
 }
 
+/* ---------- Grunnstil: mobil (under 768px) ---------- */
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: var(--meny); }
 body {
   margin: 0;
   background: var(--bg);
   color: var(--tekst);
-  font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 a { color: var(--aksent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-.bredde { max-width: var(--maks); margin: 0 auto; padding: 0 20px; }
+.bredde { max-width: var(--maks); margin: 0 auto; padding: 0 var(--gutter); }
 
 /* Navigasjon som alltid ligger øverst */
 .toppmeny {
@@ -42,14 +48,23 @@ a:hover { text-decoration: underline; }
   background: var(--bg); border-bottom: 1px solid var(--linje);
 }
 .toppmeny .bredde { display: flex; align-items: center; height: var(--meny); }
-.toppmeny a { color: var(--dempet); font-size: 15px; white-space: nowrap; }
+.toppmeny a { color: var(--dempet); white-space: nowrap; }
 .toppmeny .navn { color: var(--tekst); font-weight: 700; margin-right: auto; }
 .toppmeny a.aktiv { color: var(--aksent); font-weight: 600; }
-.menyliste { display: flex; gap: 24px; }
+
+/* Menyliste som fyller bredden når hamburgeren er åpen */
+.menyliste {
+  display: none; position: absolute; top: 100%; left: 0; right: 0;
+  flex-direction: column; padding: 8px 0 16px;
+  background: var(--bg); border-bottom: 1px solid var(--linje);
+  max-height: calc(100vh - var(--meny)); overflow-y: auto;
+}
+.apen .menyliste { display: flex; }
+.menyliste a { font-size: 18px; padding: 12px var(--gutter); }
 
 /* Hamburgerknapp – tre streker som blir til en X */
 .menyknapp {
-  display: none; position: relative; width: 44px; height: 44px; margin-right: -10px;
+  display: block; position: relative; width: 44px; height: 44px; margin-right: -10px;
   border: 0; background: none; cursor: pointer; color: var(--tekst);
 }
 .menyknapp span {
@@ -63,22 +78,32 @@ a:hover { text-decoration: underline; }
 .apen .menyknapp span:nth-child(2) { opacity: 0; }
 .apen .menyknapp span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
-@media (max-width: 760px) {
-  .menyknapp { display: block; }
-  .menyliste {
-    display: none; position: absolute; top: 100%; left: 0; right: 0;
-    flex-direction: column; gap: 0; padding: 8px 0 16px;
-    background: var(--bg); border-bottom: 1px solid var(--linje);
-    max-height: calc(100vh - var(--meny)); overflow-y: auto;
-  }
-  .apen .menyliste { display: flex; }
-  .menyliste a { font-size: 18px; padding: 12px 20px; }
+.topp { padding: 48px 0 40px; border-bottom: 1px solid var(--linje); }
+.overtittel {
+  text-transform: uppercase; letter-spacing: .12em; font-size: 13px;
+  color: var(--aksent); font-weight: 600; margin: 0 0 12px;
 }
+h1 { font-size: 40px; line-height: 1.05; letter-spacing: -.03em; margin: 0; }
+.tittel { font-size: 19px; color: var(--dempet); margin: 8px 0 20px; }
+.ingress { font-size: 18px; max-width: 680px; margin: 0 0 20px; }
+.kontakt { font-size: 15px; color: var(--dempet); }
+
+section { padding: 56px 0; border-bottom: 1px solid var(--linje); }
+section:last-child { border-bottom: 0; }
+h2 { font-size: 32px; line-height: 1.1; letter-spacing: -.02em; margin: 0 0 16px; }
+h3 {
+  font-size: 13px; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--dempet); margin: 40px 0 16px;
+}
+h4 { font-size: 17px; margin: 0 0 6px; }
+.meta { font-size: 14px; color: var(--dempet); margin: 0 0 8px; }
+.tekst { max-width: 720px; margin: 0; }
+.hovedbilde { width: 100%; border-radius: 12px; margin-top: 24px; }
 
 /* «In short»-boks øverst i hvert prosjekt */
 .oppsummering {
   background: var(--aksent-bg); border-left: 4px solid var(--aksent);
-  border-radius: 0 12px 12px 0; padding: 18px 24px; margin: 8px 0 24px; max-width: 720px;
+  border-radius: 0 12px 12px 0; padding: 16px 18px; margin: 8px 0 24px; max-width: 720px;
 }
 .oppsummering p {
   margin: 0 0 8px; font-size: 13px; font-weight: 700;
@@ -87,30 +112,9 @@ a:hover { text-decoration: underline; }
 .oppsummering ul { margin: 0; padding-left: 20px; }
 .oppsummering li { margin-bottom: 4px; }
 
-.topp { padding: 80px 0 64px; border-bottom: 1px solid var(--linje); }
-.overtittel {
-  text-transform: uppercase; letter-spacing: .12em; font-size: 13px;
-  color: var(--aksent); font-weight: 600; margin: 0 0 12px;
-}
-h1 { font-size: clamp(40px, 7vw, 68px); line-height: 1.05; letter-spacing: -.03em; margin: 0; }
-.tittel { font-size: 22px; color: var(--dempet); margin: 10px 0 24px; }
-.ingress { font-size: 20px; max-width: 680px; margin: 0 0 20px; }
-.kontakt { font-size: 15px; color: var(--dempet); }
-
-section { padding: 80px 0; border-bottom: 1px solid var(--linje); }
-section:last-child { border-bottom: 0; }
-h2 { font-size: 40px; line-height: 1.1; letter-spacing: -.02em; margin: 0 0 16px; }
-h3 {
-  font-size: 14px; text-transform: uppercase; letter-spacing: .12em;
-  color: var(--dempet); margin: 48px 0 16px;
-}
-h4 { font-size: 18px; margin: 0 0 6px; }
-.meta { font-size: 14px; color: var(--dempet); margin: 0 0 8px; }
-.tekst { max-width: 720px; margin: 0; }
-.hovedbilde { width: 100%; border-radius: 12px; margin-top: 32px; }
-
-.rutenett { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-.kort { background: var(--flate); border: 1px solid var(--linje); border-radius: 12px; padding: 20px; }
+/* Løsningskort: én kolonne på mobil */
+.rutenett { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.kort { background: var(--flate); border: 1px solid var(--linje); border-radius: 12px; padding: 18px; }
 .kort p { margin: 0; font-size: 16px; }
 
 .stikkord { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
@@ -124,8 +128,36 @@ h4 { font-size: 18px; margin: 0 0 6px; }
 .prosess li { margin-bottom: 20px; }
 .prosess p { margin: 0; color: var(--dempet); }
 
-@media (max-width: 600px) {
-  .topp { padding: 48px 0 40px; }
-  section { padding: 56px 0; }
-  h2 { font-size: 32px; }
+/* ---------- Nettbrett: 768px og bredere ---------- */
+@media (min-width: 768px) {
+  :root { --gutter: 32px; }
+  body { font-size: 17px; }
+  .topp { padding: 72px 0 56px; }
+  h1 { font-size: 56px; }
+  .tittel { font-size: 21px; }
+  .ingress { font-size: 20px; }
+  section { padding: 72px 0; }
+  h2 { font-size: 36px; }
+  h3 { font-size: 14px; margin-top: 48px; }
+  .oppsummering { padding: 18px 24px; }
+  .rutenett { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .kort { padding: 20px; }
+}
+
+/* ---------- Desktop: 1024px og bredere ---------- */
+@media (min-width: 1024px) {
+  .topp { padding: 96px 0 72px; }
+  h1 { font-size: 68px; }
+  .tittel { font-size: 22px; }
+  section { padding: 88px 0; }
+  h2 { font-size: 40px; }
+  .rutenett { grid-template-columns: repeat(3, 1fr); }
+
+  /* Full menylinje i stedet for hamburger */
+  .menyknapp { display: none; }
+  .menyliste {
+    display: flex; position: static; flex-direction: row; gap: 24px;
+    padding: 0; border: 0; max-height: none; overflow: visible; background: none;
+  }
+  .menyliste a { font-size: 15px; padding: 0; }
 }
