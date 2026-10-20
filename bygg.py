@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Bygger index.html (nettside) og portefolje-kort.pdf fra innhold.json.
+"""Bygger nettsiden og portefolje-kort.pdf fra innhold.json.
 
 Bruk:  python3 bygg.py
-PDF-en lages med Google Chrome i headless-modus.
+Lager index.html, én side per prosjekt i prosjekter/, og PDF-en
+(via Google Chrome i headless-modus).
 """
 import json
 import shutil
@@ -23,6 +24,10 @@ def les_innhold():
     return json.loads((ROT / "innhold.json").read_text(encoding="utf-8"))
 
 
+def meta(p):
+    return " · ".join(e(x) for x in [p.get("aar"), p.get("rolle")] if x)
+
+
 def lenker(k):
     deler = []
     if k.get("epost"):
@@ -34,21 +39,43 @@ def lenker(k):
     return deler
 
 
+def stikkord(liste, klasse="stikkord"):
+    return f'<ul class="{klasse}">{"".join(f"<li>{e(s)}</li>" for s in liste)}</ul>'
+
+
+def side(tittel, beskrivelse, kropp, css="stil.css"):
+    return f"""<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{e(tittel)}</title>
+<meta name="description" content="{e(beskrivelse)}">
+<link rel="stylesheet" href="{css}">
+</head>
+<body>
+{kropp}
+</body>
+</html>
+"""
+
+
+def bunntekst(d):
+    k = d["kontakt"]
+    return f'<footer class="bredde"><p>{" · ".join(lenker(k))}</p></footer>'
+
+
 def prosjektkort(p):
     bilde = f'<img src="{e(p["bilde"])}" alt="" loading="lazy">' if p.get("bilde") else ""
-    stikkord = "".join(f"<li>{e(s)}</li>" for s in p.get("stikkord", []))
-    resultat = f'<p class="resultat">{e(p["resultat"])}</p>' if p.get("resultat") else ""
-    lenke = f'<a class="mer" href="{e(p["lenke"])}">Se prosjektet →</a>' if p.get("lenke") else ""
     return f"""
-      <article class="kort">
+      <a class="kort" href="prosjekter/{e(p["slug"])}.html">
         {bilde}
-        <div class="meta">{e(p.get("aar", ""))} · {e(p.get("rolle", ""))}</div>
+        <div class="meta">{meta(p)}</div>
         <h3>{e(p["tittel"])}</h3>
-        <p>{e(p.get("beskrivelse", ""))}</p>
-        {resultat}
-        <ul class="stikkord">{stikkord}</ul>
-        {lenke}
-      </article>"""
+        <p>{e(p.get("kort", ""))}</p>
+        {stikkord(p.get("stikkord", []))}
+        <span class="mer">Les casen →</span>
+      </a>"""
 
 
 def tidslinje(rader, tittel_felt, under_felt):
@@ -63,36 +90,25 @@ def tidslinje(rader, tittel_felt, under_felt):
     )
 
 
-def lag_nettside(d):
-    k = d["kontakt"]
-    return f"""<!doctype html>
-<html lang="no">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{e(d["navn"])} – Portefølje</title>
-<meta name="description" content="{e(d["ingress"])}">
-<link rel="stylesheet" href="stil.css">
-</head>
-<body>
-<header class="topp">
+def lag_forside(d):
+    kropp = f"""<header class="topp">
   <div class="bredde">
     <p class="overtittel">Portefølje</p>
     <h1>{e(d["navn"])}</h1>
     <p class="tittel">{e(d["tittel"])}</p>
     <p class="ingress">{e(d["ingress"])}</p>
-    <nav class="kontakt">{" · ".join(lenker(k))}</nav>
+    <nav class="kontakt">{" · ".join(lenker(d["kontakt"]))}</nav>
   </div>
 </header>
 <main class="bredde">
   <section id="prosjekter">
-    <h2>Utvalgte prosjekter</h2>
+    <h2>Prosjekter</h2>
     <div class="rutenett">{"".join(prosjektkort(p) for p in d["prosjekter"])}
     </div>
   </section>
   <section id="ferdigheter">
-    <h2>Ferdigheter</h2>
-    <ul class="stikkord stor">{"".join(f"<li>{e(f)}</li>" for f in d["ferdigheter"])}</ul>
+    <h2>Ferdigheter og verktøy</h2>
+    {stikkord(d["ferdigheter"], "stikkord stor")}
   </section>
   <section id="erfaring">
     <h2>Erfaring</h2>
@@ -103,12 +119,51 @@ def lag_nettside(d):
     <ul class="tidslinje">{tidslinje(d["utdanning"], "grad", "sted")}</ul>
   </section>
 </main>
-<footer class="bredde">
-  <p>{e(k.get("sted", ""))} · <a href="mailto:{e(k.get("epost", ""))}">Ta kontakt</a></p>
-</footer>
-</body>
-</html>
-"""
+{bunntekst(d)}"""
+    return side(f'{d["navn"]} – Portefølje', d["ingress"], kropp)
+
+
+def blokker(rader, klasse):
+    return "".join(
+        f'<div class="{klasse}"><h3>{e(r["tittel"])}</h3><p>{e(r["tekst"])}</p></div>'
+        for r in rader
+    )
+
+
+def lag_prosjektside(d, p, forrige, neste):
+    bilde = f'<img class="hovedbilde" src="../{e(p["bilde"])}" alt="">' if p.get("bilde") else ""
+    losning = (
+        f'<section><h2>Løsningen</h2><div class="rutenett">{blokker(p["losning"], "kort")}</div></section>'
+        if p.get("losning") else ""
+    )
+    prosess = (
+        f'<section><h2>Prosessen</h2><ol class="prosess">'
+        + "".join(f'<li><h3>{e(s["tittel"])}</h3><p>{e(s["tekst"])}</p></li>' for s in p["prosess"])
+        + "</ol></section>"
+        if p.get("prosess") else ""
+    )
+    lenke = f'<p><a class="mer" href="{e(p["lenke"])}">Se prosjektet →</a></p>' if p.get("lenke") else ""
+    kropp = f"""<header class="topp smal">
+  <div class="bredde">
+    <p class="overtittel"><a href="../index.html">← {e(d["navn"])}</a></p>
+    <h1>{e(p["tittel"])}</h1>
+    <p class="tittel">{meta(p)}</p>
+    <p class="ingress">{e(p.get("kort", ""))}</p>
+    {stikkord(p.get("stikkord", []))}
+  </div>
+</header>
+<main class="bredde">
+  {bilde}
+  <section><h2>Utfordringen</h2><p class="tekst">{e(p.get("utfordring", ""))}</p>{lenke}</section>
+  {losning}
+  {prosess}
+  <nav class="bla">
+    <a href="{e(forrige["slug"])}.html">← {e(forrige["tittel"])}</a>
+    <a href="{e(neste["slug"])}.html">{e(neste["tittel"])} →</a>
+  </nav>
+</main>
+{bunntekst(d)}"""
+    return side(f'{p["tittel"]} – {d["navn"]}', p.get("kort", ""), kropp, "../stil.css")
 
 
 def lag_pdf_html(d):
@@ -120,9 +175,8 @@ def lag_pdf_html(d):
     prosjekter = "".join(
         f"""
       <div class="p">
-        <div class="ph"><strong>{e(p["tittel"])}</strong><span>{e(p.get("aar", ""))} · {e(p.get("rolle", ""))}</span></div>
-        <p>{e(p.get("beskrivelse", ""))}</p>
-        {f'<p class="res">→ {e(p["resultat"])}</p>' if p.get("resultat") else ""}
+        <div class="ph"><strong>{e(p["tittel"])}</strong><span>{meta(p)}</span></div>
+        <p>{e(p.get("kort", ""))}</p>
       </div>"""
         for p in d["prosjekter"]
     )
@@ -146,11 +200,10 @@ def lag_pdf_html(d):
   .ingress {{ margin: 8pt 0 0; font-size: 10pt; }}
   hr {{ border: 0; border-top: 1.5pt solid #2a5bd7; margin: 10pt 0; width: 40pt; }}
   h2 {{ font-size: 9pt; text-transform: uppercase; letter-spacing: 0.1em; color: #5b6573; margin: 12pt 0 6pt; }}
-  .p {{ margin-bottom: 8pt; break-inside: avoid; }}
+  .p {{ margin-bottom: 7pt; break-inside: avoid; }}
   .ph {{ display: flex; justify-content: space-between; gap: 8pt; }}
   .ph span {{ color: #5b6573; font-size: 8.5pt; white-space: nowrap; }}
-  .p p {{ margin: 2pt 0 0; }}
-  .res {{ color: #2a5bd7; font-weight: 600; }}
+  .p p {{ margin: 1pt 0 0; }}
   .kol {{ display: grid; grid-template-columns: 1fr 1fr; gap: 0 18pt; }}
   ul {{ list-style: none; padding: 0; margin: 0; }}
   .liste li {{ margin-bottom: 3pt; }}
@@ -164,11 +217,11 @@ def lag_pdf_html(d):
   <div class="kontakt">{e(kontaktlinje)}</div>
   <p class="ingress">{e(d["ingress"])}</p>
   <hr>
-  <h2>Utvalgte prosjekter</h2>{prosjekter}
+  <h2>Prosjekter</h2>{prosjekter}
   <div class="kol">
-    <div><h2>Erfaring</h2><ul class="liste">{erfaring}</ul></div>
-    <div><h2>Utdanning</h2><ul class="liste">{utdanning}</ul>
-      <h2>Ferdigheter</h2><ul class="ferd">{"".join(f"<li>{e(f)}</li>" for f in d["ferdigheter"])}</ul></div>
+    <div><h2>Erfaring</h2><ul class="liste">{erfaring}</ul>
+      <h2>Utdanning</h2><ul class="liste">{utdanning}</ul></div>
+    <div><h2>Ferdigheter og verktøy</h2><ul class="ferd">{"".join(f"<li>{e(f)}</li>" for f in d["ferdigheter"])}</ul></div>
   </div>
 </body></html>
 """
@@ -183,8 +236,18 @@ def finn_chrome():
 
 def main():
     d = les_innhold()
-    (ROT / "index.html").write_text(lag_nettside(d), encoding="utf-8")
+    (ROT / "index.html").write_text(lag_forside(d), encoding="utf-8")
     print("✓ index.html")
+
+    mappe = ROT / "prosjekter"
+    mappe.mkdir(exist_ok=True)
+    for gammel in mappe.glob("*.html"):
+        gammel.unlink()
+    ps = d["prosjekter"]
+    for i, p in enumerate(ps):
+        html = lag_prosjektside(d, p, ps[i - 1], ps[(i + 1) % len(ps)])
+        (mappe / f'{p["slug"]}.html').write_text(html, encoding="utf-8")
+    print(f"✓ prosjekter/ ({len(ps)} sider)")
 
     chrome = finn_chrome()
     if not chrome:

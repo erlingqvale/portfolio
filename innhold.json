@@ -1,48 +1,146 @@
 {
   "navn": "Erling Qvale",
-  "tittel": "[Din tittel, f.eks. Produktleder / Rådgiver]",
-  "ingress": "[2–3 setninger om hvem du er, hva du jobber med og hva du er god på. Dette er det første besøkende leser.]",
+  "tittel": "UX-designer",
+  "ingress": "Jeg er UX-designer som liker å gjøre det komplekse forståelig. Gjennom prosjekter med blant andre TV 2 og Wolftech har jeg jobbet med hele designprosessen – fra intervjuer og workshops til prototyper og brukertesting.",
   "kontakt": {
-    "epost": "erling.qvale@tribia.com",
-    "linkedin": "https://www.linkedin.com/in/[ditt-brukernavn]",
-    "github": "https://github.com/[ditt-brukernavn]",
-    "sted": "[By], Norge"
+    "epost": "",
+    "linkedin": "https://www.linkedin.com/in/erling-qvale-18190717b/",
+    "github": "https://github.com/erlingqvale",
+    "sted": ""
   },
   "ferdigheter": [
-    "[Ferdighet 1]",
-    "[Ferdighet 2]",
-    "[Ferdighet 3]",
-    "[Ferdighet 4]",
-    "[Ferdighet 5]"
+    "Brukerintervjuer",
+    "Fokusgrupper",
+    "Workshop-fasilitering",
+    "Google Design Sprint",
+    "Prototyping",
+    "Brukertesting",
+    "Datavisualisering",
+    "Figma",
+    "Unity (AR)",
+    "Autodesk Maya",
+    "Cinema 4D",
+    "Adobe After Effects"
   ],
   "prosjekter": [
     {
-      "tittel": "[Prosjektnavn 1]",
-      "aar": "2026",
-      "rolle": "[Din rolle]",
-      "beskrivelse": "[Hva var problemet, hva gjorde du, og hva ble resultatet? 2–4 setninger.]",
-      "resultat": "[Ett målbart resultat, f.eks. «Reduserte saksbehandlingstid med 40 %»]",
-      "stikkord": ["[Verktøy]", "[Metode]"],
+      "slug": "fuse",
+      "tittel": "FUSE",
+      "aar": "",
+      "rolle": "UX-design i team",
+      "kort": "Et skrivebordsgrensesnitt som gjør komplekse utslippsdata forståelige for studenter – med ekte data og visualiseringer skapt sammen med brukerne.",
+      "utfordring": "Design et skrivebordsgrensesnitt som visualiserer komplekse data for studenter. Visjonen var et grensesnitt som gjør komplekse data om til fengende historier nesten hvem som helst kan forstå. Gjennom en iterativ designprosess ble FUSE en prototype som bruker ekte data og ekte tekst i stedet for plassholdere og upresise visualiseringer som skaper forvirring.",
+      "losning": [
+        {"tittel": "Sammenlign", "tekst": "Et vertikalt stolpediagram vist som animert røyk fra et industrirør. Jo høyere stolpen er, desto mørkere og tettere blir røyken – akkurat som i virkeligheten."},
+        {"tittel": "Utforsk", "tekst": "Et linjediagram der datapunktene viser om det har vært økning, nedgang eller ingen endring fra året før."},
+        {"tittel": "Verifiser", "tekst": "En tabell med de eksakte verdiene og kildene bak hver visualisering. Røde og grønne piler viser økning og nedgang fra året før."}
+      ],
+      "prosess": [
+        {"tittel": "Semistrukturerte intervjuer", "tekst": "Seks intervjuer med studenter fra ulike studieprogram kartla kunnskap om klima, mediavaner og tanker om datavisualisering. Dette ble grunnlaget for målgruppen."},
+        {"tittel": "Fokusgruppe med eksperter", "tekst": "Validerte funnene og sammenlignet studentenes behov med forretningsinteresser og tekniske begrensninger."},
+        {"tittel": "Co-creation-workshop", "tekst": "Workshop med åtte studenter: Crazy 8, storyboard, tilbakemelding med «hatter» (optimist, pessimist, opportunist), gruppearbeid og avstemning."},
+        {"tittel": "Papirprototype og første brukertest", "tekst": "Alle komponenter skissert på A3. Korte tester på ca. 15 minutter med studenter rekruttert direkte på campus."},
+        {"tittel": "Figma-prototype og andre brukertest", "tekst": "Mid-fidelity-prototype med forhåndsdefinert brukerreise. Side-ved-side-test av horisontale vs. vertikale stolper og hvor mye data som bør vises."}
+      ],
+      "stikkord": ["Datavisualisering", "Co-creation", "Brukertesting", "Figma"],
       "lenke": "",
       "bilde": ""
     },
     {
-      "tittel": "[Prosjektnavn 2]",
-      "aar": "2025",
-      "rolle": "[Din rolle]",
-      "beskrivelse": "[Kort beskrivelse av prosjektet.]",
-      "resultat": "[Resultat]",
-      "stikkord": ["[Stikkord]"],
+      "slug": "charm",
+      "tittel": "Charm",
+      "aar": "",
+      "rolle": "Team på fire",
+      "kort": "En AR-app i Unity der hele kroppen er kontrolleren – brukeren blir en trollmann som kaster magi med håndbevegelser.",
+      "utfordring": "Utvikle en prototype i Unity med fokus på utvidet virkelighet (AR) og kroppsinteraksjon. Ingen i gruppen hadde jobbet i Unity før, og oppgaven var helt åpen. Alle laget hvert sitt storyboard, og gruppen stemte frem det beste forslaget.",
+      "losning": [
+        {"tittel": "Minimum viable product", "tekst": "En glød som viser at hånden spores, å skape et virtuelt objekt med håndbevegelser, å flytte og endre objektet, og bevegelser som utløser spesialeffekter."},
+        {"tittel": "Posisjonsgjenkjenning", "tekst": "X- og Y-posisjonen til høyre hånd utløser handlinger når den beveger seg inn i forhåndsdefinerte soner – den mest pålitelige løsningen."}
+      ],
+      "prosess": [
+        {"tittel": "Frihåndsgjenkjenning", "tekst": "Foretrukket løsning med potensial for mange positurer, men lot seg ikke realisere innenfor tid og erfaring."},
+        {"tittel": "Formgjenkjenning", "tekst": "Idé om å gjenkjenne geometriske former tegnet med hånden for å utløse ulike magiske triks."},
+        {"tittel": "Kollisjonsgjenkjenning", "tekst": "Usynlige objekter som endret fargen på håndgløden – vanskelig å treffe når objektene ikke synes."},
+        {"tittel": "Posisjonsgjenkjenning", "tekst": "Valgt løsning: pålitelig sporing basert på soner i bildet."}
+      ],
+      "stikkord": ["AR", "Unity", "Kroppsinteraksjon"],
       "lenke": "",
       "bilde": ""
     },
     {
-      "tittel": "[Prosjektnavn 3]",
-      "aar": "2024",
-      "rolle": "[Din rolle]",
-      "beskrivelse": "[Kort beskrivelse av prosjektet.]",
-      "resultat": "[Resultat]",
-      "stikkord": ["[Stikkord]"],
+      "slug": "wolftech-feeds",
+      "tittel": "Wolftech Feeds",
+      "aar": "",
+      "rolle": "UX-design i samarbeid med Wolftech",
+      "kort": "Videreutvikling av research-verktøyet i en etablert nyhetsproduksjonsplattform – gjennomført som Google Design Sprint med Wolftech.",
+      "utfordring": "Hvordan kan vi forbedre en eksisterende løsning i en etablert plattform for nyhetsproduksjon? Wolftech beskrev Feeds som et verktøy i tidlig fase. Oppgaven var å se på hvordan journalister gjør research, og hvordan Feeds kan gjøre prosessen enklere og mer effektiv.",
+      "losning": [
+        {"tittel": "Dashboard", "tekst": "Modulbasert design der brukeren setter sammen sitt eget dashboard av widgets. Innhold, størrelse og plassering styres helt av brukeren."},
+        {"tittel": "Discover", "tekst": "Nyhetssaker filtrert etter brukerens preferanser og vist på et kart, der man kan finne andre saker i samme område."},
+        {"tittel": "Nøkkelordsøk", "tekst": "Integrert søk som styrer innholdet i Feeds-kolonnene, med sortering og redigerbare kolonner."}
+      ],
+      "prosess": [
+        {"tittel": "Ekspertintervjuer", "tekst": "Fem intervjuer over Zoom med folk med journalistisk erfaring for å forstå arbeidshverdag, utfordringer og motivasjon."},
+        {"tittel": "Design Sprint", "tekst": "Alignment-, løsnings- og beslutningsworkshop med ansatte fra Wolftech: kartlegging, How Might We, Crazy 8 og løsningsskisser."},
+        {"tittel": "Første prototype og brukertest", "tekst": "Test av nøkkelordsøk og avansert filter over Zoom. Det var nesten umulig å få tak i journalister, så vi måtte teste med deltakere utenfor målgruppen."},
+        {"tittel": "Iterasjonsworkshops", "tekst": "Affinitetskart, prioritering av målgruppe med et fiktivt budsjett, seilbåt-øvelse og avstemning som landet fokus på Discover."}
+      ],
+      "stikkord": ["Design Sprint", "Workshop", "B2B", "Brukertesting"],
+      "lenke": "",
+      "bilde": ""
+    },
+    {
+      "slug": "tv2-xplore",
+      "tittel": "TV 2 Xplore",
+      "aar": "",
+      "rolle": "UX-design i samarbeid med TV 2",
+      "kort": "Et utforskningsmodus for TV 2 Play rettet mot unge voksne med barn, der det spennende innholdet finner brukeren – ikke omvendt.",
+      "utfordring": "Design et brukergrensesnitt for strømmetjenesten TV 2 Play, tilpasset unge voksne med barn. Utfordringen var å finne balansen mellom for mye og for lite innhold på forsiden: å vise at det finnes mye spennende uten å overvelde.",
+      "losning": [
+        {"tittel": "Forside", "tekst": "Visuelt uttrykk inspirert av universet – et univers av uoppdaget innhold, med fargekontraster, varierte former og figurer som vekker nysgjerrighet."},
+        {"tittel": "Skreddersydd innhold", "tekst": "Bryter med den monotone presentasjonen hos strømmegigantene. Hver bruker får sitt eget univers basert på egne interesser."},
+        {"tittel": "Utforskningsmodus", "tekst": "En positiv filterboble som reduserer scrolling, frustrasjon og irrelevante anbefalinger – og dermed risikoen for oppsigelse."}
+      ],
+      "prosess": [
+        {"tittel": "Intervjuer", "tekst": "Intervjuer med unge voksne med barn om bruk og preferanser for strømmetjenester."},
+        {"tittel": "Think aloud", "tekst": "Tre deltakere navigerte i TV 2 Sumo, NRK TV eller Netflix mens de tenkte høyt."},
+        {"tittel": "Første prototype", "tekst": "Enkel prototype for å teste ideene: dra favorittkategorier opp og ned, finere filtrering, og gode alternativer når ønsket innhold mangler."},
+        {"tittel": "To runder brukertesting", "tekst": "Tre deltakere per runde, med analyse og endringer etter hver iterasjon."}
+      ],
+      "stikkord": ["Strømming", "Visuell design", "Brukertesting"],
+      "lenke": "",
+      "bilde": ""
+    },
+    {
+      "slug": "twerton-park",
+      "tittel": "Twerton Park",
+      "aar": "",
+      "rolle": "Individuelt prosjekt",
+      "kort": "3D-modell og kortfilm av Bath City FCs hjemmebane, laget i Autodesk Maya uten tidligere 3D-erfaring.",
+      "utfordring": "Lag en 3D-modell av et miljø som speiler min opplevelse av Bath, i Autodesk Maya, og lag en kortfilm av den. Jeg valgte Twerton Park, hjemmebanen til Bath City FC, fordi jeg brukte mye av tiden i England på å reise rundt og se fotballkamper.",
+      "losning": [],
+      "prosess": [
+        {"tittel": "Research", "tekst": "Samlet bilder av stadion fra nettet og besøkte stadion selv for å ta egne bilder."},
+        {"tittel": "Polygonmodellering", "tekst": "Lærte Maya fra bunnen av gjennom en innføring i de viktigste funksjonene, og bygget modellen med polygonmodellering."}
+      ],
+      "stikkord": ["3D", "Autodesk Maya"],
+      "lenke": "",
+      "bilde": ""
+    },
+    {
+      "slug": "car-ride",
+      "tittel": "Car Ride",
+      "aar": "",
+      "rolle": "Individuelt prosjekt",
+      "kort": "Et selvvalgt landskap og en kortfilm med en bil som kjører gjennom det, laget i Cinema 4D og After Effects.",
+      "utfordring": "Lag et landskap etter eget valg og en kortfilm der en bil kjører gjennom det. Cinema 4D ble brukt de tre siste ukene av kurset, etter en introduksjon til Adobe Animate og After Effects.",
+      "losning": [],
+      "prosess": [
+        {"tittel": "Bil og vei", "tekst": "Startet med bilen og veien, og fikk bilen til å kjøre jevnt – det vanskeligste var å få den over broen."},
+        {"tittel": "Landskap", "tekst": "La til fjell, gress, vann, trær og steiner, og fikk tid til en båt, et hus og blomster i tillegg."},
+        {"tittel": "Film", "tekst": "Plasserte kameraer i scenen, laget klipp og rendret kortfilmen i After Effects."}
+      ],
+      "stikkord": ["3D", "Cinema 4D", "After Effects"],
       "lenke": "",
       "bilde": ""
     }
@@ -52,12 +150,6 @@
       "periode": "[20XX] – nå",
       "stilling": "[Stilling]",
       "arbeidsgiver": "Tribia",
-      "beskrivelse": "[Kort om ansvarsområder.]"
-    },
-    {
-      "periode": "[20XX] – [20XX]",
-      "stilling": "[Stilling]",
-      "arbeidsgiver": "[Arbeidsgiver]",
       "beskrivelse": "[Kort om ansvarsområder.]"
     }
   ],

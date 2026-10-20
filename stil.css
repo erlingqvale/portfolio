@@ -79,6 +79,33 @@ h2 {
 .tidslinje p { margin: 4px 0 0; color: var(--dempet); font-size: 16px; }
 .periode { color: var(--dempet); font-size: 15px; }
 
+a.kort { color: inherit; text-decoration: none; }
+a.kort:hover h3 { color: var(--aksent); }
+
+/* Prosjektsider */
+.topp.smal { padding: 56px 0 48px; }
+.topp .overtittel a { color: inherit; }
+.hovedbilde { width: 100%; border-radius: 14px; margin-top: 48px; border: 1px solid var(--linje); }
+.tekst { font-size: 19px; max-width: 720px; margin: 0; }
+.prosess { list-style: none; counter-reset: steg; padding: 0; margin: 0; max-width: 760px; }
+.prosess li {
+  counter-increment: steg; position: relative;
+  padding: 0 0 28px 56px; border-left: 2px solid var(--linje); margin-left: 17px;
+}
+.prosess li:last-child { border-left-color: transparent; }
+.prosess li::before {
+  content: counter(steg); position: absolute; left: -18px; top: -4px;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--aksent); color: var(--bg);
+  display: grid; place-items: center; font-weight: 700; font-size: 15px;
+}
+.prosess h3 { margin: 0 0 4px; font-size: 19px; margin-left: -20px; }
+.prosess p { margin: 0 0 0 -20px; color: var(--dempet); }
+.bla {
+  display: flex; justify-content: space-between; gap: 16px;
+  margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--linje); font-weight: 600;
+}
+
 footer { padding: 64px 20px 48px; color: var(--dempet); font-size: 15px; }
 
 @media (max-width: 600px) {
