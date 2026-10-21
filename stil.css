@@ -20,7 +20,13 @@
   --maks: 1180px;
   --meny: 64px;
   --gutter: 16px;
-  --display: "Anton", "Impact", "Arial Narrow", sans-serif;
+  /* Typografi: tre faste roller gjennom hele siden
+     tittel     – Anton: store titler (UX Designer, prosjektnavn, Let's connect)
+     overskrift – Fraunces: seksjons- og kortoverskrifter (The challenge, Compare …)
+     brødtekst  – Inter: all løpende tekst, meny, knapper og etiketter */
+  --font-tittel: "Anton", "Impact", "Arial Narrow", sans-serif;
+  --font-overskrift: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-tekst: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -44,7 +50,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--tekst);
-  font: 16px/1.6 "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font: 16px/1.6 var(--font-tekst);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -55,7 +61,7 @@ a:hover { color: var(--aksent); }
 
 /* Store prosjekttitler i prosjektets aksentfarge */
 .stortord {
-  font-family: var(--display); font-weight: 400; text-transform: uppercase;
+  font-family: var(--font-tittel); font-weight: 400; text-transform: uppercase;
   line-height: .9; letter-spacing: .01em; color: var(--aksent);
 }
 
@@ -74,21 +80,27 @@ a:hover { color: var(--aksent); }
 .toppmeny .bredde { display: flex; align-items: center; height: var(--meny); }
 .toppmeny a { color: var(--tekst); text-decoration: none; white-space: nowrap; }
 .toppmeny .navn {
-  font-family: var(--display); font-size: 22px; text-transform: uppercase;
+  font-family: var(--font-tittel); font-size: 22px; text-transform: uppercase;
   letter-spacing: .02em; margin-right: auto;
 }
-.toppmeny a.aktiv:not(.navn) { color: var(--aksent); }
 
 /* Menyliste som fyller bredden når hamburgeren er åpen */
 .menyliste {
   display: none; position: absolute; top: 100%; left: 0; right: 0;
-  flex-direction: column; padding: 8px 0 16px;
+  flex-direction: column; align-items: flex-start; gap: 4px;
+  padding: 8px var(--gutter) 20px;
   background: var(--bg);
   max-height: calc(100vh - var(--meny)); overflow-y: auto;
 }
 .apen .menyliste { display: flex; }
-.menyliste a { font-size: 18px; font-weight: 500; padding: 12px var(--gutter); }
-.menyliste a.knapp { font-weight: 700; }
+/* Det aktive menypunktet blir en pille i sin egen farge (prosjektets aksent,
+   eller hovedsidens for Contact). Contact er alltid en mørk pille. */
+.menyliste a {
+  font-size: 18px; font-weight: 500; padding: 10px 16px; border-radius: 999px;
+  transition: background-color .2s ease, color .2s ease;
+}
+.toppmeny .menyliste a.aktiv { background: var(--aksent); color: #fff; }
+.menyliste a.knapp { font-weight: 700; background: var(--knapp); color: var(--knapp-tekst); margin-top: 8px; }
 
 /* Hamburgerknapp – tre streker som blir til en X */
 .menyknapp {
@@ -127,7 +139,7 @@ a:hover { color: var(--aksent); }
 .topp .bredde { position: relative; z-index: 1; width: 100%; }
 .hei { font-size: 18px; font-weight: 500; margin: 0 0 4px; }
 h1 {
-  font-family: var(--display); font-weight: 400; text-transform: uppercase;
+  font-family: var(--font-tittel); font-weight: 400; text-transform: uppercase;
   font-size: 14vw; line-height: .9; letter-spacing: .005em; margin: 0;
   white-space: nowrap;
 }
@@ -161,20 +173,20 @@ h1 {
 .stortord { font-size: 64px; margin: 0 0 24px; overflow-wrap: anywhere; }
 
 h3 {
-  font-family: var(--display); font-weight: 400; text-transform: uppercase;
-  font-size: 22px; letter-spacing: .02em; line-height: 1;
+  font-family: var(--font-overskrift); font-weight: 600;
+  font-size: 24px; letter-spacing: -.01em; line-height: 1.15;
   border-left: 3px solid var(--aksent); padding-left: 10px;
   margin: 44px 0 18px;
 }
 h4 {
-  font-family: var(--display); font-weight: 400; text-transform: uppercase;
-  font-size: 26px; line-height: 1; letter-spacing: .01em; margin: 0 0 10px;
+  font-family: var(--font-overskrift); font-weight: 600;
+  font-size: 21px; line-height: 1.2; letter-spacing: -.01em; margin: 0 0 8px;
 }
 .tekst { max-width: 720px; margin: 0; }
 .mer { font-weight: 600; }
 .hovedbilde { width: 100%; border-radius: 20px; margin-top: 24px; display: block; }
 
-/* «In short»-boks øverst i hvert prosjekt */
+/* «Summary»-boks øverst i hvert prosjekt */
 .oppsummering {
   background: var(--flate); border-radius: 20px;
   padding: 20px 22px; margin: 0 0 20px; max-width: 760px;
@@ -209,15 +221,15 @@ h4 {
 .prosess li::before {
   content: counter(steg, decimal-leading-zero);
   position: absolute; left: 0; top: -4px;
-  font-family: var(--display); font-size: 32px; line-height: 1; color: var(--aksent);
+  font-family: var(--font-tittel); font-size: 32px; line-height: 1; color: var(--aksent);
 }
-.prosess h4 { font-family: inherit; text-transform: none; font-size: 17px; font-weight: 700; letter-spacing: 0; line-height: 1.3; margin-bottom: 4px; }
+.prosess h4 { font-size: 19px; margin-bottom: 4px; }
 .prosess p { margin: 0; color: var(--dempet); }
 
 /* ---------- Kontakt: del av bakgrunnen ---------- */
 .kontaktseksjon { padding: 64px 0 96px; }
 .kontaktseksjon h2 {
-  font-family: var(--display); font-weight: 400; text-transform: uppercase;
+  font-family: var(--font-tittel); font-weight: 400; text-transform: uppercase;
   font-size: 56px; line-height: .95; margin: 0 0 24px; position: relative;
 }
 .kontaktknapper { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
@@ -236,7 +248,7 @@ h4 {
   .hei { font-size: 22px; }
   .ark { padding: 48px 44px 56px; border-radius: 32px; margin-bottom: 32px; }
   .stortord { font-size: 112px; }
-  h3 { font-size: 26px; margin-top: 56px; }
+  h3 { font-size: 30px; margin-top: 56px; }
   .rutenett { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .kort { padding: 26px; }
   .kontaktseksjon { padding: 96px 0 128px; }
@@ -260,12 +272,6 @@ h4 {
     display: flex; position: static; flex-direction: row; align-items: center; gap: 6px;
     padding: 0; max-height: none; overflow: visible; background: none;
   }
-  /* Det aktive menypunktet blir en pille i sin egen farge (prosjektets
-     aksent, eller hovedsidens for Contact) */
-  .menyliste a {
-    font-size: 14px; font-weight: 600; padding: 10px 16px; border-radius: 999px;
-    transition: background-color .2s ease, color .2s ease;
-  }
-  .toppmeny .menyliste a.aktiv { background: var(--aksent); color: #fff; }
-  .menyliste a.knapp { background: var(--knapp); color: var(--knapp-tekst); margin-left: 6px; }
+  .menyliste a { font-size: 14px; font-weight: 600; }
+  .menyliste a.knapp { margin: 0 0 0 6px; }
 }

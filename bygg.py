@@ -65,7 +65,7 @@ def side(tittel, beskrivelse, kropp):
 <meta name="description" content="{e(beskrivelse)}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="stil.css">
 </head>
 <body>
@@ -102,7 +102,7 @@ def prosjektseksjon(p):
     )
     lenke = f'<p><a class="mer" href="{e(p["lenke"])}">View project →</a></p>' if p.get("lenke") else ""
     oppsummering = (
-        '<aside class="oppsummering"><p>In short</p><ul>'
+        '<aside class="oppsummering"><p>Summary</p><ul>'
         + "".join(f"<li>{e(x)}</li>" for x in p["oppsummering"])
         + "</ul></aside>"
         if p.get("oppsummering") else ""
