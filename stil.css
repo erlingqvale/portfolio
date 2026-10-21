@@ -257,13 +257,15 @@ h4 {
   /* Full menylinje i stedet for hamburger */
   .menyknapp { display: none; }
   .menyliste {
-    display: flex; position: static; flex-direction: row; align-items: center; gap: 22px;
+    display: flex; position: static; flex-direction: row; align-items: center; gap: 6px;
     padding: 0; max-height: none; overflow: visible; background: none;
   }
-  .menyliste a { font-size: 14px; padding: 0; }
-  .menyliste a.knapp {
-    background: var(--knapp); color: var(--knapp-tekst);
-    border-radius: 999px; padding: 10px 20px; margin-left: 6px;
+  /* Det aktive menypunktet blir en pille i sin egen farge (prosjektets
+     aksent, eller hovedsidens for Contact) */
+  .menyliste a {
+    font-size: 14px; font-weight: 600; padding: 10px 16px; border-radius: 999px;
+    transition: background-color .2s ease, color .2s ease;
   }
-  .menyliste a.knapp.aktiv { background: var(--aksent); color: #fff; }
+  .toppmeny .menyliste a.aktiv { background: var(--aksent); color: #fff; }
+  .menyliste a.knapp { background: var(--knapp); color: var(--knapp-tekst); margin-left: 6px; }
 }
