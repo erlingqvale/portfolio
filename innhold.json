@@ -25,6 +25,7 @@
   "prosjekter": [
     {
       "slug": "fuse",
+      "farger": { "aksent": "#16865a", "flate": "#e2f3ea" },
       "tittel": "FUSE",
       "aar": "",
       "rolle": "UX design, team project",
@@ -83,6 +84,7 @@
     },
     {
       "slug": "charm",
+      "farger": { "aksent": "#7048e8", "flate": "#ece6ff" },
       "tittel": "Charm",
       "aar": "",
       "rolle": "Team of four",
@@ -132,6 +134,7 @@
     },
     {
       "slug": "wolftech-feeds",
+      "farger": { "aksent": "#1d5fd6", "flate": "#e3ecfc" },
       "tittel": "Wolftech Feeds",
       "aar": "",
       "rolle": "UX design, in collaboration with Wolftech",
@@ -189,6 +192,7 @@
     },
     {
       "slug": "tv2-xplore",
+      "farger": { "aksent": "#d6284a", "flate": "#fce6ea" },
       "tittel": "TV 2 Xplore",
       "aar": "",
       "rolle": "UX design, in collaboration with TV 2",
@@ -242,6 +246,7 @@
     },
     {
       "slug": "twerton-park",
+      "farger": { "aksent": "#0e7f86", "flate": "#ddf1f2" },
       "tittel": "Twerton Park",
       "aar": "",
       "rolle": "Individual project, exchange at Bath Spa University",
@@ -273,6 +278,7 @@
     },
     {
       "slug": "car-ride",
+      "farger": { "aksent": "#b06a00", "flate": "#fbefd9" },
       "tittel": "Car Ride",
       "aar": "",
       "rolle": "Individual project, exchange at Bath Spa University",

@@ -5,31 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Erling Qvale – Portfolio</title>
 <meta name="description" content="UX designer at Tribia, working on Interaxo, with a master&#x27;s degree in Media and Interaction Design from the University of Bergen. I enjoy making the complex understandable – working across the whole design process, from interviews and workshops to prototypes and usability testing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="stil.css">
 </head>
 <body>
 <nav class="toppmeny">
   <div class="bredde">
-    <a class="navn" href="#top">Erling Qvale</a>
+    <a class="navn" href="#top">EQ Portfolio</a>
     <button class="menyknapp" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menyliste">
       <span></span><span></span><span></span>
     </button>
-    <div class="menyliste" id="menyliste"><a href="#fuse">FUSE</a><a href="#charm">Charm</a><a href="#wolftech-feeds">Wolftech Feeds</a><a href="#tv2-xplore">TV 2 Xplore</a><a href="#twerton-park">Twerton Park</a><a href="#car-ride">Car Ride</a><a href="#contact">Contact</a></div>
+    <div class="menyliste" id="menyliste"><a href="#fuse" style="--aksent: #16865a; --flate: #e2f3ea">FUSE</a><a href="#charm" style="--aksent: #7048e8; --flate: #ece6ff">Charm</a><a href="#wolftech-feeds" style="--aksent: #1d5fd6; --flate: #e3ecfc">Wolftech Feeds</a><a href="#tv2-xplore" style="--aksent: #d6284a; --flate: #fce6ea">TV 2 Xplore</a><a href="#twerton-park" style="--aksent: #0e7f86; --flate: #ddf1f2">Twerton Park</a><a href="#car-ride" style="--aksent: #b06a00; --flate: #fbefd9">Car Ride</a><a class="knapp" href="#contact">Contact</a></div>
   </div>
 </nav>
 <header class="topp" id="top">
+  <img class="forsidebilde" src="bilder/generelt/stonehenge-1600.jpg"
+    srcset="bilder/generelt/stonehenge-900.jpg 900w, bilder/generelt/stonehenge-1600.jpg 1600w, bilder/generelt/stonehenge-2400.jpg 2400w"
+    sizes="(orientation: portrait) 150vh, 100vw" alt="" fetchpriority="high">
   <div class="bredde">
-    <p class="overtittel">Portfolio</p>
-    <h1>Erling Qvale</h1>
-    <p class="tittel">UX Designer</p>
-    <p class="ingress">UX designer at Tribia, working on Interaxo, with a master&#x27;s degree in Media and Interaction Design from the University of Bergen. I enjoy making the complex understandable – working across the whole design process, from interviews and workshops to prototypes and usability testing.</p>
-    <p class="kontakt"><a href="mailto:erling.qvale@icloud.com">erling.qvale@icloud.com</a> · <a href="tel:+4746822505">+47 468 22 505</a> · <a href="https://www.linkedin.com/in/erling-qvale-18190717b/">LinkedIn</a></p>
+    <p class="hei">Hi, I'm Erling Qvale</p>
+    <h1>UX Designer</h1>
   </div>
+  <a class="nedpil" href="#fuse" aria-label="Scroll to projects">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
+  </a>
 </header>
 <main class="bredde">
-  <section class="prosjekt" id="fuse">
-    <p class="meta">UX design, team project</p>
-    <h2>FUSE</h2>
+  <section class="prosjekt ark" id="fuse" style="--aksent: #16865a; --flate: #e2f3ea">
+    <h2 class="stortord">FUSE</h2>
     <aside class="oppsummering"><p>In short</p><ul><li>A desktop interface that makes real emission data understandable for students</li><li>Three views: Compare, Explore and Verify</li><li>Built on six interviews, an expert focus group and a co-creation workshop with eight students</li><li>Two prototype iterations, each followed by usability testing</li></ul></aside>
     <ul class="stikkord"><li>Data visualization</li><li>Co-creation</li><li>Usability testing</li><li>Figma</li></ul>
     
@@ -38,9 +43,8 @@
     <h3>The solution</h3><div class="rutenett"><div class="kort"><h4>Compare</h4><p>Lets the user compare the size difference of separate categories. A vertical bar chart, represented as animated smoke coming out of an industrial pipe – the higher the bar, the darker and denser it becomes, just like smoke in real life.</p></div><div class="kort"><h4>Explore</h4><p>Lets the user explore the development of each category. A line chart where the data points indicate whether there has been an increase, decrease or no change from the previous year.</p></div><div class="kort"><h4>Verify</h4><p>Lets the user verify the values and sources behind the visualizations. A table with the exact values from the data set, where arrows show an increase (red) or decrease (green) from the year before.</p></div></div>
     <h3>The process</h3><ol class="prosess"><li><h4>Semi-structured interviews</h4><p>Six interviews with students from different backgrounds and study programs identified their knowledge of and interest in climate, media habits, preferred ways to interact and thoughts on data visualization. This formed the basis of our target group.</p></li><li><h4>Focus group</h4><p>A focus group with experts validated the interview findings and compared the students&#x27; needs to business interests and technical constraints, making it easier to prioritize and understand the decision-making behind a data visualization.</p></li><li><h4>Workshop</h4><p>A co-creation workshop with eight students in four parts: individual work (Crazy 8 and storyboards), presentation and feedback using the optimist, pessimist and opportunist roles, group work, and a final vote.</p></li><li><h4>1st prototype and usability test</h4><p>A paper prototype sketched on A3 to appear as a desktop interface, tested in quick 15-minute sessions with students recruited around campus.</p></li><li><h4>2nd prototype and usability test</h4><p>A mid-fidelity prototype in Figma with a predefined user journey. A side-by-side test compared horizontal and vertical bar charts and the right amount of data to visualize.</p></li></ol>
   </section>
-  <section class="prosjekt" id="charm">
-    <p class="meta">Team of four</p>
-    <h2>Charm</h2>
+  <section class="prosjekt ark" id="charm" style="--aksent: #7048e8; --flate: #ece6ff">
+    <h2 class="stortord">Charm</h2>
     <aside class="oppsummering"><p>In short</p><ul><li>An AR app in Unity where full-body movement is the input</li><li>The user becomes a wizard, casting magic with hand movements</li><li>A team of four with no prior Unity experience</li><li>Four approaches to hand tracking explored – position recognition proved most reliable</li></ul></aside>
     <ul class="stikkord"><li>Augmented reality</li><li>Unity</li><li>Body interaction</li></ul>
     
@@ -49,9 +53,8 @@
     <h3>The solution</h3><div class="rutenett"><div class="kort"><h4>Minimum viable product</h4><p>All interactions are made with the user&#x27;s right hand: a glow indicating that the hand is tracked, creating a virtual object by hand movement, moving and modifying it, and movements that trigger special effects.</p></div><div class="kort"><h4>Position recognition</h4><p>The X and Y position of the user&#x27;s right hand triggers actions when it enters predefined areas – the most reliable way to detect hand movement at this stage.</p></div></div>
     <h3>The process</h3><ol class="prosess"><li><h4>Free-hand recognition</h4><p>Our preferred solution, with the potential to recognize multiple postures and movements – but with our experience and time limits, we never managed to recognize a specific hand posture.</p></li><li><h4>Shape recognition</h4><p>If the script could recognize shapes drawn by the hand, different magic tricks could be triggered for different shapes.</p></li><li><h4>Collider recognition</h4><p>Interacting with hidden game objects to change the colour of the hand glow – easier said than done when the objects are invisible.</p></li><li><h4>Position recognition</h4><p>The approach we chose: predefined areas that trigger actions when the hand enters them.</p></li></ol>
   </section>
-  <section class="prosjekt" id="wolftech-feeds">
-    <p class="meta">UX design, in collaboration with Wolftech</p>
-    <h2>Wolftech Feeds</h2>
+  <section class="prosjekt ark" id="wolftech-feeds" style="--aksent: #1d5fd6; --flate: #e3ecfc">
+    <h2 class="stortord">Wolftech Feeds</h2>
     <aside class="oppsummering"><p>In short</p><ul><li>Making journalists&#x27; research faster in Wolftech&#x27;s news production platform</li><li>Run as a Google Design Sprint together with Wolftech employees</li><li>Three concepts: Dashboard, Discover and Keyword search</li><li>Five expert interviews, two prototypes and usability tests over Zoom</li></ul></aside>
     <ul class="stikkord"><li>Design Sprint</li><li>Workshops</li><li>Usability testing</li></ul>
     
@@ -60,9 +63,8 @@
     <h3>The solution</h3><div class="rutenett"><div class="kort"><h4>Dashboard</h4><p>A module-based design that lets users customize their personal dashboard with a selection of widgets. Content, size and position are entirely based on user preference.</p></div><div class="kort"><h4>Discover</h4><p>News stories filtered by user preference and displayed on a map, where the user can explore and find other stories in the same area.</p></div><div class="kort"><h4>Keyword search</h4><p>An integrated search that specifies the content in the Feeds columns, with sorting by top stories, newest, oldest or alphabetically, and editable columns.</p></div></div>
     <h3>The process</h3><ol class="prosess"><li><h4>Expert interviews</h4><p>Five interviews over Zoom with people experienced in journalism, to understand their work, challenges and motivations.</p></li><li><h4>Design Sprint</h4><p>A Google Design Sprint with Wolftech employees, divided into alignment, solution and decision workshops – including a high-level map, How Might We&#x27;s, Crazy 8&#x27;s and solution sketches.</p></li><li><h4>1st prototype and usability test</h4><p>Testing the keyword search and advanced filter over Zoom. Reaching busy journalists was close to impossible, so we had to test with participants outside the target group.</p></li><li><h4>Iteration workshops</h4><p>An affinity map, prioritizing journalist types with an imaginary budget, a sailboat exercise to organize feedback, and a vote that made Discover the main focus.</p></li><li><h4>2nd prototype</h4><p>A dashboard with everything a journalist needs at a glance, plus Discover, a curated Feeds page and a personal Feed page.</p></li></ol>
   </section>
-  <section class="prosjekt" id="tv2-xplore">
-    <p class="meta">UX design, in collaboration with TV 2</p>
-    <h2>TV 2 Xplore</h2>
+  <section class="prosjekt ark" id="tv2-xplore" style="--aksent: #d6284a; --flate: #fce6ea">
+    <h2 class="stortord">TV 2 Xplore</h2>
     <aside class="oppsummering"><p>In short</p><ul><li>An exploration mode for TV 2 Play, aimed at young adults with children</li><li>Lets relevant content find the user – less scrolling, fewer cancellations</li><li>A visual identity inspired by the universe</li><li>Interviews, think-aloud sessions and two rounds of usability testing</li></ul></aside>
     <ul class="stikkord"><li>Streaming</li><li>Visual design</li><li>Usability testing</li></ul>
     
@@ -71,9 +73,8 @@
     <h3>The solution</h3><div class="rutenett"><div class="kort"><h4>Landing page</h4><p>A visual design inspired by the universe – a universe of undiscovered content, sparking curiosity with color contrasts, varying shapes and figures.</p></div><div class="kort"><h4>Tailored content</h4><p>Breaking away from the monotonous presentation of the streaming giants with creative shapes, sizes and colors. XPLORE is unique for each user, reflecting their personal interests.</p></div><div class="kort"><h4>Exploration mode</h4><p>A positive filter bubble that minimizes scrolling, frustration and uninteresting recommendations, which can lead to subscription cancellations.</p></div></div>
     <h3>The process</h3><ol class="prosess"><li><h4>Interviews</h4><p>Interviews with young adults with children about their use of and preferences for streaming services.</p></li><li><h4>Think aloud</h4><p>Three participants navigated TV 2 Sumo, NRK TV or Netflix while sharing their thoughts.</p></li><li><h4>1st prototype</h4><p>A simple prototype to test our ideas: dragging favorite categories up and down, further filtering for more personalized content, and the best possible alternative when a title isn&#x27;t available.</p></li><li><h4>Usability testing</h4><p>Two iterations with three participants each, analyzing the results and updating the prototype after each round.</p></li></ol>
   </section>
-  <section class="prosjekt" id="twerton-park">
-    <p class="meta">Individual project, exchange at Bath Spa University</p>
-    <h2>Twerton Park</h2>
+  <section class="prosjekt ark" id="twerton-park" style="--aksent: #0e7f86; --flate: #ddf1f2">
+    <h2 class="stortord">Twerton Park</h2>
     <aside class="oppsummering"><p>In short</p><ul><li>A 3D model and short film of Bath City FC&#x27;s stadium</li><li>Made in Autodesk Maya with no prior 3D experience</li><li>Based on online research and my own photos from the stadium</li><li>Exchange project at Bath Spa University</li></ul></aside>
     <ul class="stikkord"><li>3D modelling</li><li>Autodesk Maya</li></ul>
     
@@ -82,9 +83,8 @@
     
     <h3>The process</h3><ol class="prosess"><li><h4>Research</h4><p>Gathered pictures of Twerton Park from the web and visited the stadium myself to take pictures.</p></li><li><h4>Polygonal modelling</h4><p>With no prior 3D experience, I learned Maya&#x27;s most important features through a tutorial from our tutor and built the model using polygonal modelling.</p></li></ol>
   </section>
-  <section class="prosjekt" id="car-ride">
-    <p class="meta">Individual project, exchange at Bath Spa University</p>
-    <h2>Car Ride</h2>
+  <section class="prosjekt ark" id="car-ride" style="--aksent: #b06a00; --flate: #fbefd9">
+    <h2 class="stortord">Car Ride</h2>
     <aside class="oppsummering"><p>In short</p><ul><li>A landscape and short film of a car driving through it</li><li>Modelled in Cinema 4D and edited in Adobe After Effects</li><li>Car, road, bridge and landscape – plus a boat, a house and flowers</li><li>Exchange project at Bath Spa University</li></ul></aside>
     <ul class="stikkord"><li>3D</li><li>Cinema 4D</li><li>After Effects</li></ul>
     
@@ -93,9 +93,9 @@
     
     <h3>The process</h3><ol class="prosess"><li><h4>Car and road</h4><p>Started with the car and the road, and worked on getting the car to drive smoothly – the most difficult part was getting it over the bridge.</p></li><li><h4>Landscape</h4><p>Added mountains, grass, water, trees and stones – and since it took less time than expected, also a boat, a house and flowers.</p></li><li><h4>Film</h4><p>Placed cameras in the scene, made different clips and rendered the short film in Adobe After Effects.</p></li></ol>
   </section>
-  <section id="contact">
-    <h2>Contact</h2>
-    <p class="kontakt"><a href="mailto:erling.qvale@icloud.com">erling.qvale@icloud.com</a> · <a href="tel:+4746822505">+47 468 22 505</a> · <a href="https://www.linkedin.com/in/erling-qvale-18190717b/">LinkedIn</a></p>
+  <section class="kontaktseksjon" id="contact">
+    <h2>Let's connect.</h2>
+    <ul class="kontaktknapper"><li><a href="https://www.linkedin.com/in/erling-qvale-18190717b/"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>LinkedIn</a></li><li><a href="mailto:erling.qvale@icloud.com">erling.qvale@icloud.com</a></li><li><a href="tel:+4746822505">+47 468 22 505</a></li></ul>
     <h3>Skills &amp; tools</h3>
     <ul class="stikkord stor"><li>User interviews</li><li>Focus groups</li><li>Workshop facilitation</li><li>Google Design Sprint</li><li>Prototyping</li><li>Usability testing</li><li>Data visualization</li><li>Figma</li><li>Unity (AR)</li><li>Autodesk Maya</li><li>Cinema 4D</li><li>Adobe After Effects</li></ul>
   </section>
@@ -129,6 +129,11 @@ function settMeny(åpen) {
 knapp.addEventListener('click', () => settMeny(!meny.classList.contains('apen')));
 lenker.forEach(a => a.addEventListener('click', () => settMeny(false)));
 addEventListener('keydown', e => { if (e.key === 'Escape') settMeny(false); });
+
+// Menyen er gjennomsiktig helt øverst og får bakgrunn når man har scrollet
+function rullet() { meny.classList.toggle('rullet', scrollY > 8); }
+addEventListener('scroll', rullet, { passive: true });
+rullet();
 </script>
 </body>
 </html>

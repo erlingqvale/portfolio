@@ -28,15 +28,24 @@ def meta(p):
     return " · ".join(e(x) for x in [p.get("aar"), p.get("rolle")] if x)
 
 
+LINKEDIN_LOGO = (
+    '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">'
+    '<path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05'
+    'c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13z'
+    'M7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45'
+    'c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>'
+)
+
+
 def lenker(k):
     deler = []
+    if k.get("linkedin"):
+        deler.append(f'<a href="{e(k["linkedin"])}">{LINKEDIN_LOGO}LinkedIn</a>')
     if k.get("epost"):
         deler.append(f'<a href="mailto:{e(k["epost"])}">{e(k["epost"])}</a>')
     if k.get("telefon"):
         tlf = k["telefon"].replace(" ", "")
         deler.append(f'<a href="tel:{e(tlf)}">{e(k["telefon"])}</a>')
-    if k.get("linkedin"):
-        deler.append(f'<a href="{e(k["linkedin"])}">LinkedIn</a>')
     if k.get("github"):
         deler.append(f'<a href="{e(k["github"])}">GitHub</a>')
     return deler
@@ -54,6 +63,9 @@ def side(tittel, beskrivelse, kropp):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(tittel)}</title>
 <meta name="description" content="{e(beskrivelse)}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="stil.css">
 </head>
 <body>
@@ -68,6 +80,12 @@ def blokker(rader, klasse):
         f'<div class="{klasse}"><h4>{e(r["tittel"])}</h4><p>{e(r["tekst"])}</p></div>'
         for r in rader
     )
+
+
+def palett(p):
+    """Prosjektets egen fargepalett som CSS-variabler (tom hvis ingen er satt)."""
+    f = p.get("farger")
+    return f' style="--aksent: {e(f["aksent"])}; --flate: {e(f["flate"])}"' if f else ""
 
 
 def prosjektseksjon(p):
@@ -90,9 +108,8 @@ def prosjektseksjon(p):
         if p.get("oppsummering") else ""
     )
     return f"""
-  <section class="prosjekt" id="{e(p["slug"])}">
-    <p class="meta">{meta(p)}</p>
-    <h2>{e(p["tittel"])}</h2>
+  <section class="prosjekt ark" id="{e(p["slug"])}"{palett(p)}>
+    <h2 class="stortord">{e(p["tittel"])}</h2>
     {oppsummering}
     {stikkord(p.get("stikkord", []))}
     {bilde}
@@ -133,33 +150,41 @@ function settMeny(åpen) {
 knapp.addEventListener('click', () => settMeny(!meny.classList.contains('apen')));
 lenker.forEach(a => a.addEventListener('click', () => settMeny(false)));
 addEventListener('keydown', e => { if (e.key === 'Escape') settMeny(false); });
+
+// Menyen er gjennomsiktig helt øverst og får bakgrunn når man har scrollet
+function rullet() { meny.classList.toggle('rullet', scrollY > 8); }
+addEventListener('scroll', rullet, { passive: true });
+rullet();
 </script>"""
 
 
 def lag_forside(d):
-    meny = "".join(f'<a href="#{e(p["slug"])}">{e(p["tittel"])}</a>' for p in d["prosjekter"])
+    meny = "".join(f'<a href="#{e(p["slug"])}"{palett(p)}>{e(p["tittel"])}</a>' for p in d["prosjekter"])
     kropp = f"""<nav class="toppmeny">
   <div class="bredde">
-    <a class="navn" href="#top">{e(d["navn"])}</a>
+    <a class="navn" href="#top">EQ Portfolio</a>
     <button class="menyknapp" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menyliste">
       <span></span><span></span><span></span>
     </button>
-    <div class="menyliste" id="menyliste">{meny}<a href="#contact">Contact</a></div>
+    <div class="menyliste" id="menyliste">{meny}<a class="knapp" href="#contact">Contact</a></div>
   </div>
 </nav>
 <header class="topp" id="top">
+  <img class="forsidebilde" src="bilder/generelt/stonehenge-1600.jpg"
+    srcset="bilder/generelt/stonehenge-900.jpg 900w, bilder/generelt/stonehenge-1600.jpg 1600w, bilder/generelt/stonehenge-2400.jpg 2400w"
+    sizes="(orientation: portrait) 150vh, 100vw" alt="" fetchpriority="high">
   <div class="bredde">
-    <p class="overtittel">Portfolio</p>
-    <h1>{e(d["navn"])}</h1>
-    <p class="tittel">{e(d["tittel"])}</p>
-    <p class="ingress">{e(d["ingress"])}</p>
-    <p class="kontakt">{" · ".join(lenker(d["kontakt"]))}</p>
+    <p class="hei">Hi, I'm {e(d["navn"])}</p>
+    <h1>{e(d["tittel"])}</h1>
   </div>
+  <a class="nedpil" href="#{e(d["prosjekter"][0]["slug"])}" aria-label="Scroll to projects">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
+  </a>
 </header>
 <main class="bredde">{"".join(prosjektseksjon(p) for p in d["prosjekter"])}
-  <section id="contact">
-    <h2>Contact</h2>
-    <p class="kontakt">{" · ".join(lenker(d["kontakt"]))}</p>
+  <section class="kontaktseksjon" id="contact">
+    <h2>Let's connect.</h2>
+    <ul class="kontaktknapper">{"".join(f"<li>{l}</li>" for l in lenker(d["kontakt"]))}</ul>
     <h3>Skills &amp; tools</h3>
     {stikkord(d["ferdigheter"], "stikkord stor")}
   </section>
