@@ -9,6 +9,7 @@ import json
 import shutil
 import subprocess
 import sys
+from datetime import date
 from html import escape as e
 from pathlib import Path
 
@@ -65,7 +66,7 @@ def side(tittel, beskrivelse, kropp):
 <meta name="description" content="{e(beskrivelse)}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="stil.css">
 </head>
 <body>
@@ -183,10 +184,18 @@ def lag_forside(d):
 </header>
 <main class="bredde">{"".join(prosjektseksjon(p) for p in d["prosjekter"])}
   <section class="kontaktseksjon" id="contact">
-    <h2>Let's connect.</h2>
-    <ul class="kontaktknapper">{"".join(f"<li>{l}</li>" for l in lenker(d["kontakt"]))}</ul>
-    <h3>Skills &amp; tools</h3>
-    {stikkord(d["ferdigheter"], "stikkord stor")}
+    <div class="kontaktinnhold">
+      <h2>Let's connect</h2>
+      <ul class="kontaktknapper">{"".join(f"<li>{l}</li>" for l in lenker(d["kontakt"]))}</ul>
+      <h3>Skills &amp; tools</h3>
+      {stikkord(d["ferdigheter"], "stikkord stor")}
+    </div>
+    <footer class="bunn">
+      <span>© {date.today().year} {e(d["navn"])}</span>
+      <a href="#top">Back to top
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4M5 11l7-7 7 7"/></svg>
+      </a>
+    </footer>
   </section>
 </main>
 {SCROLLSPY}"""

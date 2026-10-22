@@ -8,36 +8,36 @@
      768px  – nettbrett (iPad stående)
      1024px – desktop (iPad liggende, laptop, PC) */
 :root {
-  --bg: #9a9b94;
-  --ark: #c8cfd9;
-  --flate: #ffffff;
-  --tekst: #111318;
-  --dempet: #3e403b;
-  --aksent: #3577c4;
-  --knapp: #111318;
-  --knapp-tekst: #ffffff;
-  --skygge: 0 40px 80px -40px rgba(24, 32, 48, .45), 0 2px 6px rgba(24, 32, 48, .06);
+  --bg: #F4F2EC;
+  --ark: #ffffff;
+  --flate: #e7e4da;
+  --tekst: #22261F;
+  --dempet: #5a5f54;
+  --aksent: #4D7C0F;
+  --knapp: #22261F;
+  --knapp-tekst: #F4F2EC;
+  --skygge: 0 40px 80px -40px rgba(34, 38, 31, .35), 0 2px 6px rgba(34, 38, 31, .06);
   --maks: 1180px;
   --meny: 64px;
   --gutter: 16px;
   /* Typografi: tre faste roller gjennom hele siden
-     tittel     – Anton: store titler (UX Designer, prosjektnavn, Let's connect)
-     overskrift – Fraunces: seksjons- og kortoverskrifter (The challenge, Compare …)
+     tittel     – Space Grotesk: store titler (UX Designer, prosjektnavn, Let's connect)
+     overskrift – Space Grotesk: seksjons- og kortoverskrifter (The challenge, Compare …)
      brødtekst  – Inter: all løpende tekst, meny, knapper og etiketter */
-  --font-tittel: "Anton", "Impact", "Arial Narrow", sans-serif;
-  --font-overskrift: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-tittel: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-overskrift: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   --font-tekst: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #1b1c1a;
-    --ark: #1c2129;
-    --flate: #272d37;
-    --tekst: #eef0f4;
-    --dempet: #a1a9b6;
-    --aksent: #6aa5ec;
-    --knapp: #eef0f4;
-    --knapp-tekst: #111419;
+    --bg: #1c1f19;
+    --ark: #242820;
+    --flate: #2e3329;
+    --tekst: #F4F2EC;
+    --dempet: #a9ad9f;
+    --aksent: #6f9f2c;
+    --knapp: #F4F2EC;
+    --knapp-tekst: #22261F;
     --skygge: 0 40px 80px -40px rgba(0, 0, 0, .7), 0 0 0 1px rgba(255, 255, 255, .04);
   }
 }
@@ -61,8 +61,8 @@ a:hover { color: var(--aksent); }
 
 /* Store prosjekttitler i prosjektets aksentfarge */
 .stortord {
-  font-family: var(--font-tittel); font-weight: 400; text-transform: uppercase;
-  line-height: .9; letter-spacing: .01em; color: var(--aksent);
+  font-family: var(--font-tittel); font-weight: 700;
+  line-height: .95; letter-spacing: -.035em; color: var(--aksent);
 }
 
 /* ---------- Navigasjon: gjennomsiktig øverst, frostet når man scroller ---------- */
@@ -80,8 +80,8 @@ a:hover { color: var(--aksent); }
 .toppmeny .bredde { display: flex; align-items: center; height: var(--meny); }
 .toppmeny a { color: var(--tekst); text-decoration: none; white-space: nowrap; }
 .toppmeny .navn {
-  font-family: var(--font-tittel); font-size: 22px; text-transform: uppercase;
-  letter-spacing: .02em; margin-right: auto;
+  font-family: var(--font-tittel); font-size: 20px; font-weight: 700;
+  letter-spacing: -.02em; margin-right: auto;
 }
 
 /* Menyliste som fyller bredden når hamburgeren er åpen */
@@ -139,8 +139,8 @@ a:hover { color: var(--aksent); }
 .topp .bredde { position: relative; z-index: 1; width: 100%; }
 .hei { font-size: 18px; font-weight: 500; margin: 0 0 4px; }
 h1 {
-  font-family: var(--font-tittel); font-weight: 400; text-transform: uppercase;
-  font-size: 14vw; line-height: .9; letter-spacing: .005em; margin: 0;
+  font-family: var(--font-tittel); font-weight: 700;
+  font-size: 12vw; line-height: .95; letter-spacing: -.04em; margin: 0;
   white-space: nowrap;
 }
 
@@ -167,10 +167,10 @@ h1 {
 }
 /* Prosjektarket er hvitt med mørk tekst i både lys og mørk modus */
 .prosjekt {
-  --ark: #ffffff; --tekst: #111318; --dempet: #4b5361;
+  --ark: #ffffff; --tekst: #22261F; --dempet: #5a5f54;
   color: var(--tekst);
 }
-.stortord { font-size: 64px; margin: 0 0 24px; overflow-wrap: anywhere; }
+.stortord { font-size: 52px; margin: 0 0 24px; overflow-wrap: anywhere; }
 
 h3 {
   font-family: var(--font-overskrift); font-weight: 600;
@@ -221,16 +221,22 @@ h4 {
 .prosess li::before {
   content: counter(steg, decimal-leading-zero);
   position: absolute; left: 0; top: -4px;
-  font-family: var(--font-tittel); font-size: 32px; line-height: 1; color: var(--aksent);
+  font-family: var(--font-tittel); font-weight: 700; font-size: 28px; line-height: 1; color: var(--aksent);
 }
 .prosess h4 { font-size: 19px; margin-bottom: 4px; }
 .prosess p { margin: 0; color: var(--dempet); }
 
 /* ---------- Kontakt: del av bakgrunnen ---------- */
-.kontaktseksjon { padding: 64px 0 96px; }
+/* Fyller hele skjermen på alle enheter: innholdet midt i, bunntekst nederst.
+   svh tar hensyn til adresselinjen i Safari på iPhone/iPad */
+.kontaktseksjon {
+  min-height: calc(100vh - var(--meny)); min-height: calc(100svh - var(--meny));
+  display: flex; flex-direction: column; padding: 0 0 32px;
+}
+.kontaktinnhold { margin: auto 0; padding-top: 64px; }
 .kontaktseksjon h2 {
-  font-family: var(--font-tittel); font-weight: 400; text-transform: uppercase;
-  font-size: 56px; line-height: .95; margin: 0 0 24px; position: relative;
+  font-family: var(--font-tittel); font-weight: 700; letter-spacing: -.035em;
+  font-size: 48px; line-height: 1; margin: 0 0 24px; position: relative;
 }
 .kontaktknapper { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .kontaktknapper a {
@@ -241,18 +247,27 @@ h4 {
 .kontaktknapper a:hover { color: var(--aksent); }
 .kontaktknapper li:first-child a:hover { color: #fff; opacity: .85; }
 
+/* Bunntekst nederst i kontaktseksjonen */
+.bunn {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  margin-top: 72px; padding-top: 20px; font-size: 14px; color: var(--dempet);
+  border-top: 1px solid color-mix(in srgb, var(--tekst) 14%, transparent);
+}
+.bunn a { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-weight: 600; }
+
 /* ---------- Nettbrett: 768px og bredere ---------- */
 @media (min-width: 768px) {
   :root { --gutter: 32px; }
   body { font-size: 17px; }
   .hei { font-size: 22px; }
   .ark { padding: 48px 44px 56px; border-radius: 32px; margin-bottom: 32px; }
-  .stortord { font-size: 112px; }
+  .stortord { font-size: 88px; }
   h3 { font-size: 30px; margin-top: 56px; }
   .rutenett { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .kort { padding: 26px; }
-  .kontaktseksjon { padding: 96px 0 128px; }
-  .kontaktseksjon h2 { font-size: 92px; }
+  .kontaktseksjon { padding-bottom: 40px; }
+  .kontaktinnhold { padding-top: 96px; }
+  .kontaktseksjon h2 { font-size: 80px; }
 }
 
 /* ---------- Desktop: 1024px og bredere ---------- */
@@ -260,11 +275,11 @@ h4 {
   .topp { padding-bottom: 10vh; }
   .forsidebilde { object-position: 50% 30%; }
   .topp::after { background: linear-gradient(180deg, transparent 72%, var(--bg) 100%); }
-  h1 { font-size: min(13vw, 220px); }
+  h1 { font-size: min(11vw, 180px); }
   .ark { padding: 64px 64px 72px; border-radius: 36px; margin-bottom: 40px; }
-  .stortord { font-size: 152px; }
+  .stortord { font-size: 120px; }
   .rutenett { grid-template-columns: repeat(3, 1fr); }
-  .kontaktseksjon h2 { font-size: 112px; }
+  .kontaktseksjon h2 { font-size: 96px; }
 
   /* Full menylinje i stedet for hamburger */
   .menyknapp { display: none; }
