@@ -76,9 +76,14 @@ def side(tittel, beskrivelse, kropp):
 """
 
 
+def stegbilde(r):
+    """Valgfritt bilde til et løsningskort eller prosessteg."""
+    return f'<img src="{e(r["bilde"])}" alt="{e(r["tittel"])}" loading="lazy">' if r.get("bilde") else ""
+
+
 def blokker(rader, klasse):
     return "".join(
-        f'<div class="{klasse}"><h4>{e(r["tittel"])}</h4><p>{e(r["tekst"])}</p></div>'
+        f'<div class="{klasse}">{stegbilde(r)}<h4>{e(r["tittel"])}</h4><p>{e(r["tekst"])}</p></div>'
         for r in rader
     )
 
@@ -90,14 +95,14 @@ def palett(p):
 
 
 def prosjektseksjon(p):
-    bilde = f'<img class="hovedbilde" src="{e(p["bilde"])}" alt="" loading="lazy">' if p.get("bilde") else ""
+    bilde = f'<img class="hovedbilde" src="{e(p["bilde"])}" alt="{e(p["tittel"])}" loading="lazy">' if p.get("bilde") else ""
     losning = (
         f'<h3>The solution</h3><div class="rutenett">{blokker(p["losning"], "kort")}</div>'
         if p.get("losning") else ""
     )
     prosess = (
         '<h3>The process</h3><ol class="prosess">'
-        + "".join(f'<li><h4>{e(s["tittel"])}</h4><p>{e(s["tekst"])}</p></li>' for s in p["prosess"])
+        + "".join(f'<li><h4>{e(s["tittel"])}</h4><p>{e(s["tekst"])}</p>{stegbilde(s)}</li>' for s in p["prosess"])
         + "</ol>"
         if p.get("prosess") else ""
     )

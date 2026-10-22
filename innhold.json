@@ -40,15 +40,18 @@
       "losning": [
         {
           "tittel": "Compare",
-          "tekst": "Lets the user compare the size difference of separate categories. A vertical bar chart, represented as animated smoke coming out of an industrial pipe – the higher the bar, the darker and denser it becomes, just like smoke in real life."
+          "tekst": "Lets the user compare the size difference of separate categories. A vertical bar chart, represented as animated smoke coming out of an industrial pipe – the higher the bar, the darker and denser it becomes, just like smoke in real life.",
+          "bilde": "bilder/fuse/compare.png"
         },
         {
           "tittel": "Explore",
-          "tekst": "Lets the user explore the development of each category. A line chart where the data points indicate whether there has been an increase, decrease or no change from the previous year."
+          "tekst": "Lets the user explore the development of each category. A line chart where the data points indicate whether there has been an increase, decrease or no change from the previous year.",
+          "bilde": "bilder/fuse/explore.png"
         },
         {
           "tittel": "Verify",
-          "tekst": "Lets the user verify the values and sources behind the visualizations. A table with the exact values from the data set, where arrows show an increase (red) or decrease (green) from the year before."
+          "tekst": "Lets the user verify the values and sources behind the visualizations. A table with the exact values from the data set, where arrows show an increase (red) or decrease (green) from the year before.",
+          "bilde": "bilder/fuse/verify.png"
         }
       ],
       "prosess": [
@@ -62,15 +65,18 @@
         },
         {
           "tittel": "Workshop",
-          "tekst": "A co-creation workshop with eight students in four parts: individual work (Crazy 8 and storyboards), presentation and feedback using the optimist, pessimist and opportunist roles, group work, and a final vote."
+          "tekst": "A co-creation workshop with eight students in four parts: individual work (Crazy 8 and storyboards), presentation and feedback using the optimist, pessimist and opportunist roles, group work, and a final vote.",
+          "bilde": "bilder/fuse/workshop-sketches.png"
         },
         {
           "tittel": "1st prototype and usability test",
-          "tekst": "A paper prototype sketched on A3 to appear as a desktop interface, tested in quick 15-minute sessions with students recruited around campus."
+          "tekst": "A paper prototype sketched on A3 to appear as a desktop interface, tested in quick 15-minute sessions with students recruited around campus.",
+          "bilde": "bilder/fuse/paper-prototype.png"
         },
         {
           "tittel": "2nd prototype and usability test",
-          "tekst": "A mid-fidelity prototype in Figma with a predefined user journey. A side-by-side test compared horizontal and vertical bar charts and the right amount of data to visualize."
+          "tekst": "A mid-fidelity prototype in Figma with a predefined user journey. A side-by-side test compared horizontal and vertical bar charts and the right amount of data to visualize.",
+          "bilde": "bilder/fuse/mid-fi-prototype.png"
         }
       ],
       "stikkord": [
@@ -80,7 +86,7 @@
         "Figma"
       ],
       "lenke": "",
-      "bilde": ""
+      "bilde": "bilder/fuse/compare.png"
     },
     {
       "slug": "charm",
@@ -99,7 +105,8 @@
       "losning": [
         {
           "tittel": "Minimum viable product",
-          "tekst": "All interactions are made with the user's right hand: a glow indicating that the hand is tracked, creating a virtual object by hand movement, moving and modifying it, and movements that trigger special effects."
+          "tekst": "All interactions are made with the user's right hand: a glow indicating that the hand is tracked, creating a virtual object by hand movement, moving and modifying it, and movements that trigger special effects.",
+          "bilde": "bilder/charm/ar-screens.png"
         },
         {
           "tittel": "Position recognition",
@@ -130,7 +137,7 @@
         "Body interaction"
       ],
       "lenke": "",
-      "bilde": ""
+      "bilde": "bilder/charm/ipad.png"
     },
     {
       "slug": "wolftech-feeds",
@@ -149,15 +156,18 @@
       "losning": [
         {
           "tittel": "Dashboard",
-          "tekst": "A module-based design that lets users customize their personal dashboard with a selection of widgets. Content, size and position are entirely based on user preference."
+          "tekst": "A module-based design that lets users customize their personal dashboard with a selection of widgets. Content, size and position are entirely based on user preference.",
+          "bilde": "bilder/wolftech-feeds/dashboard.png"
         },
         {
           "tittel": "Discover",
-          "tekst": "News stories filtered by user preference and displayed on a map, where the user can explore and find other stories in the same area."
+          "tekst": "News stories filtered by user preference and displayed on a map, where the user can explore and find other stories in the same area.",
+          "bilde": "bilder/wolftech-feeds/discover.png"
         },
         {
           "tittel": "Keyword search",
-          "tekst": "An integrated search that specifies the content in the Feeds columns, with sorting by top stories, newest, oldest or alphabetically, and editable columns."
+          "tekst": "An integrated search that specifies the content in the Feeds columns, with sorting by top stories, newest, oldest or alphabetically, and editable columns.",
+          "bilde": "bilder/wolftech-feeds/keyword-search.png"
         }
       ],
       "prosess": [
@@ -167,11 +177,13 @@
         },
         {
           "tittel": "Design Sprint",
-          "tekst": "A Google Design Sprint with Wolftech employees, divided into alignment, solution and decision workshops – including a high-level map, How Might We's, Crazy 8's and solution sketches."
+          "tekst": "A Google Design Sprint with Wolftech employees, divided into alignment, solution and decision workshops – including a high-level map, How Might We's, Crazy 8's and solution sketches.",
+          "bilde": "bilder/wolftech-feeds/sprint-sketch.png"
         },
         {
           "tittel": "1st prototype and usability test",
-          "tekst": "Testing the keyword search and advanced filter over Zoom. Reaching busy journalists was close to impossible, so we had to test with participants outside the target group."
+          "tekst": "Testing the keyword search and advanced filter over Zoom. Reaching busy journalists was close to impossible, so we had to test with participants outside the target group.",
+          "bilde": "bilder/wolftech-feeds/first-prototype.png"
         },
         {
           "tittel": "Iteration workshops",
@@ -179,7 +191,8 @@
         },
         {
           "tittel": "2nd prototype",
-          "tekst": "A dashboard with everything a journalist needs at a glance, plus Discover, a curated Feeds page and a personal Feed page."
+          "tekst": "A dashboard with everything a journalist needs at a glance, plus Discover, a curated Feeds page and a personal Feed page.",
+          "bilde": "bilder/wolftech-feeds/second-prototype.png"
         }
       ],
       "stikkord": [
@@ -188,7 +201,7 @@
         "Usability testing"
       ],
       "lenke": "",
-      "bilde": ""
+      "bilde": "bilder/wolftech-feeds/overview.png"
     },
     {
       "slug": "tv2-xplore",
@@ -207,15 +220,18 @@
       "losning": [
         {
           "tittel": "Landing page",
-          "tekst": "A visual design inspired by the universe – a universe of undiscovered content, sparking curiosity with color contrasts, varying shapes and figures."
+          "tekst": "A visual design inspired by the universe – a universe of undiscovered content, sparking curiosity with color contrasts, varying shapes and figures.",
+          "bilde": "bilder/tv2-xplore/landing.png"
         },
         {
           "tittel": "Tailored content",
-          "tekst": "Breaking away from the monotonous presentation of the streaming giants with creative shapes, sizes and colors. XPLORE is unique for each user, reflecting their personal interests."
+          "tekst": "Breaking away from the monotonous presentation of the streaming giants with creative shapes, sizes and colors. XPLORE is unique for each user, reflecting their personal interests.",
+          "bilde": "bilder/tv2-xplore/tailored.png"
         },
         {
           "tittel": "Exploration mode",
-          "tekst": "A positive filter bubble that minimizes scrolling, frustration and uninteresting recommendations, which can lead to subscription cancellations."
+          "tekst": "A positive filter bubble that minimizes scrolling, frustration and uninteresting recommendations, which can lead to subscription cancellations.",
+          "bilde": "bilder/tv2-xplore/exploration.png"
         }
       ],
       "prosess": [
@@ -225,15 +241,18 @@
         },
         {
           "tittel": "Think aloud",
-          "tekst": "Three participants navigated TV 2 Sumo, NRK TV or Netflix while sharing their thoughts."
+          "tekst": "Three participants navigated TV 2 Sumo, NRK TV or Netflix while sharing their thoughts.",
+          "bilde": "bilder/tv2-xplore/think-aloud.png"
         },
         {
           "tittel": "1st prototype",
-          "tekst": "A simple prototype to test our ideas: dragging favorite categories up and down, further filtering for more personalized content, and the best possible alternative when a title isn't available."
+          "tekst": "A simple prototype to test our ideas: dragging favorite categories up and down, further filtering for more personalized content, and the best possible alternative when a title isn't available.",
+          "bilde": "bilder/tv2-xplore/first-prototype.png"
         },
         {
           "tittel": "Usability testing",
-          "tekst": "Two iterations with three participants each, analyzing the results and updating the prototype after each round."
+          "tekst": "Two iterations with three participants each, analyzing the results and updating the prototype after each round.",
+          "bilde": "bilder/tv2-xplore/favourites.png"
         }
       ],
       "stikkord": [
@@ -242,7 +261,7 @@
         "Usability testing"
       ],
       "lenke": "",
-      "bilde": ""
+      "bilde": "bilder/tv2-xplore/landing.png"
     },
     {
       "slug": "twerton-park",
@@ -274,7 +293,7 @@
         "Autodesk Maya"
       ],
       "lenke": "",
-      "bilde": ""
+      "bilde": "bilder/twerton-park/stadium.png"
     },
     {
       "slug": "car-ride",
@@ -311,7 +330,7 @@
         "After Effects"
       ],
       "lenke": "",
-      "bilde": ""
+      "bilde": "bilder/car-ride/landscape.png"
     }
   ]
 }
