@@ -8,6 +8,10 @@
     "linkedin": "https://www.linkedin.com/in/erling-qvale-18190717b/",
     "sted": "Oslo, Norway"
   },
+  "lenker": [
+    { "tittel": "Master's thesis", "tekst": "Media and Interaction Design, University of Bergen", "lenke": "https://nva.sikt.no/registration/0198f2235496-0ce12c6d-cfbe-4a7b-a4e0-a7c23e665859" },
+    { "tittel": "Bachelor project – Wolftech Feeds", "tekst": "University of Bergen, 2022", "lenke": "https://teklab.uib.no/artikler/wolftech-feeds/" }
+  ],
   "ferdigheter": [
     "User interviews",
     "Focus groups",
@@ -25,7 +29,7 @@
   "prosjekter": [
     {
       "slug": "fuse",
-      "farger": { "aksent": "#16865a", "flate": "#e2f3ea" },
+      "farger": { "aksent": "#172B4C", "flate": "#F4E2FD" },
       "tittel": "FUSE",
       "aar": "",
       "rolle": "UX design, team project",
@@ -85,6 +89,7 @@
         "Usability testing",
         "Figma"
       ],
+      "video": "bilder/fuse/video.mp4",
       "lenke": "",
       "bilde": "bilder/fuse/compare.png"
     },
@@ -136,6 +141,7 @@
         "Unity",
         "Body interaction"
       ],
+      "video": "bilder/charm/video.mp4",
       "lenke": "",
       "bilde": "bilder/charm/ipad.png"
     },
@@ -200,6 +206,7 @@
         "Workshops",
         "Usability testing"
       ],
+      "video": "bilder/wolftech-feeds/video.mp4",
       "lenke": "",
       "bilde": "bilder/wolftech-feeds/overview.png"
     },
@@ -260,6 +267,7 @@
         "Visual design",
         "Usability testing"
       ],
+      "video": "bilder/tv2-xplore/video.mp4",
       "lenke": "",
       "bilde": "bilder/tv2-xplore/landing.png"
     },
@@ -292,6 +300,7 @@
         "3D modelling",
         "Autodesk Maya"
       ],
+      "video": "bilder/twerton-park/video.mp4",
       "lenke": "",
       "bilde": "bilder/twerton-park/stadium.png"
     },
@@ -329,8 +338,9 @@
         "Cinema 4D",
         "After Effects"
       ],
+      "video": "bilder/car-ride/video.mp4",
       "lenke": "",
-      "bilde": "bilder/car-ride/landscape.png"
+      "bilde": ""
     }
   ]
 }

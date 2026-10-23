@@ -41,15 +41,28 @@ LINKEDIN_LOGO = (
 def lenker(k):
     deler = []
     if k.get("linkedin"):
-        deler.append(f'<a href="{e(k["linkedin"])}">{LINKEDIN_LOGO}LinkedIn</a>')
+        deler.append(f'<a href="{e(k["linkedin"])}" target="_blank" rel="noopener">{LINKEDIN_LOGO}LinkedIn</a>')
+    # E-post og telefon kopieres ved klikk (se KOPIER); mailto/tel er reserve uten JavaScript
     if k.get("epost"):
-        deler.append(f'<a href="mailto:{e(k["epost"])}">{e(k["epost"])}</a>')
+        deler.append(f'<a href="mailto:{e(k["epost"])}" data-kopier="{e(k["epost"])}">{e(k["epost"])}</a>')
     if k.get("telefon"):
         tlf = k["telefon"].replace(" ", "")
-        deler.append(f'<a href="tel:{e(tlf)}">{e(k["telefon"])}</a>')
+        deler.append(f'<a href="tel:{e(tlf)}" data-kopier="{e(k["telefon"])}">{e(k["telefon"])}</a>')
     if k.get("github"):
         deler.append(f'<a href="{e(k["github"])}">GitHub</a>')
     return deler
+
+
+def ekstralenker(rader):
+    """Lenker nederst på siden, f.eks. bachelor- og masteroppgave."""
+    if not rader:
+        return ""
+    return '<h3>Further reading</h3><ul class="ekstralenker">' + "".join(
+        f'<li><a href="{e(r["lenke"])}" target="_blank" rel="noopener">{e(r["tittel"])}'
+        + (f'<span>{e(r["tekst"])}</span>' if r.get("tekst") else "")
+        + '</a></li>'
+        for r in rader
+    ) + "</ul>"
 
 
 def stikkord(liste, klasse="stikkord"):
@@ -88,6 +101,24 @@ def blokker(rader, klasse):
     )
 
 
+def video(p):
+    """Valgfri video av løsningen: lokal fil (bilder/<prosjekt>/x.mp4) eller YouTube-/Vimeo-lenke."""
+    v = p.get("video")
+    if not v:
+        return ""
+    if "youtube.com/watch?v=" in v or "youtu.be/" in v:
+        id_ = v.split("v=")[-1].split("&")[0] if "v=" in v else v.rsplit("/", 1)[-1].split("?")[0]
+        src = f"https://www.youtube-nocookie.com/embed/{id_}"
+    elif "vimeo.com/" in v:
+        src = f"https://player.vimeo.com/video/{v.rstrip('/').rsplit('/', 1)[-1]}"
+    else:
+        plakat = Path(v).with_suffix(".jpg")
+        plakat = f' poster="{e(str(plakat))}"' if (ROT / plakat).exists() else ""
+        return f'<video class="video" src="{e(v)}"{plakat} controls playsinline preload="none"></video>'
+    return (f'<div class="video"><iframe src="{e(src)}" title="{e(p["tittel"])} – video" '
+            'allow="fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>')
+
+
 def palett(p):
     """Prosjektets egen fargepalett som CSS-variabler (tom hvis ingen er satt)."""
     f = p.get("farger")
@@ -96,10 +127,8 @@ def palett(p):
 
 def prosjektseksjon(p):
     bilde = f'<img class="hovedbilde" src="{e(p["bilde"])}" alt="{e(p["tittel"])}" loading="lazy">' if p.get("bilde") else ""
-    losning = (
-        f'<h3>The solution</h3><div class="rutenett">{blokker(p["losning"], "kort")}</div>'
-        if p.get("losning") else ""
-    )
+    kort = f'<div class="rutenett">{blokker(p["losning"], "kort")}</div>' if p.get("losning") else ""
+    losning = f'<h3>The solution</h3>{kort}' if kort else ""
     prosess = (
         '<h3>The process</h3><ol class="prosess">'
         + "".join(f'<li><h4>{e(s["tittel"])}</h4><p>{e(s["tekst"])}</p>{stegbilde(s)}</li>' for s in p["prosess"])
@@ -118,12 +147,38 @@ def prosjektseksjon(p):
     <h2 class="stortord">{e(p["tittel"])}</h2>
     {oppsummering}
     {stikkord(p.get("stikkord", []))}
-    {bilde}
+    {video(p) or bilde}
     <h3>The challenge</h3>
     <p class="tekst">{e(p.get("utfordring", ""))}</p>{lenke}
     {losning}
     {prosess}
   </section>"""
+
+
+# Kopierer e-post/telefon ved klikk og viser en kort bekreftelse.
+KOPIER = """<script>
+const status = document.querySelector('.kopistatus');
+let tidtaker;
+document.querySelectorAll('[data-kopier]').forEach(a => a.addEventListener('click', async ev => {
+  if (!navigator.clipboard) return;
+  ev.preventDefault();
+  try {
+    await navigator.clipboard.writeText(a.dataset.kopier);
+    status.textContent = 'Copied ' + a.dataset.kopier;
+    status.classList.add('vis');
+    clearTimeout(tidtaker);
+    tidtaker = setTimeout(() => status.classList.remove('vis'), 2000);
+  } catch { location.href = a.href; }
+}));
+</script>"""
+
+
+# Bare én video spiller om gangen: starter man en, pauses de andre.
+EN_VIDEO = """<script>
+document.addEventListener('play', ev => {
+  document.querySelectorAll('video').forEach(v => { if (v !== ev.target) v.pause(); });
+}, true);
+</script>"""
 
 
 # Markerer prosjektet som vises i navigasjonen mens man scroller.
@@ -194,6 +249,7 @@ def lag_forside(d):
       <ul class="kontaktknapper">{"".join(f"<li>{l}</li>" for l in lenker(d["kontakt"]))}</ul>
       <h3>Skills &amp; tools</h3>
       {stikkord(d["ferdigheter"], "stikkord stor")}
+      {ekstralenker(d.get("lenker", []))}
     </div>
     <footer class="bunn">
       <span>© {date.today().year} {e(d["navn"])}</span>
@@ -203,7 +259,8 @@ def lag_forside(d):
     </footer>
   </section>
 </main>
-{SCROLLSPY}"""
+<p class="kopistatus" role="status" aria-live="polite"></p>
+{SCROLLSPY}{KOPIER}{EN_VIDEO}"""
     return side(f'{d["navn"]} – Portfolio', d["ingress"], kropp)
 
 

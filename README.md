@@ -4,7 +4,7 @@ Personlig portefølje som nettside (GitHub Pages) og kortversjon i PDF.
 
 ## Slik oppdaterer du
 
-1. Rediger innholdet i `innhold.json` (prosjektbilder legges i `bilder/<prosjekt>/`, f.eks. `"bilde": "bilder/fuse/navn.png"`; bilder som ikke hører til et prosjekt – profilbilde, logo, bakgrunner o.l. – legges i `bilder/generelt/`).
+1. Rediger innholdet i `innhold.json` (prosjektbilder legges i `bilder/<prosjekt>/`, f.eks. `"bilde": "bilder/fuse/navn.png"`; bilder som ikke hører til et prosjekt – profilbilde, logo, bakgrunner o.l. – legges i `bilder/generelt/`). Video av løsningen settes i `"video"` – enten en lokal fil (`bilder/fuse/demo.mp4`) eller en YouTube-/Vimeo-lenke.
 2. Kjør `python3 bygg.py` – lager `index.html` (one-pager med alle prosjekter og navigasjon som følger scrollingen) og `portefolje-kort.pdf`.
 3. Commit og push – nettsiden oppdateres automatisk.
 
