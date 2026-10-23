@@ -421,6 +421,14 @@ def lag_forside(d):
     return side(f'{d["navn"]} – Portfolio', d["ingress"], kropp)
 
 
+def hovedbilde(p):
+    """Bildet av den ferdige løsningen: første løsningsbilde, ellers stillbildet fra videoen."""
+    for r in p.get("losning", []):
+        if r.get("bilde"):
+            return r["bilde"]
+    return str(Path(p["video"]).with_suffix(".jpg")) if p.get("video") else ""
+
+
 def lag_pdf_html(d):
     """Kortversjon: én A4-side med det viktigste."""
     k = d["kontakt"]
@@ -430,8 +438,11 @@ def lag_pdf_html(d):
     prosjekter = "".join(
         f"""
       <div class="p">
-        <div class="ph"><strong>{e(p["tittel"])}</strong><span>{meta(p)}</span></div>
-        <p>{e(p.get("kort", ""))}</p>
+        <img src="{e(quote(hovedbilde(p)))}" alt="">
+        <div>
+          <div class="ph"><strong>{e(p["tittel"])}</strong><span>{meta(p)}</span></div>
+          <p>{e(p.get("kort", ""))}</p>
+        </div>
       </div>"""
         for p in d["prosjekter"]
     )
@@ -447,7 +458,9 @@ def lag_pdf_html(d):
   .ingress {{ margin: 8pt 0 0; font-size: 10pt; }}
   hr {{ border: 0; border-top: 1.5pt solid #2a5bd7; margin: 10pt 0; width: 40pt; }}
   h2 {{ font-size: 9pt; text-transform: uppercase; letter-spacing: 0.1em; color: #5b6573; margin: 12pt 0 6pt; }}
-  .p {{ margin-bottom: 7pt; break-inside: avoid; }}
+  .p {{ display: flex; gap: 10pt; align-items: center; margin-bottom: 8pt; break-inside: avoid; }}
+  .p img {{ flex: none; width: 34mm; aspect-ratio: 3 / 2; object-fit: cover; object-position: top; border-radius: 4pt; background: #f1f3f7; }}
+  .p > div {{ flex: 1; }}
   .ph {{ display: flex; justify-content: space-between; gap: 8pt; }}
   .ph span {{ color: #5b6573; font-size: 8.5pt; white-space: nowrap; }}
   .p p {{ margin: 1pt 0 0; }}
