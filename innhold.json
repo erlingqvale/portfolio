@@ -45,17 +45,17 @@
         {
           "tittel": "Compare",
           "tekst": "Lets the user compare the size difference of separate categories. A vertical bar chart, represented as animated smoke coming out of an industrial pipe – the higher the bar, the darker and denser it becomes, just like smoke in real life.",
-          "bilde": "bilder/fuse/1.Compare.svg"
+          "bilde": "bilder/01-fuse/2-losning-1-compare.svg"
         },
         {
           "tittel": "Explore",
           "tekst": "Lets the user explore the development of each category. A line chart where the data points indicate whether there has been an increase, decrease or no change from the previous year.",
-          "bilde": "bilder/fuse/2.Explore.svg"
+          "bilde": "bilder/01-fuse/2-losning-2-explore.svg"
         },
         {
           "tittel": "Verify",
           "tekst": "Lets the user verify the values and sources behind the visualizations. A table with the exact values from the data set, where arrows show an increase (red) or decrease (green) from the year before.",
-          "bilde": "bilder/fuse/3.Verify.svg"
+          "bilde": "bilder/01-fuse/2-losning-3-verify.svg"
         }
       ],
       "tidslinje": [
@@ -95,25 +95,25 @@
           "tittel": "Workshop",
           "tekst": "A co-creation workshop with eight students in four parts: individual work (Crazy 8 and storyboards), presentation and feedback using the optimist, pessimist and opportunist roles, group work, and a final vote.",
           "deler": [
-            {"tittel": "Individual work", "tekst": "Each participant sketched ideas on their own, using Crazy 8 and storyboards.", "bilder": ["bilder/fuse/Part 1_ Individual Work - 1.svg", "bilder/fuse/Part 1_ Individual Work - 2.svg"]},
+            {"tittel": "Individual work", "tekst": "Each participant sketched ideas on their own, using Crazy 8 and storyboards.", "bilder": ["bilder/01-fuse/3-prosess-03-workshop-del1-1-storyboards.svg", "bilder/01-fuse/3-prosess-03-workshop-del1-2-crazy8.svg"]},
             {"tittel": "Present and feedback", "tekst": "Everyone presented their ideas, and the others gave feedback wearing one of three hats.", "roller": [
                 {"tittel": "The Optimist", "tekst": "Share what you believe is good and should be further focused on.", "farge": "#2f9e6b", "figur": {"hud": 2, "topp": "hvit"}},
                 {"tittel": "The Pessimist", "tekst": "Share problem areas and challenges that may lead to conflict.", "farge": "#d64545", "figur": {"hud": 4, "topp": "hvit"}},
                 {"tittel": "The Opportunist", "tekst": "Share how things could be done differently or better.", "farge": "#2f7fd1", "figur": {"hud": 1, "topp": "hvit"}}
             ]},
-            {"tittel": "Group work", "tekst": "In groups, the participants combined the strongest ideas into shared concepts.", "bilder": ["bilder/fuse/Part 3_ Group Work.svg"]},
-            {"tittel": "Voting", "tekst": "The groups presented their concepts, and each participant placed dot stickers on the ideas they believed in most.", "bilder": [{"fil": "bilder/fuse/Part 4 voting.svg", "tittel": "Concept: a flight across the map", "tekst": "A world map with a plane over each region. Tapping a plane opens the emission data for that country, so the user explores the numbers by travelling across the map. The orange dots are the participants' votes."}, {"fil": "bilder/fuse/Part 4_ Voting - 2.svg", "tittel": "Concept: emissions as factory smoke", "tekst": "A news-article concept, \"Emissions in Norway or elsewhere\". Each bar in the chart is smoke rising from a factory chimney, so higher emissions look like more smoke. A fact box explains definitions, where the emissions come from, emissions per person and CO₂ equivalents, with sources. The smoke metaphor became the starting point for the Compare view in FUSE."}]}
+            {"tittel": "Group work", "tekst": "In groups, the participants combined the strongest ideas into shared concepts.", "bilder": ["bilder/01-fuse/3-prosess-03-workshop-del3-1-gruppearbeid.svg"]},
+            {"tittel": "Voting", "tekst": "The groups presented their concepts, and each participant placed dot stickers on the ideas they believed in most.", "bilder": [{"fil": "bilder/01-fuse/3-prosess-03-workshop-del4-1-kart.svg", "tittel": "Concept: a flight across the map", "tekst": "A world map with a plane over each region. Tapping a plane opens the emission data for that country, so the user explores the numbers by travelling across the map. The orange dots are the participants' votes."}, {"fil": "bilder/01-fuse/3-prosess-03-workshop-del4-2-roeyk.svg", "tittel": "Concept: emissions as factory smoke", "tekst": "A news-article concept, \"Emissions in Norway or elsewhere\". Each bar in the chart is smoke rising from a factory chimney, so higher emissions look like more smoke. A fact box explains definitions, where the emissions come from, emissions per person and CO₂ equivalents, with sources. The smoke metaphor became the starting point for the Compare view in FUSE."}]}
           ]
         },
         {
           "tittel": "1st prototype",
           "tekst": "The first iteration was a paper prototype inspired by the mockups, slightly adjusted to fit the personas and available data that we could find. We sketched every component we wanted to implement on an A3 paper, to make it appear as a desktop interface.",
           "annotert": {
-            "hoved": "bilder/fuse/1st Prototype_1.svg",
+            "hoved": "bilder/01-fuse/3-prosess-04-prototype1-1-hoved.svg",
             "visninger": [
-              {"fil": "bilder/fuse/1st Prototype_2.svg", "tittel": "Line Chart"},
-              {"fil": "bilder/fuse/1st Prototype_3.svg", "tittel": "Pictogram"},
-              {"fil": "bilder/fuse/1st Prototype_4.svg", "tittel": "Table"}
+              {"fil": "bilder/01-fuse/3-prosess-04-prototype1-2-linjediagram.svg", "tittel": "Line Chart"},
+              {"fil": "bilder/01-fuse/3-prosess-04-prototype1-3-piktogram.svg", "tittel": "Pictogram"},
+              {"fil": "bilder/01-fuse/3-prosess-04-prototype1-4-tabell.svg", "tittel": "Table"}
             ],
             "merker": [
               {"tittel": "Navigation Menu", "tekst": "Allows the user to toggle between three different views: a bar chart/pictogram, line chart or table.", "omrade": [0.51, 0.16, 0.94, 0.25], "side": "top", "etikett": [345, 20, 295]},
@@ -134,13 +134,13 @@
           "tittel": "2nd prototype",
           "tekst": "A mid-fidelity prototype in Figma with a predefined user journey, built on real emission data and real text examples instead of placeholders.",
           "annotert": {
-            "hoved": "bilder/fuse/2nd Prototype_3.svg",
+            "hoved": "bilder/01-fuse/3-prosess-06-prototype2-1-hoved.svg",
             "topp": 175,
             "visninger": [
-              {"fil": "bilder/fuse/2nd Prototype_1.svg", "tittel": "Line Chart"},
-              {"fil": "bilder/fuse/2nd Prototype_2.svg", "tittel": "Hover details"},
-              {"fil": "bilder/fuse/2nd Prototype_4.svg", "tittel": "Pictogram"},
-              {"fil": "bilder/fuse/2nd Prototype_5.svg", "tittel": "Table"}
+              {"fil": "bilder/01-fuse/3-prosess-06-prototype2-2-linjediagram.svg", "tittel": "Line Chart"},
+              {"fil": "bilder/01-fuse/3-prosess-06-prototype2-3-hover.svg", "tittel": "Hover details"},
+              {"fil": "bilder/01-fuse/3-prosess-06-prototype2-4-piktogram.svg", "tittel": "Pictogram"},
+              {"fil": "bilder/01-fuse/3-prosess-06-prototype2-5-tabell.svg", "tittel": "Table"}
             ],
             "merker": [
               {"tittel": "Navigation Menu", "tekst": "Toggles between emissions, development over time and the table.", "omrade": [0.3, 0.047, 0.947, 0.086], "side": "top", "etikett": [300, 20, 300]},
@@ -157,7 +157,7 @@
           "testpersoner": 5,
           "figurstart": 5
         },
-        {"tittel": "Final prototype", "tekst": "The third iteration became the final prototype – the solution shown at the top. Compared to the second prototype:", "punkter": ["After the side-by-side test, the bars became vertical – the smoke now rises from industrial pipes, so higher emissions look like taller, darker smoke.", "The views got clear, action-based names – Compare, Explore and Verify – instead of “See emissions”, “See development” and “See table”.", "Change over time is visible at a glance: data points in the line chart and arrows in the table show whether emissions went up, down or stayed the same."], "lenke": {"tekst": "See the final solution ↑", "href": "#fuse-losning"}},
+        {"tittel": "Final prototype", "tekst": "The third iteration became the final prototype – the solution shown at the top. Compared to the second prototype:", "punkter": ["After the side-by-side test, the bars became vertical – the smoke now rises from industrial pipes, so higher emissions look like taller, darker smoke.", "The views got clear, action-based names – Compare, Explore and Verify – instead of “See emissions”, “See development” and “See table”.", "Change over time is visible at a glance: data points in the line chart and arrows in the table show whether emissions went up, down or stayed the same."]},
         {"tittel": "3rd usability test", "tekst": "The final prototype was tested with three students. No changes were made after this last round.", "funn": [{"type": "pluss", "tekst": "Most liked how the data was presented"}, {"type": "minus", "tekst": "Still wanted to compare with data from other countries"}, {"type": "minus", "tekst": "Not everything was interactive"}], "testpersoner": 3, "figurstart": 2}
       ],
       "stikkord": [
@@ -166,7 +166,7 @@
         "Usability testing",
         "Figma"
       ],
-      "video": "bilder/fuse/video.mp4",
+      "video": "bilder/01-fuse/1-video.mp4",
       "lenke": ""
     },
     {
@@ -216,7 +216,7 @@
         "Unity",
         "Body interaction"
       ],
-      "video": "bilder/charm/video.mp4",
+      "video": "bilder/02-charm/1-video.mp4",
       "lenke": ""
     },
     {
@@ -274,7 +274,7 @@
         "Workshops",
         "Usability testing"
       ],
-      "video": "bilder/wolftech-feeds/video.mp4",
+      "video": "bilder/03-wolftech-feeds/1-video.mp4",
       "lenke": ""
     },
     {
@@ -328,7 +328,7 @@
         "Visual design",
         "Usability testing"
       ],
-      "video": "bilder/tv2-xplore/video.mp4",
+      "video": "bilder/04-tv2-xplore/1-video.mp4",
       "lenke": ""
     },
     {
@@ -360,7 +360,7 @@
         "3D modelling",
         "Autodesk Maya"
       ],
-      "video": "bilder/twerton-park/video.mp4",
+      "video": "bilder/05-twerton-park/1-video.mp4",
       "lenke": ""
     },
     {
@@ -397,7 +397,7 @@
         "Cinema 4D",
         "After Effects"
       ],
-      "video": "bilder/car-ride/video.mp4",
+      "video": "bilder/06-car-ride/1-video.mp4",
       "lenke": ""
     }
   ]
