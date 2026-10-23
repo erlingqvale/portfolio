@@ -144,6 +144,7 @@ a:hover { color: var(--aksent); }
   background: color-mix(in srgb, var(--bg) 72%, transparent);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
 }
+.hei-navn { color: var(--aksent); }
 h1 {
   font-family: var(--font-tittel); font-weight: 700;
   font-size: 12vw; line-height: .95; letter-spacing: -.04em; margin: 0;

@@ -338,7 +338,7 @@ def lag_forside(d):
     srcset="bilder/generelt/stonehenge-900.jpg 900w, bilder/generelt/stonehenge-1600.jpg 1600w, bilder/generelt/stonehenge-2400.jpg 2400w"
     sizes="(orientation: portrait) 150vh, 100vw" alt="" fetchpriority="high">
   <div class="bredde">
-    <p class="hei">Hi, I'm {e(d["navn"])}</p>
+    <p class="hei">Hi, I'm <span class="hei-navn">{e(d["navn"])}</span></p>
     <h1>{e(d["tittel"])}</h1>
   </div>
   <a class="nedpil" href="#{e(d["prosjekter"][0]["slug"])}" aria-label="Scroll to projects">
