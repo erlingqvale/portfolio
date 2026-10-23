@@ -12,7 +12,9 @@ porteføljen. Brukes fra innhold.json som f.eks.
   ting:     mobil, nettbrett, laptop, kolbe (eller ingen)
   briller:  true/false     skjegg: true/false     frakk: true/false (hvit frakk)
   hatt:     hex-farge – papirhatt i stedet for hår (f.eks. workshop-roller)
+  arm:      vinkel for høyre arm, strukket ut (0 = rett ned, 90 = rett ut); armlengde: standard 58
 """
+import math
 
 HUD = ["#f3d2b8", "#e3b48e", "#c98e64", "#9a6440", "#6b4128"]
 HARFARGE = {"svart": "#23201f", "brun": "#5a3a26", "blond": "#d9b25c", "rød": "#a8492b", "grå": "#a7a39c"}
@@ -41,8 +43,8 @@ def _papirhatt(farge, x, y, b):
     )
 
 
-def person(f=None, tittel=""):
-    """En stående person som inline SVG."""
+def _figur(f):
+    """Delene til en stående person (i personens eget koordinatsystem 120 × 250)."""
     f = f or {}
     hud = HUD[max(1, min(5, int(f.get("hud", 2)))) - 1]
     har = f.get("har", "kort")
@@ -79,8 +81,14 @@ def person(f=None, tittel=""):
         d.append('<path d="M40 86 C40 74 46 70 54 69 H57 L55 162 H36 Z" fill="#f2f1ed"/>')
         d.append('<path d="M80 86 C80 74 74 70 66 69 H63 L65 162 H84 Z" fill="#e6e4df"/>')
 
-    # Høyre arm: bøyd når personen holder noe foran seg
-    if ting in ("mobil", "nettbrett", "kolbe"):
+    # Høyre arm: strukket ut i en vinkel, bøyd når personen holder noe foran seg, ellers hengende
+    if "arm" in f:
+        hx, hy = _hand(f)
+        for farge, opasitet in ((erme, 1), ("#000", .08)):
+            d.append(f'<path d="M85 84 L{hx:.1f} {hy:.1f}" stroke="{farge}" stroke-opacity="{opasitet}" '
+                     'stroke-width="11.5" stroke-linecap="round"/>')
+        d.append(f'<circle cx="{hx:.1f}" cy="{hy:.1f}" r="5.6" fill="{hud}"/>')
+    elif ting in ("mobil", "nettbrett", "kolbe"):
         d.append(f'<path d="M85 84 L89 118 L73 110" fill="none" stroke="{erme}" stroke-width="11.5" '
                  'stroke-linecap="round" stroke-linejoin="round"/>')
         d.append(f'<path d="M85 84 L89 118 L73 110" fill="none" stroke="#000" stroke-opacity=".08" stroke-width="11.5" '
@@ -124,8 +132,19 @@ def person(f=None, tittel=""):
         d.append(f'<g fill="none" stroke="{MORK}" stroke-width="1.6"><circle cx="53.5" cy="41" r="4.6"/>'
                  '<circle cx="66.5" cy="41" r="4.6"/><path d="M58.1 41 h3.8"/></g>')
 
+    return "".join(d)
+
+
+def _hand(f):
+    """Håndens posisjon når armen er strukket ut: `arm` er vinkelen fra rett ned (90 = rett ut)."""
+    v, lengde = math.radians(f["arm"]), f.get("armlengde", 58)
+    return 85 + lengde * math.sin(v), 84 + lengde * math.cos(v)
+
+
+def person(f=None, tittel=""):
+    """En stående person som inline SVG."""
     rolle = f' role="img" aria-label="{tittel}"' if tittel else ' aria-hidden="true"'
-    return f'<svg class="person" viewBox="0 -6 120 256"{rolle}>{"".join(d)}</svg>'
+    return f'<svg class="person" viewBox="0 -6 120 256"{rolle}>{_figur(f or {})}</svg>'
 
 
 # Ferdige figurer til testpersoner o.l., så de varierer uten å måtte beskrives hver gang
@@ -144,3 +163,75 @@ TESTPERSONER = [
 def testpersoner(antall, start=0):
     """`antall` ulike figurer fra TESTPERSONER, fra posisjon `start`."""
     return [TESTPERSONER[(start + n) % len(TESTPERSONER)] for n in range(antall)]
+
+
+# ---------- Scener: før/etter-ruter der en person bruker hånden (f.eks. Charm) ----------
+SKALA, PX, PY = .86, 75, 12            # personens plassering i ruten (300 × 240)
+SCENEPERSON = {"har": "hestehale", "harfarge": "svart", "hud": 4, "topp": "aksent", "bukse": "dongeri"}
+_scener = 0
+
+
+def _mot(x, y):
+    """Arm-vinkel og -lengde som får hånden til punktet (x, y) i ruten."""
+    dx, dy = (x - PX) / SKALA - 85, (y - PY) / SKALA - 84
+    return {"arm": math.degrees(math.atan2(dx, dy)), "armlengde": math.hypot(dx, dy)}
+
+
+def _glod(pref, x, y, farge, r=19):
+    return (f'<radialGradient id="{pref}"><stop offset="0" style="stop-color:{farge};stop-opacity:.95"/>'
+            f'<stop offset=".45" style="stop-color:{farge};stop-opacity:.5"/>'
+            f'<stop offset="1" style="stop-color:{farge};stop-opacity:0"/></radialGradient>'
+            f'<circle cx="{x}" cy="{y}" r="{r}" fill="url(#{pref})"/>')
+
+
+def _gnist(x, y, s=5):
+    return (f'<path d="M{x} {y - s} Q{x} {y} {x + s} {y} Q{x} {y} {x} {y + s} Q{x} {y} {x - s} {y} '
+            f'Q{x} {y} {x} {y - s} Z" fill="var(--aksent)"/>')
+
+
+def _felt(x, y, b, h, tekst=""):
+    t = f'<text class="scene-tekst" x="{x + b / 2}" y="{y + 15}" text-anchor="middle">{tekst}</text>' if tekst else ""
+    return f'<rect class="scene-felt" x="{x}" y="{y}" width="{b}" height="{h}" rx="3"/>{t}'
+
+
+def _rute(hand, foran="", bak="", tittel=""):
+    """Én rute: bakgrunn, ting bak personen, personen med hånden i `hand`, ting foran."""
+    figur = dict(SCENEPERSON, **_mot(*hand))
+    return (f'<svg class="scene-rute" viewBox="0 0 300 240" role="img" aria-label="{tittel}">'
+            '<rect class="scene-bg" width="300" height="240" rx="16"/>'
+            '<rect class="scene-gulv" y="204" width="300" height="36" rx="16"/>'
+            f'{bak}<g transform="translate({PX} {PY}) scale({SKALA})">{_figur(figur)}</g>{foran}</svg>')
+
+
+def scene(navn):
+    """To ruter (før → etter) for en gjenkjenningsmetode i Charm."""
+    global _scener
+    _scener += 1
+    p = f"sc{_scener}"
+    if navn == "fri-hand":
+        a = _rute((175, 128), _glod(p + "a", 175, 128, "#9aa0aa"), tittel="Hand down, not recognized")
+        b = _rute((182, 40), _glod(p + "b", 182, 40, "var(--aksent)") + _gnist(204, 26) + _gnist(198, 60, 4) + _gnist(165, 22, 3.5),
+                  tittel="Hand raised, posture recognized")
+    elif navn == "form":
+        T, R, L = (190, 52), (255, 120), (180, 120)
+        pil = (f'<defs><marker id="{p}m" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">'
+               '<path d="M1 1 L8 5 L1 9 Z" fill="var(--aksent)"/></marker></defs>')
+        trekant = f'<path class="scene-strek" d="M{T[0]} {T[1]} L{R[0]} {R[1]} L{L[0]} {L[1]} Z"/>'
+        a = _rute(T, _glod(p + "a", *T, "var(--aksent)") +
+                  f'<text class="scene-tekst" x="{T[0] + 14}" y="{T[1] - 12}">Start position</text>',
+                  bak=trekant, tittel="Start position of the shape")
+        b = _rute(L, _glod(p + "b", *L, "var(--aksent)") + _gnist(205, 98, 6),
+                  bak=pil + trekant + f'<path class="scene-spor" d="M{T[0]} {T[1]} L{R[0]} {R[1]} L{L[0] + 12} {L[1]}" '
+                  f'marker-end="url(#{p}m)"/>', tittel="Triangle drawn in the air")
+    elif navn == "kollider":
+        felt = _felt(182, 28, 74, 50, "Collider 1") + _felt(182, 90, 74, 50, "Collider 2")
+        a = _rute((172, 128), _glod(p + "a", 172, 128, "#6f86ff"), bak=felt, tittel="Hand outside the colliders")
+        b = _rute((205, 60), _glod(p + "b", 205, 60, "#ff4fc8"), bak=felt, tittel="Hand hits collider 1, glow changes colour")
+    else:  # posisjon
+        akser = ('<path class="scene-akse" d="M24 228 V24 M18 32 L24 24 L30 32 M24 228 H284 M276 222 L284 228 L276 234"/>'
+                 '<text class="scene-tekst" x="32" y="30">Y</text><text class="scene-tekst" x="272" y="216">X</text>')
+        felt = akser + _felt(168, 30, 40, 40) + _felt(168, 92, 40, 40) + _felt(216, 92, 40, 40)
+        kube = lambda x, y, farge: f'<rect x="{x - 9}" y="{y - 20}" width="18" height="18" rx="2" fill="{farge}"/>'
+        a = _rute((188, 112), kube(188, 112, "#3fae5b"), bak=felt, tittel="Hand in one area: green cube")
+        b = _rute((188, 50), kube(188, 50, "#e5484d"), bak=felt, tittel="Hand in another area: red cube")
+    return f'<div class="scene">{a}{b}</div>'

@@ -16,7 +16,7 @@ from pathlib import Path
 from urllib.parse import quote
 
 from annotering import annotert
-from illustrasjoner import person, testpersoner
+from illustrasjoner import person, scene, testpersoner
 
 ROT = Path(__file__).resolve().parent
 CHROME_KANDIDATER = [
@@ -179,7 +179,7 @@ def funn(s):
 
 def prosessteg(s):
     return (f'<li><h4>{e(s["tittel"])}</h4><p>{e(s["tekst"])}</p>{funn(s)}{punkter(s)}'
-            f'{deltakere(s.get("deltakere"))}{deler(s.get("deler"))}{annotert(s.get("annotert"))}{stegbilde(s)}</li>')
+            f'{deltakere(s.get("deltakere"))}{deler(s.get("deler"))}{annotert(s.get("annotert"))}{scene(s["scene"]) if s.get("scene") else ""}{stegbilde(s)}</li>')
 
 
 def blokker(rader, klasse):

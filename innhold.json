@@ -171,7 +171,7 @@
     },
     {
       "slug": "charm",
-      "farger": { "aksent": "#7048e8", "flate": "#ece6ff" },
+      "farger": { "aksent": "#882792", "flate": "#DBBFFF" },
       "tittel": "Charm",
       "aar": "",
       "rolle": "Team of four",
@@ -184,32 +184,15 @@
       ],
       "utfordring": "Develop a prototype in Unity focusing on Augmented Reality and Body Interaction. None of the four of us had prior experience with Unity, and the task was very open-ended – so everyone created a storyboard, and we voted on the proposal we liked best.",
       "losning": [
-        {
-          "tittel": "Minimum viable product",
-          "tekst": "All interactions are made with the user's right hand: a glow indicating that the hand is tracked, creating a virtual object by hand movement, moving and modifying it, and movements that trigger special effects."
-        },
-        {
-          "tittel": "Position recognition",
-          "tekst": "The X and Y position of the user's right hand triggers actions when it enters predefined areas – the most reliable way to detect hand movement at this stage."
-        }
+        {"tittel": "Charm – a magical AR experience", "tekst": "The user becomes a wizard, and the phone camera turns the room into the game. A glow shows that the right hand is tracked, hand movements conjure magical items like a dragon egg, and new movements move them, change them or trigger special effects. The hand is tracked with position recognition: actions fire when the hand enters predefined areas of the screen.", "bilde": "bilder/02-charm/2-losning-1-charm.svg"}
       ],
       "prosess": [
-        {
-          "tittel": "Free-hand recognition",
-          "tekst": "Our preferred solution, with the potential to recognize multiple postures and movements – but with our experience and time limits, we never managed to recognize a specific hand posture."
-        },
-        {
-          "tittel": "Shape recognition",
-          "tekst": "If the script could recognize shapes drawn by the hand, different magic tricks could be triggered for different shapes."
-        },
-        {
-          "tittel": "Collider recognition",
-          "tekst": "Interacting with hidden game objects to change the colour of the hand glow – easier said than done when the objects are invisible."
-        },
-        {
-          "tittel": "Position recognition",
-          "tekst": "The approach we chose: predefined areas that trigger actions when the hand enters them."
-        }
+        {"tittel": "Storyboard", "tekst": "With an open-ended brief and no prior Unity experience, everyone in the team sketched a storyboard of their own idea. We voted on the proposal we liked best: a wizard who casts spells with hand movements.", "bilde": "bilder/02-charm/3-prosess-01-storyboard.svg"},
+        {"tittel": "Minimum viable product", "tekst": "All interactions are made with the user's right hand: a glow indicating that the hand is tracked, creating a virtual object by hand movement, moving and modifying it, and movements that trigger special effects."},
+        {"tittel": "Free-hand recognition", "scene": "fri-hand", "tekst": "Our preferred solution, with the potential to recognize multiple postures and movements – but with our experience and time limits, we never managed to recognize a specific hand posture."},
+        {"tittel": "Shape recognition", "scene": "form", "tekst": "If the script could recognize shapes drawn by the hand, different magic tricks could be triggered for different shapes."},
+        {"tittel": "Collider recognition", "scene": "kollider", "tekst": "Interacting with hidden game objects to change the colour of the hand glow – easier said than done when the objects are invisible."},
+        {"tittel": "Position recognition", "scene": "posisjon", "tekst": "The approach we chose: predefined areas that trigger actions when the hand enters them."}
       ],
       "stikkord": [
         "Augmented reality",

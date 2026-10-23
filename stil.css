@@ -217,6 +217,8 @@ video.video { aspect-ratio: auto; width: auto; margin-inline: auto; max-width: 1
 .rutenett { display: grid; grid-template-columns: 1fr; gap: 12px; }
 .kort { background: var(--flate); border-radius: 20px; padding: 22px; }
 .kort p { margin: 0; font-size: 15px; color: var(--dempet); }
+/* Ett enkelt løsningskort tar hele bredden */
+.rutenett .kort:only-child { grid-column: 1 / -1; }
 /* Bilde øverst i løsningskortet, og under teksten i prosessteg */
 .kort img { display: block; width: 100%; border-radius: 12px; margin-bottom: 18px; }
 .prosess img { display: block; width: 100%; border-radius: 14px; margin-top: 14px; }
@@ -359,6 +361,18 @@ video.video { aspect-ratio: auto; width: auto; margin-inline: auto; max-width: 1
 .ann-visninger figcaption { margin-top: 8px; font-family: var(--font-overskrift); font-weight: 600; font-size: 14px; }
 .prosess .annotert img { max-width: none; }
 
+/* Scener (illustrasjoner.py): før → etter, én og én på mobil, side om side fra nettbrett */
+.scene { display: grid; gap: 12px; margin-top: 16px; }
+.scene-rute { display: block; width: 100%; height: auto; }
+.scene-bg { fill: var(--flate); }
+.scene-gulv { fill: #000; fill-opacity: .05; }
+.scene-felt { fill: none; stroke: var(--tekst); stroke-width: 1.4; stroke-dasharray: 5 4; }
+.scene-tekst { font: 600 12px var(--font-tekst); fill: var(--tekst); }
+.scene-strek { fill: none; stroke: var(--aksent); stroke-width: 1.6; stroke-dasharray: 4 4; opacity: .5; }
+.scene-spor, .scene-akse { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.scene-spor { stroke: var(--aksent); }
+.scene-akse { stroke: var(--tekst); stroke-width: 2; }
+
 /* Roller med papirhatt (workshop del 2) */
 .roller { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 10px; }
 .roller li { display: flex; align-items: center; gap: 12px; }
@@ -429,6 +443,7 @@ video.video { aspect-ratio: auto; width: auto; margin-inline: auto; max-width: 1
   .annotert-liten { display: none; }
   .deltakere { grid-template-columns: repeat(6, 1fr); }
   .funnliste { grid-template-columns: repeat(3, 1fr); }
+  .scene { grid-template-columns: 1fr 1fr; }
   .funnliste li { flex-direction: column; text-align: center; padding: 20px 16px; }
   .deltakere.med-sitater { grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .delbilder { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
