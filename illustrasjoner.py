@@ -276,3 +276,64 @@ def seilbat():
         '<text class="seilbat-tekst" x="430" y="313">holds us back</text>'
         '</svg>'
     )
+
+# ---------- Lo-fi wireframes (TV 2 Xplore, 1st prototype) ----------
+def _wf_linjer(x, y, bredder, h=4, gap=8):
+    return "".join(f'<rect x="{x}" y="{y + i * gap}" width="{b}" height="{h}" rx="2" class="wf-linje"/>'
+                   for i, b in enumerate(bredder))
+
+
+def _wf_rad(y, tittel, antall=4, x0=24, bredde=352, h=46, tekst_x=None):
+    b = (bredde - (antall - 1) * 10) / antall
+    kort = "".join(f'<rect x="{x0 + i * (b + 10):.1f}" y="{y + 10}" width="{b:.1f}" height="{h}" rx="6" class="wf-kort"/>'
+                   for i in range(antall))
+    return f'<text class="wf-etikett" x="{tekst_x or x0}" y="{y + 4}">{tittel}</text>{kort}'
+
+
+def _wf_topp(sok=False):
+    meny = '<path d="M20 20 h14 M20 25 h14 M20 30 h14" class="wf-strek"/>'
+    bruker = ('<circle cx="356" cy="25" r="7" class="wf-ikon"/><text class="wf-liten" x="367" y="28">user</text>')
+    felt = ('<rect x="130" y="15" width="140" height="20" rx="10" class="wf-sok"/>'
+            '<circle cx="257" cy="24" r="4.5" class="wf-strek"/><path d="M260 27 l4 4" class="wf-strek"/>') if sok else ""
+    return meny + felt + bruker
+
+
+def _wf_helt():
+    return ('<text class="wf-tittel" x="24" y="66">Title</text>' + _wf_linjer(24, 76, [110, 96, 104])
+            + "".join(f'<circle cx="{190 + i * 12}" cy="104" r="{3.5 if i else 4.5}" class="{"wf-prikk-aktiv" if not i else "wf-prikk"}"/>'
+                      for i in range(4)))
+
+
+def wireframe(navn):
+    """Lo-fi skjermskisse: grunn, dra (favoritter), filter eller alternativ."""
+    deler = [_wf_topp(sok=navn == "alternativ")]
+    if navn == "alternativ":
+        deler.append('<text class="wf-liten" x="200" y="58" text-anchor="middle">Sorry, we couldn’t find what you were looking for…</text>')
+        deler.append('<g class="wf-fremhevet">' + _wf_rad(78, "SIMILAR GENRE", 3, h=58) + "</g>")
+        deler.append(_wf_rad(160, "SAME DIRECTOR", 4, h=30))
+        deler.append(_wf_rad(212, "THE SAME ACTORS ALSO STARRED IN", 4, h=22))
+    else:
+        deler.append(_wf_helt())
+        x0 = 40 if navn == "dra" else 24
+        deler.append(_wf_rad(122, "CONTINUE WATCHING", x0=x0, bredde=376 - x0))
+        rad2 = _wf_rad(188, "RECOMMENDED FOR YOU", x0=x0, bredde=376 - x0)
+        if navn == "dra":
+            # raden løftes og dras opp: skygge, aksentkant og håndtak med piler
+            deler.append(f'<g class="wf-loftet" transform="translate(0 -6)">{rad2}</g>')
+            deler.append('<path d="M18 144 h12 M18 149 h12 M18 154 h12" class="wf-aksentstrek"/>'
+                         '<path d="M18 204 h12 M18 209 h12 M18 214 h12" class="wf-aksentstrek"/>'
+                         '<path d="M24 186 v-14 M19 177 l5 -5 l5 5 M24 230 v10 M19 235 l5 5 l5 -5" class="wf-aksentstrek"/>')
+        else:
+            deler.append(rad2)
+        if navn == "filter":
+            deler.append('<g class="wf-aksentstrek"><path d="M150 118 h12 M150 122 h12 M150 126 h12"/>'
+                         '<circle cx="154" cy="118" r="1.6"/><circle cx="159" cy="122" r="1.6"/><circle cx="155" cy="126" r="1.6"/></g>'
+                         '<rect x="146" y="132" width="122" height="98" rx="8" class="wf-meny"/>'
+                         '<text class="wf-meny-tekst" x="158" y="152">Recently added</text>'
+                         '<text class="wf-meny-tekst" x="158" y="168">Most popular</text>'
+                         '<text class="wf-meny-tekst" x="158" y="184">Classics</text>'
+                         '<rect x="156" y="194" width="102" height="26" rx="4" class="wf-meny-felt"/>'
+                         '<text class="wf-meny-liten" x="162" y="205">Select year ▾</text>'
+                         '<text class="wf-meny-liten" x="162" y="215">2022 · 2021 · 2020</text>')
+    return f'<svg class="wireframe" viewBox="0 0 400 250" role="img" aria-label="Wireframe">' \
+           f'<rect x="1" y="1" width="398" height="248" rx="12" class="wf-ramme"/>{"".join(deler)}</svg>'

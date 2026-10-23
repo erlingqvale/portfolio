@@ -17,7 +17,7 @@ from pathlib import Path
 from urllib.parse import quote
 
 from annotering import annotert
-from illustrasjoner import person, scene, seilbat, testpersoner
+from illustrasjoner import person, scene, seilbat, testpersoner, wireframe
 
 ROT = Path(__file__).resolve().parent
 # Endres når stil.css endres, så nettleseren ikke viser en gammel, mellomlagret versjon
@@ -144,7 +144,7 @@ def delbilder(bilder, alt):
     if all(isinstance(b, str) for b in bilder):
         return f'<div class="delbilder">{"".join(bildefil(b, alt) for b in bilder)}</div>'
     return '<div class="delbilder forklart">' + "".join(
-        f'<figure>{bildefil(b["fil"], b.get("tittel", alt))}<figcaption>'
+        f'<figure>{wireframe(b["wireframe"]) if b.get("wireframe") else bildefil(b["fil"], b.get("tittel", alt))}<figcaption>'
         + (f'<strong>{e(b["tittel"])}</strong>' if b.get("tittel") else "")
         + f'{e(b.get("tekst", ""))}</figcaption></figure>'
         for b in bilder
@@ -222,7 +222,8 @@ def utvikling(rader):
     deler = []
     for r in rader:
         bilder = "".join(
-            f'<figure>{bildefil(b["fil"], b["tittel"])}<figcaption>{e(b["tittel"])}</figcaption></figure>'
+            f'<figure>{wireframe(b["wireframe"]) if b.get("wireframe") else bildefil(b["fil"], b["tittel"])}'
+            f'<figcaption>{e(b["tittel"])}</figcaption></figure>'
             for b in r["bilder"]
         )
         deler.append(f'<div class="evo-rad"><h5>{e(r["tittel"])}</h5><div class="evo-bilder">{bilder}</div></div>')

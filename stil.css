@@ -409,12 +409,40 @@ video.video { aspect-ratio: auto; width: auto; margin-inline: auto; max-width: 1
 .evo-rad h5 { font-family: var(--font-overskrift); font-weight: 600; font-size: 17px; margin: 0 0 12px; color: var(--aksent); text-align: center; }
 .evo-bilder { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 12px; }
 .evo-bilder figure { margin: 0; }
+.evo-bilder:has(> figure:only-child) { max-width: 420px; margin: 0 auto; }  /* ett bilde: ikke full bredde */
+/* Ett enkelt bilde (f.eks. en kollasj) vises i sin egen form, uten hvit flate og ramme */
+.prosess .evo-bilder:has(> figure:only-child) img {
+  aspect-ratio: auto; object-fit: contain; background: none; box-shadow: none; border-radius: 0;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, .2));
+}
 .prosess .evo-bilder img {
   margin: 0; border-radius: 6px; box-shadow: 0 4px 10px -4px rgba(0, 0, 0, .25);
   aspect-ratio: 3 / 2; object-fit: cover; object-position: top; background: #fff;  /* lik høyde, så etikettene står på linje */
 }
+.evo-bilder .wireframe { aspect-ratio: 3 / 2; border-radius: 6px; box-shadow: 0 4px 10px -4px rgba(0, 0, 0, .25); }
 .evo-bilder figcaption { margin-top: 6px; font-size: 13px; font-weight: 600; text-align: center; }
 .evo-pil { color: var(--aksent); display: flex; }
+
+/* Lo-fi wireframes (illustrasjoner.wireframe) */
+.wireframe { display: block; width: 100%; height: auto; }
+.wf-ramme { fill: var(--ark); stroke: color-mix(in srgb, var(--tekst) 18%, transparent); stroke-width: 1.5; }
+.wf-kort { fill: #d7dae1; }
+.wf-linje { fill: #e3e5ea; }
+.wf-strek, .wf-aksentstrek { fill: none; stroke: #6b7080; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.wf-aksentstrek { stroke: var(--aksent); stroke-width: 2.4; }
+.wf-ikon { fill: #6b7080; }
+.wf-sok { fill: none; stroke: var(--aksent); stroke-width: 2; }
+.wf-tittel { font: 700 20px var(--font-overskrift); fill: var(--tekst); }
+.wf-etikett { font: 700 8px var(--font-tekst); letter-spacing: .06em; fill: #6b7080; }
+.wf-liten { font: 9px var(--font-tekst); fill: #6b7080; }
+.wf-prikk { fill: #c3c7d0; }
+.wf-prikk-aktiv { fill: var(--aksent); }
+.wf-loftet .wf-kort { fill: #cfd3dc; stroke: var(--aksent); stroke-width: 2; filter: drop-shadow(0 6px 6px rgba(0, 0, 0, .18)); }
+.wf-fremhevet .wf-kort { fill: color-mix(in srgb, var(--aksent) 22%, #d7dae1); }
+.wf-meny { fill: var(--aksent); filter: drop-shadow(0 8px 10px rgba(0, 0, 0, .25)); }
+.wf-meny-tekst { font: 600 10px var(--font-tekst); fill: #fff; }
+.wf-meny-felt { fill: none; stroke: #fff; stroke-opacity: .6; }
+.wf-meny-liten { font: 7.5px var(--font-tekst); fill: #fff; }
 
 /* Roller med papirhatt (workshop del 2) */
 .roller { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 10px; }
@@ -509,6 +537,7 @@ video.video { aspect-ratio: auto; width: auto; margin-inline: auto; max-width: 1
   .ark { padding: 64px 64px 72px; border-radius: 36px; margin-bottom: 40px; }
   .stortord { font-size: 120px; }
   .rutenett { grid-template-columns: repeat(3, 1fr); }
+  .rutenett:has(> .kort:nth-child(4):last-child) { grid-template-columns: repeat(2, 1fr); }  /* fire kort: to og to */
 
   /* Tidslinjen vannrett; sirklene vokser med skjermen */
   .tidslinje { --d: clamp(52px, 5vw, 64px); flex-direction: row; gap: 0; }
