@@ -235,3 +235,44 @@ def scene(navn):
         a = _rute((188, 112), kube(188, 112, "#3fae5b"), bak=felt, tittel="Hand in one area: green cube")
         b = _rute((188, 50), kube(188, 50, "#e5484d"), bak=felt, tittel="Hand in another area: red cube")
     return f'<div class="scene">{a}{b}</div>'
+
+
+def _postit(x, y, farge, vri=0):
+    """Liten post-it med to «tekstlinjer» og skygge."""
+    return (f'<g transform="rotate({vri} {x + 22} {y + 22})">'
+            f'<rect x="{x + 2}" y="{y + 4}" width="44" height="44" fill="#000" opacity=".12"/>'
+            f'<rect x="{x}" y="{y}" width="44" height="44" fill="{farge}"/>'
+            f'<path d="M{x + 8} {y + 16} h26 M{x + 8} {y + 25} h20" stroke="#000" stroke-opacity=".25" stroke-width="3" stroke-linecap="round"/></g>')
+
+
+def seilbat():
+    """Seilbåtøvelsen: grønne lapper i vinden (driver fremover), oransje ved ankeret (holder igjen)."""
+    vind = "".join(f'<path d="M{x} {y} q30 -14 60 0 t60 0" fill="none" stroke="var(--aksent)" stroke-opacity=".45" '
+                   'stroke-width="4" stroke-linecap="round"/>' for x, y in ((40, 92), (70, 122), (30, 152)))
+    return (
+        '<svg class="seilbat" viewBox="0 0 600 320" role="img" '
+        'aria-label="Sailboat exercise: the wind is what pushes the design forward, the anchor is what holds it back">'
+        '<rect width="600" height="320" rx="18" fill="var(--ark)"/>'
+        '<path d="M0 206 q37 -14 75 0 t75 0 t75 0 t75 0 t75 0 t75 0 t75 0 t75 0 V302 a18 18 0 0 1 -18 18 H18 a18 18 0 0 1 -18 -18 Z" '
+        'fill="var(--aksent)" fill-opacity=".18"/>'
+        '<path d="M0 236 q37 -10 75 0 t75 0 t75 0 t75 0 t75 0 t75 0 t75 0 t75 0 V302 a18 18 0 0 1 -18 18 H18 a18 18 0 0 1 -18 -18 Z" '
+        'fill="var(--aksent)" fill-opacity=".18"/>'
+        + vind +
+        # båt: mast, seil og skrog
+        '<path d="M352 48 V196" stroke="#2c3038" stroke-width="5" stroke-linecap="round"/>'
+        '<path d="M357 56 L357 186 L440 186 Z" fill="#fff" stroke="#2c3038" stroke-width="3" stroke-linejoin="round"/>'
+        '<path d="M347 72 L347 186 L288 186 Z" fill="#f1f3f8" stroke="#2c3038" stroke-width="3" stroke-linejoin="round"/>'
+        '<path d="M262 196 H458 L430 236 H292 Z" fill="var(--aksent)"/>'
+        '<path d="M262 196 H458 L452 206 H268 Z" fill="#000" fill-opacity=".15"/>'
+        # anker med kjetting
+        '<path d="M320 236 V286" stroke="#2c3038" stroke-width="3" stroke-dasharray="5 4"/>'
+        '<path d="M320 286 V306 M306 298 q14 16 28 0 M314 290 h12" stroke="#2c3038" stroke-width="4" '
+        'stroke-linecap="round" fill="none"/>'
+        # lappene
+        + _postit(52, 34, "#c5ec7f", -6) + _postit(150, 46, "#c5ec7f", 5) + _postit(96, 168, "#c5ec7f", -3)
+        + _postit(230, 258, "#ffa35a", 4) + _postit(370, 262, "#ffa35a", -5) +
+        '<text class="seilbat-tekst" x="200" y="30">Wind – what pushes us forward</text>'
+        '<text class="seilbat-tekst" x="430" y="296">Anchor – what</text>'
+        '<text class="seilbat-tekst" x="430" y="313">holds us back</text>'
+        '</svg>'
+    )

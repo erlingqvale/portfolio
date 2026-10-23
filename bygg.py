@@ -5,6 +5,7 @@ Bruk:  python3 bygg.py
 Lager index.html (one-pager med alle prosjekter) og PDF-en
 (via Google Chrome i headless-modus).
 """
+import hashlib
 import json
 import re
 import shutil
@@ -16,9 +17,11 @@ from pathlib import Path
 from urllib.parse import quote
 
 from annotering import annotert
-from illustrasjoner import person, scene, testpersoner
+from illustrasjoner import person, scene, seilbat, testpersoner
 
 ROT = Path(__file__).resolve().parent
+# Endres når stil.css endres, så nettleseren ikke viser en gammel, mellomlagret versjon
+STILVERSJON = hashlib.sha1((ROT / "stil.css").read_bytes()).hexdigest()[:8]
 CHROME_KANDIDATER = [
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
     "google-chrome",
@@ -86,7 +89,7 @@ def side(tittel, beskrivelse, kropp):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="stil.css">
+<link rel="stylesheet" href="stil.css?v={STILVERSJON}">
 </head>
 <body>
 {kropp}
@@ -105,18 +108,26 @@ def stegbilde(r):
 
 
 def deltakere(liste):
-    """Illustrerte deltakere, ev. med rolle og sitater i snakkebobler."""
+    """Illustrerte deltakere. Med sitater: rolle og snakkebobler over figuren.
+    Ellers kan hver ha redaksjon/firma (org), rolle og en kort beskrivelse under figuren."""
     if not liste:
         return ""
     sitater = any(d.get("sitater") for d in liste)
+    tekst = any(d.get("org") or d.get("beskrivelse") for d in liste)
     rader = []
     for d in liste:
-        bobler = "".join(f'<blockquote class="boble">“{e(x)}”</blockquote>' for x in d.get("sitater", []))
         rolle = f'<strong class="rolle">{e(d["rolle"])}</strong>' if d.get("rolle") else ""
+        if sitater:
+            bobler = "".join(f'<blockquote class="boble">“{e(x)}”</blockquote>' for x in d.get("sitater", []))
+            over, under = (f'<div class="bobler">{bobler}</div>' if bobler else "") + rolle, ""
+        else:
+            org = f'<span class="org">{e(d["org"])}</span>' if d.get("org") else ""
+            beskr = f'<span class="beskrivelse">{e(d["beskrivelse"])}</span>' if d.get("beskrivelse") else ""
+            over, under = "", org + rolle + beskr
         navn = f'<span class="navn">{e(d["navn"])}</span>' if d.get("navn") else ""
-        rader.append(f'<li>{f"<div class=bobler>{bobler}</div>" if bobler else ""}{rolle}'
-                     f'{person(d.get("figur"))}{navn}</li>')
-    return f'<ul class="deltakere{" med-sitater" if sitater else ""}">{"".join(rader)}</ul>'
+        rader.append(f'<li>{over}{person(d.get("figur"))}{navn}{under}</li>')
+    klasse = " med-sitater" if sitater else " med-tekst" if tekst else ""
+    return f'<ul class="deltakere{klasse}">{"".join(rader)}</ul>'
 
 
 def roller(liste):
@@ -140,13 +151,40 @@ def delbilder(bilder, alt):
     ) + "</div>"
 
 
+def lapper(liste):
+    """Post-it-lapper (f.eks. How Might We) med stemmeprikker."""
+    noen = any(x.get("stemmer") for x in liste) and not all(x.get("stemmer") for x in liste)
+    return '<ul class="lapper">' + "".join(
+        f'<li{" class=uvalgt" if noen and not x.get("stemmer") else ""}><span class="stemmer" aria-label="{x.get("stemmer", 0)} votes">'
+        f'{"<i></i>" * x.get("stemmer", 0)}</span>{e(x["tekst"])}</li>'
+        for x in liste
+    ) + "</ul>"
+
+
+def affinitet(grupper):
+    """Affinity map: grupper av små lapper med en overskrift."""
+    farger = ["#b9d4ff", "#f1c9f5", "#ffe58a", "#9fe0a4", "#f2c48f"]
+    return '<div class="affinitet">' + "".join(
+        f'<div class="klynge"><span>{e(g["tittel"])}</span><div>'
+        + "".join(f'<i style="background:{farger[(n * 7 + i * 3) % len(farger)]}"></i>' for n in range(g.get("antall", 9)))
+        + "</div></div>"
+        for i, g in enumerate(grupper)
+    ) + "</div>"
+
+
+ILLUSTRASJONER = {"seilbat": seilbat}
+
+
 def deler(liste):
     """Et prosessteg delt opp i deler (Part 1, Part 2 …) med bilder eller roller."""
     if not liste:
         return ""
     return '<ol class="deler">' + "".join(
-        f'<li><span class="delnr">Part {i}</span><h5>{e(x["tittel"])}</h5><p>{e(x["tekst"])}</p>'
+        f'<li>{f"<span class=delnr>Part {i}</span>" if len(liste) > 1 else ""}<h5>{e(x["tittel"])}</h5><p>{e(x["tekst"])}</p>'
         + (roller(x["roller"]) if x.get("roller") else "")
+        + (lapper(x["lapper"]) if x.get("lapper") else "")
+        + (affinitet(x["affinitet"]) if x.get("affinitet") else "")
+        + (ILLUSTRASJONER[x["illustrasjon"]]() if x.get("illustrasjon") else "")
         + (delbilder(x["bilder"], x["tittel"]) if x.get("bilder") else "")
         + "</li>"
         for i, x in enumerate(liste, 1)
@@ -177,9 +215,24 @@ def funn(s):
     return f'<ul class="funnliste">{kort}</ul>{folk}'
 
 
+def utvikling(rader):
+    """Hvordan prototypen utviklet seg: rader med miniatyrbilder og pil ned mellom radene."""
+    if not rader:
+        return ""
+    deler = []
+    for r in rader:
+        bilder = "".join(
+            f'<figure>{bildefil(b["fil"], b["tittel"])}<figcaption>{e(b["tittel"])}</figcaption></figure>'
+            for b in r["bilder"]
+        )
+        deler.append(f'<div class="evo-rad"><h5>{e(r["tittel"])}</h5><div class="evo-bilder">{bilder}</div></div>')
+    pil = f'<span class="evo-pil">{ikon("arrow-down", 22)}</span>'
+    return f'<div class="evolusjon">{pil.join(deler)}</div>'
+
+
 def prosessteg(s):
     return (f'<li><h4>{e(s["tittel"])}</h4><p>{e(s["tekst"])}</p>{funn(s)}{punkter(s)}'
-            f'{deltakere(s.get("deltakere"))}{deler(s.get("deler"))}{annotert(s.get("annotert"))}{scene(s["scene"]) if s.get("scene") else ""}{stegbilde(s)}</li>')
+            f'{deltakere(s.get("deltakere"))}{deler(s.get("deler"))}{annotert(s.get("annotert"))}{scene(s["scene"]) if s.get("scene") else ""}{stegbilde(s)}{utvikling(s.get("utvikling"))}</li>')
 
 
 def blokker(rader, klasse):
