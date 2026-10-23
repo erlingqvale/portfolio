@@ -12,5 +12,8 @@ Personlig portefølje som nettside (GitHub Pages) og kortversjon i PDF.
 |---|---|
 | `innhold.json` | All tekst – eneste fil du trenger å redigere |
 | `stil.css` | Utseende på nettsiden |
+| `illustrasjoner.py` | Egne personfigurer (deltakere) og papirhatter – se toppen av filen for valgene i `"figur"` |
+| `annotering.py` | Annoterte prototyper (merkelapper, klammer og piler rundt skissene) – se toppen av filen for `"annotert"` |
+| `ikoner/` | Ikoner fra [Lucide](https://lucide.dev) (gratis, ISC-lisens). Nye ikoner: last ned `<navn>.svg` fra lucide.dev hit og bruk navnet, f.eks. `"ikon": "user"` i `"tidslinje"` |
 | `bygg.py` | Genererer nettside og PDF |
 | `portefolje-kort.pdf` | Kortversjon, kun lokalt (ikke i Git) |

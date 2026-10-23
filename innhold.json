@@ -9,7 +9,7 @@
     "sted": "Oslo, Norway"
   },
   "lenker": [
-    { "tittel": "Master's thesis", "tekst": "Media and Interaction Design, University of Bergen", "lenke": "https://nva.sikt.no/registration/0198f2235496-0ce12c6d-cfbe-4a7b-a4e0-a7c23e665859" },
+    { "tittel": "Master's thesis – Data visualization for students with low to medium visual literacy", "tekst": "Media and Interaction Design, University of Bergen, 2024 (in Norwegian)", "lenke": "https://hdl.handle.net/11250/3141357" },
     { "tittel": "Bachelor project – Wolftech Feeds", "tekst": "University of Bergen, 2022", "lenke": "https://teklab.uib.no/artikler/wolftech-feeds/" }
   ],
   "ferdigheter": [
@@ -38,50 +38,127 @@
         "A desktop interface that makes real emission data understandable for students",
         "Three views: Compare, Explore and Verify",
         "Built on six interviews, an expert focus group and a co-creation workshop with eight students",
-        "Two prototype iterations, each followed by usability testing"
+        "Three prototype iterations, each followed by usability testing"
       ],
       "utfordring": "Design a desktop interface that visualizes complex data for students. Imagine an interface transforming complex data into captivating stories that practically anyone can understand. This is the vision of FUSE – an innovative data visualization interface developed for and by students. Through an iterative design process, FUSE has developed into a prototype that uses authentic data and real text examples, to replace placeholders and imprecise visualizations that lead to confusion.",
       "losning": [
         {
           "tittel": "Compare",
           "tekst": "Lets the user compare the size difference of separate categories. A vertical bar chart, represented as animated smoke coming out of an industrial pipe – the higher the bar, the darker and denser it becomes, just like smoke in real life.",
-          "bilde": "bilder/fuse/compare.png"
+          "bilde": "bilder/fuse/1.Compare.svg"
         },
         {
           "tittel": "Explore",
           "tekst": "Lets the user explore the development of each category. A line chart where the data points indicate whether there has been an increase, decrease or no change from the previous year.",
-          "bilde": "bilder/fuse/explore.png"
+          "bilde": "bilder/fuse/2.Explore.svg"
         },
         {
           "tittel": "Verify",
           "tekst": "Lets the user verify the values and sources behind the visualizations. A table with the exact values from the data set, where arrows show an increase (red) or decrease (green) from the year before.",
-          "bilde": "bilder/fuse/verify.png"
+          "bilde": "bilder/fuse/3.Verify.svg"
         }
+      ],
+      "tidslinje": [
+        { "tittel": "Semi-structured interviews", "ikon": "user" },
+        { "tittel": "Focus group", "ikon": "users" },
+        { "tittel": "Workshop", "ikon": "wrench" },
+        { "tittel": "1st prototype", "ikon": "file" },
+        { "tittel": "1st usability test", "ikon": "message-square-text" },
+        { "tittel": "2nd prototype", "ikon": "monitor" },
+        { "tittel": "2nd usability test", "ikon": "message-square-text" },
+        { "tittel": "Final prototype", "ikon": "monitor" },
+        { "tittel": "3rd usability test", "ikon": "message-square-text" }
       ],
       "prosess": [
         {
           "tittel": "Semi-structured interviews",
-          "tekst": "Six interviews with students from different backgrounds and study programs identified their knowledge of and interest in climate, media habits, preferred ways to interact and thoughts on data visualization. This formed the basis of our target group."
+          "tekst": "Six interviews with students from different backgrounds and study programs identified their knowledge of and interest in climate, media habits, preferred ways to interact and thoughts on data visualization. This formed the basis of our target group.",
+          "deltakere": [
+            {"figur": {"har": "kort", "harfarge": "blond", "hud": 1, "topp": "aksent", "ting": "mobil"}},
+            {"figur": {"har": "lang", "harfarge": "svart", "hud": 4, "topp": "rust", "ting": "mobil"}},
+            {"figur": {"har": "hestehale", "harfarge": "rød", "hud": 1, "topp": "oliven", "ting": "mobil", "bukse": "dongeri"}},
+            {"figur": {"har": "krøller", "harfarge": "svart", "hud": 5, "topp": "sand", "ting": "mobil"}},
+            {"figur": {"har": "knute", "harfarge": "brun", "hud": 3, "topp": "bla", "ting": "mobil", "briller": true}},
+            {"figur": {"har": "kort", "harfarge": "svart", "hud": 2, "topp": "gra", "ting": "mobil", "bukse": "sand"}}
+          ]
         },
         {
           "tittel": "Focus group",
-          "tekst": "A focus group with experts validated the interview findings and compared the students' needs to business interests and technical constraints, making it easier to prioritize and understand the decision-making behind a data visualization."
+          "tekst": "A focus group with experts validated the interview findings and compared the students' needs to business interests and technical constraints, making it easier to prioritize and understand the decision-making behind a data visualization.",
+          "deltakere": [
+            {"rolle": "The Producer", "sitater": ["The data must be true", "What is important depends on the purpose"], "figur": {"har": "kort", "harfarge": "brun", "hud": 2, "topp": "gra", "ting": "kolbe", "frakk": true, "briller": true}},
+            {"rolle": "The Client", "sitater": ["The purpose of data visualization, in my opinion, is to convey a message"], "figur": {"har": "skallet", "harfarge": "grå", "hud": 3, "topp": "bla", "ting": "laptop", "briller": true, "skjegg": true}},
+            {"rolle": "The Customer", "sitater": ["The storytelling should emphasize something and fit the environment", "Context is important"], "figur": {"har": "kort", "harfarge": "svart", "hud": 3, "topp": "rust", "ting": "nettbrett"}}
+          ]
         },
         {
           "tittel": "Workshop",
           "tekst": "A co-creation workshop with eight students in four parts: individual work (Crazy 8 and storyboards), presentation and feedback using the optimist, pessimist and opportunist roles, group work, and a final vote.",
-          "bilde": "bilder/fuse/workshop-sketches.png"
+          "deler": [
+            {"tittel": "Individual work", "tekst": "Each participant sketched ideas on their own, using Crazy 8 and storyboards.", "bilder": ["bilder/fuse/Part 1_ Individual Work - 1.svg", "bilder/fuse/Part 1_ Individual Work - 2.svg"]},
+            {"tittel": "Present and feedback", "tekst": "Everyone presented their ideas, and the others gave feedback wearing one of three hats.", "roller": [
+                {"tittel": "The Optimist", "tekst": "Share what you believe is good and should be further focused on.", "farge": "#2f9e6b", "figur": {"hud": 2, "topp": "hvit"}},
+                {"tittel": "The Pessimist", "tekst": "Share problem areas and challenges that may lead to conflict.", "farge": "#d64545", "figur": {"hud": 4, "topp": "hvit"}},
+                {"tittel": "The Opportunist", "tekst": "Share how things could be done differently or better.", "farge": "#2f7fd1", "figur": {"hud": 1, "topp": "hvit"}}
+            ]},
+            {"tittel": "Group work", "tekst": "In groups, the participants combined the strongest ideas into shared concepts.", "bilder": ["bilder/fuse/Part 3_ Group Work.svg"]},
+            {"tittel": "Voting", "tekst": "The groups presented their concepts, and each participant placed dot stickers on the ideas they believed in most.", "bilder": [{"fil": "bilder/fuse/Part 4 voting.svg", "tittel": "Concept: a flight across the map", "tekst": "A world map with a plane over each region. Tapping a plane opens the emission data for that country, so the user explores the numbers by travelling across the map. The orange dots are the participants' votes."}, {"fil": "bilder/fuse/Part 4_ Voting - 2.svg", "tittel": "Concept: emissions as factory smoke", "tekst": "A news-article concept, \"Emissions in Norway or elsewhere\". Each bar in the chart is smoke rising from a factory chimney, so higher emissions look like more smoke. A fact box explains definitions, where the emissions come from, emissions per person and CO₂ equivalents, with sources. The smoke metaphor became the starting point for the Compare view in FUSE."}]}
+          ]
         },
         {
-          "tittel": "1st prototype and usability test",
-          "tekst": "A paper prototype sketched on A3 to appear as a desktop interface, tested in quick 15-minute sessions with students recruited around campus.",
-          "bilde": "bilder/fuse/paper-prototype.png"
+          "tittel": "1st prototype",
+          "tekst": "The first iteration was a paper prototype inspired by the mockups, slightly adjusted to fit the personas and available data that we could find. We sketched every component we wanted to implement on an A3 paper, to make it appear as a desktop interface.",
+          "annotert": {
+            "hoved": "bilder/fuse/1st Prototype_1.svg",
+            "visninger": [
+              {"fil": "bilder/fuse/1st Prototype_2.svg", "tittel": "Line Chart"},
+              {"fil": "bilder/fuse/1st Prototype_3.svg", "tittel": "Pictogram"},
+              {"fil": "bilder/fuse/1st Prototype_4.svg", "tittel": "Table"}
+            ],
+            "merker": [
+              {"tittel": "Navigation Menu", "tekst": "Allows the user to toggle between three different views: a bar chart/pictogram, line chart or table.", "omrade": [0.51, 0.16, 0.94, 0.25], "side": "top", "etikett": [345, 20, 295]},
+              {"tittel": "Bar Chart", "omrade": [0.5, 0.29, 0.98, 0.72], "side": "left", "via": [[265, 342]], "etikett": [212, 62, 106]},
+              {"tittel": "Filter Menu", "tekst": "Allows the user to narrow down the data displayed, either by transport or counties.", "omrade": [0.12, 0.21, 0.375, 0.78], "side": "left", "via": [[60, 337]], "etikett": [40, 585, 300]},
+              {"tittel": "Text Box", "tekst": "Provides the user with context of the data visualization.", "omrade": [0.5, 0.72, 0.91, 0.94], "side": "right", "via": [[628, 478]], "etikett": [360, 600, 282]}
+            ]
+          }
         },
         {
-          "tittel": "2nd prototype and usability test",
-          "tekst": "A mid-fidelity prototype in Figma with a predefined user journey. A side-by-side test compared horizontal and vertical bar charts and the right amount of data to visualize.",
-          "bilde": "bilder/fuse/mid-fi-prototype.png"
-        }
+          "tittel": "1st usability test",
+          "tekst": "The paper prototype was tested in quick 15-minute sessions with students recruited around campus.",
+          "funn": [{"type": "pluss", "tekst": "Intuitive interface"}, {"type": "minus", "tekst": "The filter menu was too big"}, {"type": "minus", "tekst": "The bar charts felt childish"}],
+          "testpersoner": 5,
+          "figurstart": 0
+        },
+        {
+          "tittel": "2nd prototype",
+          "tekst": "A mid-fidelity prototype in Figma with a predefined user journey, built on real emission data and real text examples instead of placeholders.",
+          "annotert": {
+            "hoved": "bilder/fuse/2nd Prototype_3.svg",
+            "topp": 175,
+            "visninger": [
+              {"fil": "bilder/fuse/2nd Prototype_1.svg", "tittel": "Line Chart"},
+              {"fil": "bilder/fuse/2nd Prototype_2.svg", "tittel": "Hover details"},
+              {"fil": "bilder/fuse/2nd Prototype_4.svg", "tittel": "Pictogram"},
+              {"fil": "bilder/fuse/2nd Prototype_5.svg", "tittel": "Table"}
+            ],
+            "merker": [
+              {"tittel": "Navigation Menu", "tekst": "Toggles between emissions, development over time and the table.", "omrade": [0.3, 0.047, 0.947, 0.086], "side": "top", "etikett": [300, 20, 300]},
+              {"tittel": "Bar Chart", "omrade": [0.29, 0.11, 0.944, 0.555], "side": "left", "via": [[165, 316]], "etikett": [112, 62, 106]},
+              {"tittel": "Filter Menu", "tekst": "Transport type and county, now with every county in Norway.", "omrade": [0.055, 0.086, 0.205, 0.96], "side": "left", "via": [[30, 398]], "etikett": [20, 635, 300]},
+              {"tittel": "Text Box", "tekst": "Explains the numbers in plain language, with an everyday comparison.", "omrade": [0.3, 0.58, 0.947, 0.955], "side": "right", "via": [[632, 502]], "etikett": [360, 635, 282]}
+            ]
+          }
+        },
+        {
+          "tittel": "2nd usability test",
+          "tekst": "A side-by-side test compared horizontal and vertical bar charts and the right amount of data to visualize.",
+          "funn": [{"type": "pluss", "tekst": "Intuitive interface"}, {"type": "minus", "tekst": "Wanted to compare data with other countries"}, {"type": "minus", "tekst": "Overlooked the text box"}],
+          "testpersoner": 5,
+          "figurstart": 5
+        },
+        {"tittel": "Final prototype", "tekst": "The third iteration became the final prototype – the solution shown at the top. Compared to the second prototype:", "punkter": ["After the side-by-side test, the bars became vertical – the smoke now rises from industrial pipes, so higher emissions look like taller, darker smoke.", "The views got clear, action-based names – Compare, Explore and Verify – instead of “See emissions”, “See development” and “See table”.", "Change over time is visible at a glance: data points in the line chart and arrows in the table show whether emissions went up, down or stayed the same."], "lenke": {"tekst": "See the final solution ↑", "href": "#fuse-losning"}},
+        {"tittel": "3rd usability test", "tekst": "The final prototype was tested with three students. No changes were made after this last round.", "funn": [{"type": "pluss", "tekst": "Most liked how the data was presented"}, {"type": "minus", "tekst": "Still wanted to compare with data from other countries"}, {"type": "minus", "tekst": "Not everything was interactive"}], "testpersoner": 3, "figurstart": 2}
       ],
       "stikkord": [
         "Data visualization",
@@ -90,8 +167,7 @@
         "Figma"
       ],
       "video": "bilder/fuse/video.mp4",
-      "lenke": "",
-      "bilde": "bilder/fuse/compare.png"
+      "lenke": ""
     },
     {
       "slug": "charm",
@@ -110,8 +186,7 @@
       "losning": [
         {
           "tittel": "Minimum viable product",
-          "tekst": "All interactions are made with the user's right hand: a glow indicating that the hand is tracked, creating a virtual object by hand movement, moving and modifying it, and movements that trigger special effects.",
-          "bilde": "bilder/charm/ar-screens.png"
+          "tekst": "All interactions are made with the user's right hand: a glow indicating that the hand is tracked, creating a virtual object by hand movement, moving and modifying it, and movements that trigger special effects."
         },
         {
           "tittel": "Position recognition",
@@ -142,8 +217,7 @@
         "Body interaction"
       ],
       "video": "bilder/charm/video.mp4",
-      "lenke": "",
-      "bilde": "bilder/charm/ipad.png"
+      "lenke": ""
     },
     {
       "slug": "wolftech-feeds",
@@ -162,18 +236,15 @@
       "losning": [
         {
           "tittel": "Dashboard",
-          "tekst": "A module-based design that lets users customize their personal dashboard with a selection of widgets. Content, size and position are entirely based on user preference.",
-          "bilde": "bilder/wolftech-feeds/dashboard.png"
+          "tekst": "A module-based design that lets users customize their personal dashboard with a selection of widgets. Content, size and position are entirely based on user preference."
         },
         {
           "tittel": "Discover",
-          "tekst": "News stories filtered by user preference and displayed on a map, where the user can explore and find other stories in the same area.",
-          "bilde": "bilder/wolftech-feeds/discover.png"
+          "tekst": "News stories filtered by user preference and displayed on a map, where the user can explore and find other stories in the same area."
         },
         {
           "tittel": "Keyword search",
-          "tekst": "An integrated search that specifies the content in the Feeds columns, with sorting by top stories, newest, oldest or alphabetically, and editable columns.",
-          "bilde": "bilder/wolftech-feeds/keyword-search.png"
+          "tekst": "An integrated search that specifies the content in the Feeds columns, with sorting by top stories, newest, oldest or alphabetically, and editable columns."
         }
       ],
       "prosess": [
@@ -183,13 +254,11 @@
         },
         {
           "tittel": "Design Sprint",
-          "tekst": "A Google Design Sprint with Wolftech employees, divided into alignment, solution and decision workshops – including a high-level map, How Might We's, Crazy 8's and solution sketches.",
-          "bilde": "bilder/wolftech-feeds/sprint-sketch.png"
+          "tekst": "A Google Design Sprint with Wolftech employees, divided into alignment, solution and decision workshops – including a high-level map, How Might We's, Crazy 8's and solution sketches."
         },
         {
           "tittel": "1st prototype and usability test",
-          "tekst": "Testing the keyword search and advanced filter over Zoom. Reaching busy journalists was close to impossible, so we had to test with participants outside the target group.",
-          "bilde": "bilder/wolftech-feeds/first-prototype.png"
+          "tekst": "Testing the keyword search and advanced filter over Zoom. Reaching busy journalists was close to impossible, so we had to test with participants outside the target group."
         },
         {
           "tittel": "Iteration workshops",
@@ -197,8 +266,7 @@
         },
         {
           "tittel": "2nd prototype",
-          "tekst": "A dashboard with everything a journalist needs at a glance, plus Discover, a curated Feeds page and a personal Feed page.",
-          "bilde": "bilder/wolftech-feeds/second-prototype.png"
+          "tekst": "A dashboard with everything a journalist needs at a glance, plus Discover, a curated Feeds page and a personal Feed page."
         }
       ],
       "stikkord": [
@@ -207,8 +275,7 @@
         "Usability testing"
       ],
       "video": "bilder/wolftech-feeds/video.mp4",
-      "lenke": "",
-      "bilde": "bilder/wolftech-feeds/overview.png"
+      "lenke": ""
     },
     {
       "slug": "tv2-xplore",
@@ -227,18 +294,15 @@
       "losning": [
         {
           "tittel": "Landing page",
-          "tekst": "A visual design inspired by the universe – a universe of undiscovered content, sparking curiosity with color contrasts, varying shapes and figures.",
-          "bilde": "bilder/tv2-xplore/landing.png"
+          "tekst": "A visual design inspired by the universe – a universe of undiscovered content, sparking curiosity with color contrasts, varying shapes and figures."
         },
         {
           "tittel": "Tailored content",
-          "tekst": "Breaking away from the monotonous presentation of the streaming giants with creative shapes, sizes and colors. XPLORE is unique for each user, reflecting their personal interests.",
-          "bilde": "bilder/tv2-xplore/tailored.png"
+          "tekst": "Breaking away from the monotonous presentation of the streaming giants with creative shapes, sizes and colors. XPLORE is unique for each user, reflecting their personal interests."
         },
         {
           "tittel": "Exploration mode",
-          "tekst": "A positive filter bubble that minimizes scrolling, frustration and uninteresting recommendations, which can lead to subscription cancellations.",
-          "bilde": "bilder/tv2-xplore/exploration.png"
+          "tekst": "A positive filter bubble that minimizes scrolling, frustration and uninteresting recommendations, which can lead to subscription cancellations."
         }
       ],
       "prosess": [
@@ -248,18 +312,15 @@
         },
         {
           "tittel": "Think aloud",
-          "tekst": "Three participants navigated TV 2 Sumo, NRK TV or Netflix while sharing their thoughts.",
-          "bilde": "bilder/tv2-xplore/think-aloud.png"
+          "tekst": "Three participants navigated TV 2 Sumo, NRK TV or Netflix while sharing their thoughts."
         },
         {
           "tittel": "1st prototype",
-          "tekst": "A simple prototype to test our ideas: dragging favorite categories up and down, further filtering for more personalized content, and the best possible alternative when a title isn't available.",
-          "bilde": "bilder/tv2-xplore/first-prototype.png"
+          "tekst": "A simple prototype to test our ideas: dragging favorite categories up and down, further filtering for more personalized content, and the best possible alternative when a title isn't available."
         },
         {
           "tittel": "Usability testing",
-          "tekst": "Two iterations with three participants each, analyzing the results and updating the prototype after each round.",
-          "bilde": "bilder/tv2-xplore/favourites.png"
+          "tekst": "Two iterations with three participants each, analyzing the results and updating the prototype after each round."
         }
       ],
       "stikkord": [
@@ -268,8 +329,7 @@
         "Usability testing"
       ],
       "video": "bilder/tv2-xplore/video.mp4",
-      "lenke": "",
-      "bilde": "bilder/tv2-xplore/landing.png"
+      "lenke": ""
     },
     {
       "slug": "twerton-park",
@@ -301,8 +361,7 @@
         "Autodesk Maya"
       ],
       "video": "bilder/twerton-park/video.mp4",
-      "lenke": "",
-      "bilde": "bilder/twerton-park/stadium.png"
+      "lenke": ""
     },
     {
       "slug": "car-ride",
@@ -339,8 +398,7 @@
         "After Effects"
       ],
       "video": "bilder/car-ride/video.mp4",
-      "lenke": "",
-      "bilde": ""
+      "lenke": ""
     }
   ]
 }

@@ -1,0 +1,146 @@
+"""Egne illustrasjoner for porteføljen: personer (deltakere) og papirhatter.
+
+Personene settes sammen av noen få valg, så de ser like ut gjennom hele
+porteføljen. Brukes fra innhold.json som f.eks.
+  "figur": {"har": "kort", "harfarge": "brun", "hud": 2, "topp": "aksent", "ting": "mobil"}
+
+  har:      kort, lang, knute, hestehale, krøller, skallet
+  harfarge: svart, brun, blond, rød, grå   (eller en hex-farge)
+  hud:      1–5 (lys til mørk)
+  topp:     aksent (prosjektets farge), gra, sand, oliven, rust, bla, hvit (eller hex)
+  bukse:    mork (standard), dongeri, sand (eller hex)
+  ting:     mobil, nettbrett, laptop, kolbe (eller ingen)
+  briller:  true/false     skjegg: true/false     frakk: true/false (hvit frakk)
+  hatt:     hex-farge – papirhatt i stedet for hår (f.eks. workshop-roller)
+"""
+
+HUD = ["#f3d2b8", "#e3b48e", "#c98e64", "#9a6440", "#6b4128"]
+HARFARGE = {"svart": "#23201f", "brun": "#5a3a26", "blond": "#d9b25c", "rød": "#a8492b", "grå": "#a7a39c"}
+TOPP = {
+    "aksent": "var(--aksent)", "gra": "#8c939e", "sand": "#d8c7a6", "oliven": "#7c8a4e",
+    "rust": "#b8643c", "bla": "#4f6fa3", "hvit": "#f2f2ef",
+}
+BUKSE = {"mork": "#2c3038", "dongeri": "#46597a", "sand": "#b9a888"}
+MORK = "#22262f"
+
+
+def _farge(verdi, tabell, standard):
+    if not verdi:
+        return tabell[standard]
+    return tabell.get(verdi, verdi)
+
+
+def _papirhatt(farge, x, y, b):
+    """Brettet papirhatt: trekant med brem. (x, y) er midt på bremmen, b er bredden."""
+    h = b * 0.62
+    return (
+        f'<path d="M{x - b/2 + 3} {y} L{x} {y - h} L{x + b/2 - 3} {y} Z" fill="{farge}"/>'
+        f'<path d="M{x} {y - h} L{x - b*0.16} {y}" stroke="#000" stroke-opacity=".18" stroke-width="1.4"/>'
+        f'<rect x="{x - b/2}" y="{y - 3}" width="{b}" height="9" rx="2" fill="{farge}"/>'
+        f'<rect x="{x - b/2}" y="{y - 3}" width="{b}" height="9" rx="2" fill="#000" fill-opacity=".14"/>'
+    )
+
+
+def person(f=None, tittel=""):
+    """En stående person som inline SVG."""
+    f = f or {}
+    hud = HUD[max(1, min(5, int(f.get("hud", 2)))) - 1]
+    har = f.get("har", "kort")
+    harf = _farge(f.get("harfarge"), HARFARGE, "brun")
+    topp = _farge(f.get("topp"), TOPP, "gra")
+    bukse = _farge(f.get("bukse"), BUKSE, "mork")
+    ting = f.get("ting")
+    frakk = f.get("frakk")
+    erme = "#ecebe7" if frakk else topp
+
+    d = ['<ellipse cx="60" cy="243" rx="30" ry="4.5" fill="#000" fill-opacity=".09"/>']
+
+    # Hår bak hodet
+    if har == "lang" and not f.get("hatt"):
+        d.append(f'<path d="M41 42 C40 20 80 20 79 42 L81 80 C72 85 48 85 39 80 Z" fill="{harf}"/>')
+    if har == "hestehale" and not f.get("hatt"):
+        d.append(f'<path d="M72 28 C92 30 94 58 82 74 C85 56 80 42 70 38 Z" fill="{harf}"/>')
+
+    # Bein og sko
+    d.append(f'<rect x="46.5" y="144" width="12.5" height="92" rx="6" fill="{bukse}"/>')
+    d.append(f'<rect x="61" y="144" width="12.5" height="92" rx="6" fill="{bukse}"/>')
+    d.append(f'<ellipse cx="50" cy="238" rx="10" ry="5" fill="{MORK}"/>')
+    d.append(f'<ellipse cx="70" cy="238" rx="10" ry="5" fill="{MORK}"/>')
+
+    # Venstre arm (hengende)
+    d.append(f'<rect x="29" y="78" width="11.5" height="64" rx="5.75" fill="{erme}"/>')
+    d.append(f'<rect x="29" y="78" width="11.5" height="64" rx="5.75" fill="#000" fill-opacity=".08"/>')
+    d.append(f'<circle cx="34.75" cy="144" r="5.6" fill="{hud}"/>')
+
+    # Hals og overkropp
+    d.append(f'<rect x="54.5" y="54" width="11" height="18" rx="3.5" fill="{hud}"/>')
+    d.append(f'<path d="M40 86 C40 74 46 70 54 69 H66 C74 70 80 74 80 86 L82.5 152 H37.5 Z" fill="{topp}"/>')
+    if frakk:
+        d.append('<path d="M40 86 C40 74 46 70 54 69 H57 L55 162 H36 Z" fill="#f2f1ed"/>')
+        d.append('<path d="M80 86 C80 74 74 70 66 69 H63 L65 162 H84 Z" fill="#e6e4df"/>')
+
+    # Høyre arm: bøyd når personen holder noe foran seg
+    if ting in ("mobil", "nettbrett", "kolbe"):
+        d.append(f'<path d="M85 84 L89 118 L73 110" fill="none" stroke="{erme}" stroke-width="11.5" '
+                 'stroke-linecap="round" stroke-linejoin="round"/>')
+        d.append(f'<path d="M85 84 L89 118 L73 110" fill="none" stroke="#000" stroke-opacity=".08" stroke-width="11.5" '
+                 'stroke-linecap="round" stroke-linejoin="round"/>')
+        if ting == "mobil":
+            d.append(f'<rect x="66" y="93" width="10" height="17" rx="2.2" fill="{MORK}"/>')
+        elif ting == "nettbrett":
+            d.append(f'<rect x="56" y="90" width="24" height="30" rx="3" fill="{MORK}" transform="rotate(-8 68 105)"/>')
+            d.append('<rect x="59" y="93" width="18" height="24" rx="1.5" fill="#dfe6ee" transform="rotate(-8 68 105)"/>')
+        else:
+            d.append('<path d="M68 90 h7 v8 l7 14 a3 3 0 0 1 -3 4 h-15 a3 3 0 0 1 -3 -4 l7 -14 z" fill="#dfe6ee" '
+                     f'stroke="{MORK}" stroke-width="1.6" stroke-linejoin="round"/>')
+            d.append('<path d="M63.5 107 h17 l2 4.5 a3 3 0 0 1 -3 4 h-15 a3 3 0 0 1 -3 -4 z" fill="var(--aksent)"/>')
+        d.append(f'<circle cx="72" cy="109.5" r="5.6" fill="{hud}"/>')
+    else:
+        d.append(f'<rect x="79.5" y="78" width="11.5" height="64" rx="5.75" fill="{erme}"/>')
+        d.append(f'<rect x="79.5" y="78" width="11.5" height="64" rx="5.75" fill="#000" fill-opacity=".08"/>')
+        d.append(f'<circle cx="85.25" cy="144" r="5.6" fill="{hud}"/>')
+        if ting == "laptop":
+            d.append('<rect x="84" y="98" width="9" height="36" rx="2" fill="#c7ccd4"/>')
+            d.append('<rect x="84" y="98" width="3" height="36" rx="1.5" fill="#aab1bb"/>')
+
+    # Hode
+    d.append(f'<circle cx="60" cy="40" r="17" fill="{hud}"/>')
+    if f.get("skjegg"):
+        d.append(f'<path d="M44.5 44 C46 60 74 60 75.5 44 C71 52 49 52 44.5 44 Z" fill="{harf}"/>')
+
+    # Hår foran / hatt
+    if f.get("hatt"):
+        d.append(_papirhatt(f["hatt"], 60, 29, 44))
+    elif har in ("kort", "lang", "knute", "hestehale"):
+        d.append(f'<path d="M42.6 46 C40 24 50 19 60 19 C71 19 80 25 77.4 46 L75.5 40 C72 33 66 30 60 30 '
+                 f'C54 30 48 33 44.5 40 Z" fill="{harf}"/>')
+        if har == "knute":
+            d.append(f'<circle cx="60" cy="17" r="8" fill="{harf}"/>')
+    elif har == "krøller":
+        for cx, cy, r in [(45, 34, 7), (51, 25, 7.5), (60, 21.5, 8), (69, 25, 7.5), (75, 34, 7), (43.5, 42, 5), (76.5, 42, 5)]:
+            d.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{harf}"/>')
+
+    if f.get("briller"):
+        d.append(f'<g fill="none" stroke="{MORK}" stroke-width="1.6"><circle cx="53.5" cy="41" r="4.6"/>'
+                 '<circle cx="66.5" cy="41" r="4.6"/><path d="M58.1 41 h3.8"/></g>')
+
+    rolle = f' role="img" aria-label="{tittel}"' if tittel else ' aria-hidden="true"'
+    return f'<svg class="person" viewBox="0 -6 120 256"{rolle}>{"".join(d)}</svg>'
+
+
+# Ferdige figurer til testpersoner o.l., så de varierer uten å måtte beskrives hver gang
+TESTPERSONER = [
+    {"har": "hestehale", "harfarge": "grå", "hud": 1, "topp": "gra", "ting": "mobil"},
+    {"har": "hestehale", "harfarge": "rød", "hud": 2, "topp": "aksent", "ting": "mobil"},
+    {"har": "kort", "harfarge": "blond", "hud": 3, "topp": "rust", "ting": "mobil", "bukse": "dongeri"},
+    {"har": "kort", "harfarge": "svart", "hud": 4, "topp": "sand", "ting": "mobil"},
+    {"har": "krøller", "harfarge": "svart", "hud": 5, "topp": "oliven", "ting": "mobil"},
+    {"har": "lang", "harfarge": "brun", "hud": 2, "topp": "bla", "ting": "mobil", "briller": True},
+    {"har": "knute", "harfarge": "svart", "hud": 3, "topp": "aksent", "ting": "mobil", "bukse": "sand"},
+    {"har": "kort", "harfarge": "brun", "hud": 1, "topp": "oliven", "ting": "mobil", "briller": True},
+]
+
+
+def testpersoner(antall, start=0):
+    """`antall` ulike figurer fra TESTPERSONER, fra posisjon `start`."""
+    return [TESTPERSONER[(start + n) % len(TESTPERSONER)] for n in range(antall)]

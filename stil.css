@@ -166,6 +166,8 @@ h1 {
 }
 
 /* ---------- Prosjekter: hvert prosjekt er et svevende ark ---------- */
+/* Prosjektarkene har én felles bredde; alt innhold inni bruker hele den */
+.prosjekt.ark { max-width: 960px; margin-inline: auto; }
 .ark {
   background: var(--ark); border-radius: 24px;
   padding: 28px 20px 36px; margin: 0 0 20px;
@@ -188,7 +190,7 @@ h4 {
   font-family: var(--font-overskrift); font-weight: 600;
   font-size: 21px; line-height: 1.2; letter-spacing: -.01em; margin: 0 0 8px;
 }
-.tekst { max-width: 720px; margin: 0; }
+.tekst { margin: 0; }
 .mer { font-weight: 600; }
 .hovedbilde { width: 100%; border-radius: 20px; margin-top: 24px; display: block; }
 
@@ -201,7 +203,7 @@ video.video { aspect-ratio: auto; width: auto; margin-inline: auto; max-width: 1
 /* «Summary»-boks øverst i hvert prosjekt */
 .oppsummering {
   background: var(--flate); border-radius: 20px;
-  padding: 20px 22px; margin: 0 0 20px; max-width: 760px;
+  padding: 20px 22px; margin: 0 0 20px;
 }
 .oppsummering p {
   margin: 0 0 10px; font-size: 12px; font-weight: 700;
@@ -216,7 +218,20 @@ video.video { aspect-ratio: auto; width: auto; margin-inline: auto; max-width: 1
 .kort p { margin: 0; font-size: 15px; color: var(--dempet); }
 /* Bilde øverst i løsningskortet, og under teksten i prosessteg */
 .kort img { display: block; width: 100%; border-radius: 12px; margin-bottom: 18px; }
-.prosess img { display: block; width: 100%; max-width: 560px; border-radius: 14px; margin-top: 14px; }
+.prosess img { display: block; width: 100%; border-radius: 14px; margin-top: 14px; }
+
+/* Tidslinje mellom løsning og prosess: loddrett på mobil, vannrett fra nettbrett */
+.tidslinje { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 30px; }
+.tidslinje li { position: relative; display: flex; align-items: center; gap: 16px; }
+.tidslinje .sirkel {
+  flex: none; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--aksent); color: var(--flate);
+}
+.tidslinje .steg { font-family: var(--font-overskrift); font-weight: 600; font-size: 16px; line-height: 1.2; }
+.tidslinje .pil {
+  position: absolute; left: 17px; top: 59px; color: var(--aksent);
+  display: flex; transform: rotate(90deg);
+}
 
 .stikkord { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .stikkord li {
@@ -226,19 +241,129 @@ video.video { aspect-ratio: auto; width: auto; margin-inline: auto; max-width: 1
 .stikkord.stor li { background: var(--flate); font-size: 15px; padding: 8px 16px; }
 
 /* Prosess: store tall foran hvert steg */
-.prosess { list-style: none; padding: 0; margin: 0; max-width: 760px; counter-reset: steg; }
-.prosess li {
+.prosess { list-style: none; padding: 0; margin: 0; counter-reset: steg; }
+.prosess > li {
   counter-increment: steg; position: relative;
   padding: 0 0 22px 56px; margin-bottom: 22px;
   border-bottom: 1px solid color-mix(in srgb, var(--tekst) 14%, transparent);
 }
-.prosess li:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
-.prosess li::before {
+.prosess > li:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
+.prosess > li::before {
   content: counter(steg, decimal-leading-zero);
   position: absolute; left: 0; top: -4px;
   font-family: var(--font-tittel); font-weight: 700; font-size: 28px; line-height: 1; color: var(--aksent);
 }
 .prosess h4 { font-size: 19px; margin-bottom: 4px; }
+/* Funn fra brukertester: tommel opp/ned */
+.funnliste { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 10px; }
+.funnliste li {
+  display: flex; align-items: center; gap: 12px; padding: 14px 16px;
+  border: 1.5px solid color-mix(in srgb, var(--tekst) 14%, transparent); border-radius: 14px;
+  font-family: var(--font-overskrift); font-weight: 500; color: var(--tekst);
+}
+.funnliste svg { flex: none; }
+.funnliste .pluss svg { color: #2f9e6b; }
+.funnliste .minus svg { color: #d64545; }
+.testpersoner { display: flex; align-items: flex-end; gap: 14px; margin-top: 16px; }
+.testpersoner > div { display: flex; gap: 2px; }
+.testpersoner .person { width: 34px; }
+.testpersoner span { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--dempet); padding-bottom: 6px; }
+.punkter { margin: 10px 0 0; padding-left: 20px; color: var(--dempet); }
+.punkter li { margin-bottom: 6px; }
+.punkter li::marker { color: var(--aksent); }
+.prosess .mer { display: inline-block; margin-top: 8px; color: var(--aksent); }
+
+/* Illustrerte deltakere i prosessteg (egne figurer, se illustrasjoner.py) */
+.person { display: block; width: 100%; height: auto; }
+.deltakere {
+  list-style: none; padding: 0; margin: 20px 0 0;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px 8px;
+}
+.deltakere li { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.deltakere .person { max-width: 70px; }
+.deltakere .navn {
+  margin-top: 6px; font-size: 12px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--tekst);
+}
+/* Med sitater: én kolonne på mobil, snakkebobler over hver person */
+.deltakere.med-sitater { grid-template-columns: 1fr; gap: 32px; }
+.med-sitater li { justify-content: flex-end; }
+.med-sitater .person { max-width: 84px; }
+.bobler { display: flex; flex-direction: column; gap: 16px; width: 100%; margin-bottom: 20px; }
+.boble {
+  position: relative; margin: 0; padding: 10px 14px;
+  background: var(--ark); border: 2px solid var(--aksent); border-radius: 14px;
+  font-family: var(--font-overskrift); font-weight: 500; font-size: 15px; line-height: 1.35; color: var(--aksent);
+}
+.boble::after {
+  content: ""; position: absolute; left: 50%; bottom: -8px; width: 13px; height: 13px;
+  background: var(--ark); border: solid var(--aksent); border-width: 0 2px 2px 0;
+  transform: translateX(-50%) rotate(45deg);
+}
+.rolle { font-family: var(--font-overskrift); font-weight: 600; font-size: 17px; margin-bottom: 10px; }
+
+/* Et prosessteg delt i deler (Part 1, Part 2 …) */
+.deler { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 12px; }
+.deler > li { background: var(--flate); border-radius: 18px; padding: 18px; }
+.delnr {
+  font-size: 12px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--aksent);
+}
+.deler h5 { font-family: var(--font-overskrift); font-weight: 600; font-size: 18px; margin: 2px 0 4px; }
+.delbilder { display: grid; gap: 10px; margin-top: 14px; }
+.prosess .delbilder img {
+  max-width: none; margin: 0;
+  filter: drop-shadow(0 6px 12px color-mix(in srgb, var(--aksent) 22%, transparent));
+}
+
+/* Bilder med forklaring under: ett og ett, i full bredde */
+.delbilder.forklart { gap: 26px; }
+.delbilder figure { margin: 0; }
+/* Rammene får samme høyde, så bildetekstene starter på linje */
+.delbilder.forklart img { aspect-ratio: 366 / 285; object-fit: contain; }
+.delbilder figcaption { margin-top: 12px; font-size: 15px; color: var(--dempet); }
+.delbilder figcaption strong { display: block; font-family: var(--font-overskrift); font-weight: 600; font-size: 16px; color: var(--tekst); margin-bottom: 2px; }
+
+/* Annotert prototype (annotering.py): stor SVG fra nettbrett, enkel liste på mobil */
+.annotert { margin-top: 20px; }
+.annotert-stor { display: none; width: 100%; height: auto; }
+.ann-boks { fill: var(--flate); }
+.ann-tittel { font: 600 18px var(--font-overskrift); fill: var(--tekst); }
+.ann-tekst { font: 15.5px var(--font-tekst); fill: var(--dempet); }
+.ann-klamme, .ann-linje, .ann-pil path {
+  fill: none; stroke: var(--aksent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.ann-pil path { stroke-width: 1.6; }
+.ann-ark { filter: drop-shadow(0 6px 14px color-mix(in srgb, var(--aksent) 18%, transparent)); }
+.ann-hoved { position: relative; }
+.prosess .annotert-liten img { margin: 0; border-radius: 8px; filter: drop-shadow(0 4px 10px color-mix(in srgb, var(--aksent) 20%, transparent)); }
+/* Nummererte prikker på skissen, samme nummer som i listen under */
+.ann-prikk {
+  position: absolute; transform: translate(-50%, -50%);
+  width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--aksent); color: var(--flate); font-size: 13px; font-weight: 700;
+  box-shadow: 0 0 0 3px var(--ark);
+}
+.ann-liste { margin: 18px 0 0; padding: 0; list-style: none; counter-reset: ann; display: grid; gap: 12px; }
+.ann-liste li { counter-increment: ann; position: relative; padding-left: 34px; }
+.ann-liste li::before {
+  content: counter(ann); position: absolute; left: 0; top: 1px;
+  width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--aksent); color: var(--flate); font-size: 13px; font-weight: 700;
+}
+.ann-liste strong { display: block; font-family: var(--font-overskrift); font-weight: 600; }
+.ann-liste span { color: var(--dempet); font-size: 15px; }
+.ann-visninger { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; margin-top: 22px; }
+.ann-visninger figure { margin: 0; }
+.ann-visninger figcaption { margin-top: 8px; font-family: var(--font-overskrift); font-weight: 600; font-size: 14px; }
+.prosess .annotert img { max-width: none; }
+
+/* Roller med papirhatt (workshop del 2) */
+.roller { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 10px; }
+.roller li { display: flex; align-items: center; gap: 12px; }
+.roller .person { flex: none; width: 52px; }
+.roller strong { font-family: var(--font-overskrift); font-weight: 600; }
+.roller p { margin: 0; font-size: 15px; }
 .prosess p { margin: 0; color: var(--dempet); }
 
 /* ---------- Kontakt: del av bakgrunnen ---------- */
@@ -298,6 +423,17 @@ video.video { aspect-ratio: auto; width: auto; margin-inline: auto; max-width: 1
   h3 { font-size: 30px; margin-top: 56px; }
   .rutenett { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .kort { padding: 26px; }
+  .annotert { margin-left: -56px; }
+  .annotert-stor { display: block; }
+  .annotert-liten { display: none; }
+  .deltakere { grid-template-columns: repeat(6, 1fr); }
+  .funnliste { grid-template-columns: repeat(3, 1fr); }
+  .funnliste li { flex-direction: column; text-align: center; padding: 20px 16px; }
+  .deltakere.med-sitater { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .delbilder { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .roller { grid-template-columns: repeat(3, 1fr); }
+  .roller li { flex-direction: column; text-align: center; }
+  .roller .person { width: 64px; }
   .kontaktseksjon { padding-bottom: 40px; }
   .kontaktinnhold { padding-top: 96px; }
   .kontaktseksjon h2 { font-size: 80px; }
@@ -312,6 +448,14 @@ video.video { aspect-ratio: auto; width: auto; margin-inline: auto; max-width: 1
   .ark { padding: 64px 64px 72px; border-radius: 36px; margin-bottom: 40px; }
   .stortord { font-size: 120px; }
   .rutenett { grid-template-columns: repeat(3, 1fr); }
+
+  /* Tidslinjen vannrett; sirklene vokser med skjermen */
+  .tidslinje { --d: clamp(52px, 5vw, 64px); flex-direction: row; gap: 0; }
+  .tidslinje li { flex: 1 1 0; flex-direction: column; text-align: center; gap: 14px; }
+  .tidslinje .sirkel { width: var(--d); height: var(--d); }
+  .tidslinje .sirkel svg { width: 42%; height: 42%; }
+  .tidslinje .steg { font-size: 15px; padding: 0 4px; }
+  .tidslinje .pil { left: auto; right: 0; top: calc(var(--d) / 2 - 11px); transform: translateX(50%); }
   .kontaktseksjon h2 { font-size: 96px; }
 
   /* Full menylinje i stedet for hamburger */

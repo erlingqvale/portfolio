@@ -6,12 +6,17 @@ Lager index.html (one-pager med alle prosjekter) og PDF-en
 (via Google Chrome i headless-modus).
 """
 import json
+import re
 import shutil
 import subprocess
 import sys
 from datetime import date
 from html import escape as e
 from pathlib import Path
+from urllib.parse import quote
+
+from annotering import annotert
+from illustrasjoner import person, testpersoner
 
 ROT = Path(__file__).resolve().parent
 CHROME_KANDIDATER = [
@@ -29,19 +34,20 @@ def meta(p):
     return " · ".join(e(x) for x in [p.get("aar"), p.get("rolle")] if x)
 
 
-LINKEDIN_LOGO = (
-    '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">'
-    '<path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05'
-    'c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13z'
-    'M7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45'
-    'c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>'
-)
+def ikon(navn, str_=18):
+    """Lucide-ikon (ikoner/<navn>.svg, ISC-lisens) bakt inn i siden."""
+    svg = (ROT / "ikoner" / f"{navn}.svg").read_text(encoding="utf-8")
+    svg = re.sub(r"<!--.*?-->\s*", "", svg, flags=re.S)
+    # Fjern class/width/height bare på selve <svg>-taggen (rect o.l. trenger sine)
+    svg = re.sub(r"<svg[^>]*>", lambda m: re.sub(r'\s+(class|width|height)="[^"]*"', "", m.group()), svg, count=1)
+    svg = re.sub(r"\s+", " ", svg).replace("> <", "><").strip()
+    return svg.replace("<svg", f'<svg width="{str_}" height="{str_}" aria-hidden="true"', 1)
 
 
 def lenker(k):
     deler = []
     if k.get("linkedin"):
-        deler.append(f'<a href="{e(k["linkedin"])}" target="_blank" rel="noopener">{LINKEDIN_LOGO}LinkedIn</a>')
+        deler.append(f'<a href="{e(k["linkedin"])}" target="_blank" rel="noopener">{ikon("linkedin")}LinkedIn</a>')
     # E-post og telefon kopieres ved klikk (se KOPIER); mailto/tel er reserve uten JavaScript
     if k.get("epost"):
         deler.append(f'<a href="mailto:{e(k["epost"])}" data-kopier="{e(k["epost"])}">{e(k["epost"])}</a>')
@@ -89,9 +95,91 @@ def side(tittel, beskrivelse, kropp):
 """
 
 
+def bildefil(sti, alt):
+    return f'<img src="{e(quote(sti))}" alt="{e(alt)}" loading="lazy">'
+
+
 def stegbilde(r):
     """Valgfritt bilde til et løsningskort eller prosessteg."""
-    return f'<img src="{e(r["bilde"])}" alt="{e(r["tittel"])}" loading="lazy">' if r.get("bilde") else ""
+    return bildefil(r["bilde"], r["tittel"]) if r.get("bilde") else ""
+
+
+def deltakere(liste):
+    """Illustrerte deltakere, ev. med rolle og sitater i snakkebobler."""
+    if not liste:
+        return ""
+    sitater = any(d.get("sitater") for d in liste)
+    rader = []
+    for d in liste:
+        bobler = "".join(f'<blockquote class="boble">“{e(x)}”</blockquote>' for x in d.get("sitater", []))
+        rolle = f'<strong class="rolle">{e(d["rolle"])}</strong>' if d.get("rolle") else ""
+        navn = f'<span class="navn">{e(d["navn"])}</span>' if d.get("navn") else ""
+        rader.append(f'<li>{f"<div class=bobler>{bobler}</div>" if bobler else ""}{rolle}'
+                     f'{person(d.get("figur"))}{navn}</li>')
+    return f'<ul class="deltakere{" med-sitater" if sitater else ""}">{"".join(rader)}</ul>'
+
+
+def roller(liste):
+    """Roller med hver sin papirhatt (f.eks. optimist/pessimist/opportunist)."""
+    return '<ul class="roller">' + "".join(
+        f'<li>{person(dict(r.get("figur", {}), hatt=r["farge"]))}'
+        f'<div><strong>{e(r["tittel"])}</strong><p>{e(r["tekst"])}</p></div></li>'
+        for r in liste
+    ) + "</ul>"
+
+
+def delbilder(bilder, alt):
+    """Bilder i en del: enten bare filstier, eller {"fil", "tittel", "tekst"} med bildetekst under."""
+    if all(isinstance(b, str) for b in bilder):
+        return f'<div class="delbilder">{"".join(bildefil(b, alt) for b in bilder)}</div>'
+    return '<div class="delbilder forklart">' + "".join(
+        f'<figure>{bildefil(b["fil"], b.get("tittel", alt))}<figcaption>'
+        + (f'<strong>{e(b["tittel"])}</strong>' if b.get("tittel") else "")
+        + f'{e(b.get("tekst", ""))}</figcaption></figure>'
+        for b in bilder
+    ) + "</div>"
+
+
+def deler(liste):
+    """Et prosessteg delt opp i deler (Part 1, Part 2 …) med bilder eller roller."""
+    if not liste:
+        return ""
+    return '<ol class="deler">' + "".join(
+        f'<li><span class="delnr">Part {i}</span><h5>{e(x["tittel"])}</h5><p>{e(x["tekst"])}</p>'
+        + (roller(x["roller"]) if x.get("roller") else "")
+        + (delbilder(x["bilder"], x["tittel"]) if x.get("bilder") else "")
+        + "</li>"
+        for i, x in enumerate(liste, 1)
+    ) + "</ol>"
+
+
+def punkter(s):
+    """Valgfri punktliste og lenke i et prosessteg (f.eks. hva testene endret)."""
+    liste = f'<ul class="punkter">{"".join(f"<li>{e(x)}</li>" for x in s["punkter"])}</ul>' if s.get("punkter") else ""
+    lenke = f'<p><a class="mer" href="{e(s["lenke"]["href"])}">{e(s["lenke"]["tekst"])}</a></p>' if s.get("lenke") else ""
+    return liste + lenke
+
+
+def funn(s):
+    """Funn fra en brukertest (tommel opp/ned) og antall testpersoner som figurer."""
+    if not s.get("funn"):
+        return ""
+    kort = "".join(
+        f'<li class="{"pluss" if f["type"] == "pluss" else "minus"}">'
+        f'{ikon("thumbs-up" if f["type"] == "pluss" else "thumbs-down", 30)}<span>{e(f["tekst"])}</span></li>'
+        for f in s["funn"]
+    )
+    antall = s.get("testpersoner", 0)
+    folk = ""
+    if antall:
+        figurer = "".join(person(f) for f in testpersoner(antall, s.get("figurstart", 0)))
+        folk = f'<div class="testpersoner"><div>{figurer}</div><span>{antall} participants</span></div>'
+    return f'<ul class="funnliste">{kort}</ul>{folk}'
+
+
+def prosessteg(s):
+    return (f'<li><h4>{e(s["tittel"])}</h4><p>{e(s["tekst"])}</p>{funn(s)}{punkter(s)}'
+            f'{deltakere(s.get("deltakere"))}{deler(s.get("deler"))}{annotert(s.get("annotert"))}{stegbilde(s)}</li>')
 
 
 def blokker(rader, klasse):
@@ -113,10 +201,24 @@ def video(p):
         src = f"https://player.vimeo.com/video/{v.rstrip('/').rsplit('/', 1)[-1]}"
     else:
         plakat = Path(v).with_suffix(".jpg")
-        plakat = f' poster="{e(str(plakat))}"' if (ROT / plakat).exists() else ""
-        return f'<video class="video" src="{e(v)}"{plakat} controls playsinline preload="none"></video>'
+        # Uten plakatbilde lastes metadata, så nettleseren viser første bilde i videoen
+        plakat = f' poster="{e(str(plakat))}" preload="none"' if (ROT / plakat).exists() else ' preload="metadata"'
+        return f'<video class="video" src="{e(v)}"{plakat} controls playsinline></video>'
     return (f'<div class="video"><iframe src="{e(src)}" title="{e(p["tittel"])} – video" '
             'allow="fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>')
+
+
+def tidslinje(p):
+    """Prosessen i korte trekk: ikon i sirkel, pil mellom stegene."""
+    steg = p.get("tidslinje")
+    if not steg:
+        return ""
+    return '<h3>Design process</h3><ol class="tidslinje">' + "".join(
+        f'<li><span class="sirkel">{ikon(s["ikon"], 28)}</span><span class="steg">{e(s["tittel"])}</span>'
+        + (f'<span class="pil">{ikon("arrow-right", 22)}</span>' if i < len(steg) - 1 else "")
+        + "</li>"
+        for i, s in enumerate(steg)
+    ) + "</ol>"
 
 
 def palett(p):
@@ -128,10 +230,10 @@ def palett(p):
 def prosjektseksjon(p):
     bilde = f'<img class="hovedbilde" src="{e(p["bilde"])}" alt="{e(p["tittel"])}" loading="lazy">' if p.get("bilde") else ""
     kort = f'<div class="rutenett">{blokker(p["losning"], "kort")}</div>' if p.get("losning") else ""
-    losning = f'<h3>The solution</h3>{kort}' if kort else ""
+    losning = f'<h3 id="{e(p["slug"])}-losning">The solution</h3>{kort}' if kort else ""
     prosess = (
         '<h3>The process</h3><ol class="prosess">'
-        + "".join(f'<li><h4>{e(s["tittel"])}</h4><p>{e(s["tekst"])}</p>{stegbilde(s)}</li>' for s in p["prosess"])
+        + "".join(prosessteg(s) for s in p["prosess"])
         + "</ol>"
         if p.get("prosess") else ""
     )
@@ -151,6 +253,7 @@ def prosjektseksjon(p):
     <h3>The challenge</h3>
     <p class="tekst">{e(p.get("utfordring", ""))}</p>{lenke}
     {losning}
+    {tidslinje(p)}
     {prosess}
   </section>"""
 
@@ -239,7 +342,7 @@ def lag_forside(d):
     <h1>{e(d["tittel"])}</h1>
   </div>
   <a class="nedpil" href="#{e(d["prosjekter"][0]["slug"])}" aria-label="Scroll to projects">
-    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
+    {ikon("arrow-down", 28)}
   </a>
 </header>
 <main class="bredde">{"".join(prosjektseksjon(p) for p in d["prosjekter"])}
@@ -254,7 +357,7 @@ def lag_forside(d):
     <footer class="bunn">
       <span>© {date.today().year} {e(d["navn"])}</span>
       <a href="#top">Back to top
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4M5 11l7-7 7 7"/></svg>
+        {ikon("arrow-up")}
       </a>
     </footer>
   </section>
